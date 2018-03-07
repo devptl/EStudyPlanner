@@ -1,0 +1,39 @@
+#searchbutton {
+	border: white;
+	color: #1d2124;
+	background: white;
+}
+
+#loginButton {
+	margin-left: 2px;
+}
+
+#maincontent {
+	height: 1000px;
+}
+
+#accordion {
+	float: left !important;
+}
+
+#accordion2 {
+	float: left !important;
+}
+
+#alreadHaveAccountButton {
+	background: transparent;
+	color: blue;
+	border: none;
+}
+
+#formid {
+	float: left !important;
+}
+
+#expertlist {
+	margin-top: 2%;
+}
+
+#setstudymaterial {
+	margin-top: 2%;
+}
