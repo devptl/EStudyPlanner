@@ -14,11 +14,11 @@
     </head>
     <body>
 
-        <div class="container">
+        <div class="container" >
 
 
             <!--navigation menu-->
-            <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary">
+            <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary" id="navbar">
                 <a class="navbar-brand" href="/">E-Study and Planner</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -39,7 +39,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Courses
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="navbar">
                                 <a class="dropdown-item" href="/Courses">Engineering</a>
                                 <a class="dropdown-item" href="#">Medical</a>
                                 <div class="dropdown-divider"></div>
@@ -93,9 +93,11 @@
             
 
 
-            <div class="jumbotron">
-                <h1 class="display-4">Hello Frankin !!!</h1>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <div class="jumbotron" id="main">
+                <h1 class="display-4">Register Here!!!</h1>
+                <p class="lead">Want to learn something new then register here . Experts can also give their valuable time just register once and then u can 
+                your important feeds . Student can select their field and can get the study material . They can see the experts advice for the study material 
+                in their respective fields </p>
                 <hr class="my-4"/>
                 
                 
@@ -104,7 +106,7 @@
             	<!-- Modal -->
             	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 	<div class="modal-dialog modal-dialog-centered" role="document">
-                    	<div class="modal-content">
+                    	<div class="modal-content" id="modalcontent">
                         	<div class="modal-header">
                            		<h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
                             	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -152,8 +154,8 @@
                                   	</div>     
                                  </div>
                                  <hr class="my-4"/>
-                                 <button type="reset" class="btn btn-primary">Reset</button>
                             	 <button type="submit" class="btn btn-primary">Submit</button>
+                            	 <button type="reset" class="btn btn-primary">Reset</button>
                         	  </form>
                      		</div>
                    		</div>
@@ -164,7 +166,7 @@
                 <!--main content-->
                 <div id="maincontent">
                     <div id="accordion2" class="col-md-8 mb-2" >
-                        <div class="card">
+                        <div class="card" id="maincard">
                             <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOnet" aria-expanded="true" aria-controls="collapseOnet">
@@ -173,7 +175,7 @@
                                 </h5>
                             </div>
                             <div id="collapseOnet" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion2">
-                                <div class="card-body">
+                                <div class="card-body" >
                                     <!-- Form section -->
                                     <form class="needs-validation" th:object="${Students}" action="/studentsRegistration" method="post" >
                                         <div class="form-row">
@@ -272,7 +274,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
+                        <div class="card" id="maincard">
                             <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwot" aria-expanded="true" aria-controls="collapseTwot">
@@ -375,7 +377,7 @@
 
                     <!--collapsive top display-->
                     <div id="accordion" class="col-md-4 mb-2">
-                        <div class="card">
+                        <div class="card" id="sidecard">
                             <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -390,7 +392,7 @@
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card" id="sidecard">
                             <div class="card-header" id="headingTwo">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -405,7 +407,7 @@
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card" id="sidecard">
                             <div class="card-header" id="headingThree">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">

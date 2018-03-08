@@ -19,7 +19,7 @@ import com.esp.service.Initialiser;
 public class NavController {
 
 	@Autowired
-	private Initialiser initialiser; 
+	private Initialiser initialiser;
 
 	/**
 	 * To set the front.html as home page
@@ -28,11 +28,9 @@ public class NavController {
 	 * @return {@link front.html}
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String homeDisplay(@ModelAttribute("Experts") Experts expert,
-								@ModelAttribute("Students") Students student,
-								@ModelAttribute("LoggedUser") LoggedUser loggedUser,
-								ModelMap model) {
-		
+	public String homeDisplay(@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
+			@ModelAttribute("LoggedUser") LoggedUser loggedUser, ModelMap model) {
+
 		initialiser.frontInitialiser(model);
 		return "front";
 	}
@@ -44,8 +42,8 @@ public class NavController {
 	 */
 	@RequestMapping(value = "/Scheduler", method = RequestMethod.GET)
 	public String schedulerDisplay(@ModelAttribute("Schedule") Schedule schedule,
-			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses,ModelMap model) {
-		
+			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
+
 		initialiser.schedulerInitialiserWithoutParameter(model);
 		return "Scheduler";
 	}

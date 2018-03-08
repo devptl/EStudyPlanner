@@ -23,8 +23,8 @@ public class ExpertsService {
 	 */
 	public boolean expertsRegistration(Experts e) {
 		String id = e.getUserName();
-		if (dtoOperation.getComponents().findOneExpert(id) == null) {
-			dtoOperation.getComponents().saveExpert(e);
+		if (dtoOperation.getExpertsComponents().findOneExpert(id) == null) {
+			dtoOperation.getExpertsComponents().saveExpert(e);
 			return true;
 		} else
 			return false;
@@ -39,10 +39,10 @@ public class ExpertsService {
 	public boolean expertsLogin(LoggedUser l1) {
 
 		String loginId = l1.getUserName();
-		if (dtoOperation.getComponents().findOneExpert(loginId) == null) {
+		if (dtoOperation.getExpertsComponents().findOneExpert(loginId) == null) {
 			return false;
 		} else {
-			if (dtoOperation.getComponents().findOneExpert(loginId).getPassword().equals(l1.getPassword())) {
+			if (dtoOperation.getExpertsComponents().findOneExpert(loginId).getPassword().equals(l1.getPassword())) {
 				return true;
 			}
 
@@ -57,7 +57,7 @@ public class ExpertsService {
 	 * @return {@link Experts}
 	 */
 	public ArrayList<Experts> getAllExperts() {
-		return dtoOperation.getComponents().allExperts();
+		return dtoOperation.getExpertsComponents().allExperts();
 	}
 
 }

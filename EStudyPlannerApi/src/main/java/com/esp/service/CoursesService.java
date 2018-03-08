@@ -29,7 +29,7 @@ public class CoursesService {
 	 */
 	public ArrayList<Courses> showCourses() {
 		ArrayList<Courses> s1;
-		s1 = dtoOperation.getComponents().allCourses();
+		s1 = dtoOperation.getCoursesComponents().allCourses();
 		return s1;
 	}
 
@@ -96,11 +96,14 @@ public class CoursesService {
 
 		return s1;
 	}
-	
-	public void saveUserAndMainCourse(StudentsHasCourses s)
-	{
-		dtoOperation.getComponents().saveStudentsHasCourses(s);
+
+	/**
+	 * To save the user with the courses in join table
+	 * 
+	 * @param s
+	 */
+	public void saveUserAndMainCourse(StudentsHasCourses s) {
+		dtoOperation.getStudentsComponents().saveStudentsHasCourses(s);
 	}
-	
 
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 
 import com.esp.model.Courses;
 import com.esp.model.Experts;
+import com.esp.model.Schedule;
 
 @Service
 public class Initialiser {
@@ -25,6 +26,7 @@ public class Initialiser {
 	 */
 	public void frontInitialiser(ModelMap model) {
 
+		//initalise the field courses
 		ArrayList<Courses> fieldCourses = null;
 		fieldCourses = coursesService.fieldCourses();
 		model.addAttribute("fieldCourses", fieldCourses);
@@ -63,6 +65,7 @@ public class Initialiser {
 	 */
 	public void expertInitialiserWithParameters(ArrayList<Courses> mainCourses, ArrayList<Courses> minorCourses,
 			ModelMap model) {
+		//initalise the field courses
 		ArrayList<Courses> fieldCourses = null;
 		fieldCourses = coursesService.fieldCourses();
 		model.addAttribute("fieldCourses", fieldCourses);
@@ -86,9 +89,17 @@ public class Initialiser {
 		mainCourses = coursesService.mainCourses();
 		model.addAttribute("mainCourses", mainCourses);
 		
+		//initialise the message
+		String msg="";
+		model.addAttribute("message", msg);
+		
 		//initalise the username
 		String username="";
 		model.addAttribute("username", username);
+		
+		//initalise the schedule
+		Schedule schedule=new Schedule();
+		model.addAttribute("schedule", schedule);
 
 		// inital list of experts
 		ArrayList<Experts> allExperts = null;
@@ -104,7 +115,8 @@ public class Initialiser {
 	 * @param allExperts
 	 * @param model
 	 */
-	public void schedulerInitialiser(ArrayList<Courses> mainCourses, ArrayList<Experts> allExperts,String username, ModelMap model) {
+	public void schedulerInitialiser(ArrayList<Courses> mainCourses, ArrayList<Experts> allExperts,
+			Schedule schedule,String username, ModelMap model,String message) {
 
 		// inital list of major courses
 		model.addAttribute("mainCourses", mainCourses);
@@ -114,6 +126,12 @@ public class Initialiser {
 
 		// inital list of experts
 		model.addAttribute("allExperts", allExperts);
+		
+		//initalise the schedule
+		model.addAttribute("schedule", schedule);
+		
+		//initialise the message
+		model.addAttribute("message", message);
 
 	}
 

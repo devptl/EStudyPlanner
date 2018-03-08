@@ -1,3 +1,16 @@
+#main{
+	background-image: url("../images/bodybackground.png");
+}
+
+#navbar{
+	opacity: 0.85 !important;
+	background-image: url("../images/navbackground.jpg");
+}
+
+#navbar a{
+	color:white;
+}
+
 #searchbutton {
 	border: white;
 	color: #1d2124;
@@ -8,12 +21,26 @@
 	margin-left: 2px;
 }
 
+#modalcontent{
+	opacity: 0.8 !important;
+	background-image: url("../images/loginbackground.jpg");
+}
+
 #maincontent {
 	height: 1000px;
 }
 
+#maincard{
+	background-image: url("../images/mainbackground.jpg");
+}
+
+#sidecard{
+	background-image: url("../images/sidebackground.jpg");
+}
+
 #accordion {
 	float: left !important;
+	
 }
 
 #accordion2 {
@@ -36,4 +63,9 @@
 
 #setstudymaterial {
 	margin-top: 2%;
+}
+
+#schedulermessage{
+	color: red!important;
+    font-weight: bolder!important;
 }

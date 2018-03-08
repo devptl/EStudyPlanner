@@ -10,6 +10,7 @@ import com.esp.dto.DtoOperation;
 import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
+import com.esp.model.Schedule;
 import com.esp.model.Students;
 
 @Service
@@ -20,6 +21,9 @@ public class StudentsService {
 
 	@Autowired
 	private CoursesService coursesService;
+
+	@Autowired
+	private ScheduleService scheduleService;
 
 	@Autowired
 	private Initialiser initialiser;
@@ -33,17 +37,26 @@ public class StudentsService {
 	 */
 	public boolean studentRegistration(Students s, ModelMap model) {
 		String id = s.getUserName();
-		if (dtoOperation.getComponents().findOneStudent(id) == null) {
+		if (dtoOperation.getStudentsComponents().findOneStudent(id) == null) {
 			s.setGuardiansIdGuardians(1);
-			String username=s.getUserName();
+			String username = s.getUserName();
 
+			// getting the main course list according to registered field
 			ArrayList<Courses> mainCourses = coursesService.mainCoursesById(s.getField());
 
-			ArrayList<Experts> allExperts = dtoOperation.getComponents().allExperts();
+			// default list of experts
+			ArrayList<Experts> allExperts = dtoOperation.getExpertsComponents().allExperts();
 
-			initialiser.schedulerInitialiser(mainCourses, allExperts,username, model);
+			// assign a new schedule
+			Schedule schedule = new Schedule();
 
-			dtoOperation.getComponents().saveStudent(s);
+			// Set the messege
+			String msg = "Enter the schedule";
+
+			// initialising values for schedule page
+			initialiser.schedulerInitialiser(mainCourses, allExperts, schedule, username, model, msg);
+
+			dtoOperation.getStudentsComponents().saveStudent(s);
 
 			return true;
 		} else
@@ -60,18 +73,30 @@ public class StudentsService {
 	public boolean studentsLogin(LoggedUser l1, ModelMap model) {
 
 		String loginId = l1.getUserName();
-		if (dtoOperation.getComponents().findOneStudent(loginId) == null) {
+		if (dtoOperation.getStudentsComponents().findOneStudent(loginId) == null) {
 			return false;
 		} else {
-			if (dtoOperation.getComponents().findOneStudent(loginId).getPassword().equals(l1.getPassword())) {
-				Students s1 = dtoOperation.getComponents().findOneStudent(loginId);
-				String username=s1.getUserName();
-				
+			if (dtoOperation.getStudentsComponents().findOneStudent(loginId).getPassword().equals(l1.getPassword())) {
+				Students s1 = dtoOperation.getStudentsComponents().findOneStudent(loginId);
+				String username = s1.getUserName();
+				Schedule schedule;
+
+				// set the main course according to the fiels
 				ArrayList<Courses> mainCourses = coursesService.mainCoursesById(s1.getField());
 
-				ArrayList<Experts> allExperts = dtoOperation.getComponents().allExperts();
+				// check if schedule already exist
+				if (scheduleService.findSchedule(username) == null) {
+					schedule = new Schedule();
+				} else {
+					schedule = scheduleService.findSchedule(username);
+				}
 
-				initialiser.schedulerInitialiser(mainCourses,allExperts,username, model);
+				// setting the expert list
+				ArrayList<Experts> allExperts = dtoOperation.getExpertsComponents().allExperts();
+				String msg = "Want to make changes in schedule";
+
+				// initialising values for schedule page
+				initialiser.schedulerInitialiser(mainCourses, allExperts, schedule, username, model, msg);
 
 				return true;
 			}

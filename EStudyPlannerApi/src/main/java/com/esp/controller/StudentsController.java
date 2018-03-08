@@ -35,8 +35,7 @@ public class StudentsController {
 	@RequestMapping(value = "/studentsRegistration", method = RequestMethod.POST)
 	public String studentRegistrationController(@ModelAttribute("Experts") Experts expert,
 			@ModelAttribute("Students") Students student, @ModelAttribute("LoggedUser") LoggedUser loggedUser,
-			@ModelAttribute("Schedule") Schedule schedule,
-			ModelMap model) {
+			@ModelAttribute("Schedule") Schedule schedule, ModelMap model) {
 
 		if (studentsService.studentRegistration(student, model)) {
 

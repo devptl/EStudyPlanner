@@ -3,9 +3,10 @@ package com.esp.model;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class JoinKey implements Serializable{
+public class ExpertsHasCoursesJoinKey implements Serializable{
+
 	@SuppressWarnings("unused")
-	private String studentsUserName;
+	private String expertsUserName;
 	@SuppressWarnings("unused")
 	private int coursesIdCourse;
 

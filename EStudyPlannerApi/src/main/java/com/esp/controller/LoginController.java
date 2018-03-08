@@ -19,20 +19,20 @@ import com.esp.service.StudentsService;
 
 @Controller
 public class LoginController {
-	
+
 	@Autowired
 	private StudentsService studentsService;
-	
+
 	@Autowired
 	private ExpertsService expertsService;
 
 	@Autowired
-	private Initialiser initialiser; 
+	private Initialiser initialiser;
 
-	
 	/**
-	 * This controller is for the logged user 
-	 * expert or student they are handled here
+	 * This controller is for the logged user expert or student they are handled
+	 * here
+	 * 
 	 * @param expert
 	 * @param student
 	 * @param loggedUser
@@ -43,42 +43,29 @@ public class LoginController {
 	 * @return {@link Experts.html} or {@link Scheduler.html}
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@ModelAttribute("Experts") Experts expert,
-			@ModelAttribute("Students") Students student,
-			@ModelAttribute("LoggedUser") LoggedUser loggedUser,
-			@ModelAttribute("Courses") Courses mainCourse,
+	public String login(@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
+			@ModelAttribute("LoggedUser") LoggedUser loggedUser, @ModelAttribute("Courses") Courses mainCourse,
 			@ModelAttribute("Schedule") Schedule schedule,
-			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses,
-			ModelMap model) {
-		
-		if(loggedUser.getRole()==1)
-		{
-			if(studentsService.studentsLogin(loggedUser,model))
-			{	
-			return "Scheduler";
-			}
-			else
-			{
+			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
+
+		if (loggedUser.getRole() == 1) {
+			if (studentsService.studentsLogin(loggedUser, model)) {
+				return "Scheduler";
+			} else {
 				initialiser.frontInitialiser(model);
 				return "front";
 			}
-			
-		}
-		else
-		{
-			if(expertsService.expertsLogin(loggedUser))
-			{
-				
+
+		} else {
+			if (expertsService.expertsLogin(loggedUser)) {
+
 				initialiser.expertInitialiser(model);
 				return "Experts";
-			}
-			else
-			{
+			} else {
 				initialiser.frontInitialiser(model);
 				return "front";
 			}
-				
+
 		}
 	}
 }
-

@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 
 @Entity
-@IdClass(JoinKey.class)
+@IdClass(StudentsHasCoursesJoinKey.class)
 public class StudentsHasCourses {
 
 	@Id

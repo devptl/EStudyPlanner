@@ -18,7 +18,7 @@
 
 
             <!--navigation menu-->
-            <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary">
+            <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary" id="navbar">
                 <a class="navbar-brand" href="/">E-Study and Planner</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -39,7 +39,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Cources
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="navbar">
                                 <a class="dropdown-item" href="/Courses">Engineering</a>
                                 <a class="dropdown-item" href="#">Medical</a>
                                 <div class="dropdown-divider"></div>
@@ -90,16 +90,19 @@
             </div>
 
 
-            <div class="jumbotron">
-                <h1 class="display-4">Welcome to the Scheduler !!!</h1>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <div class="jumbotron" id="main">
+                <h1 class="display-4">Lets manage what we have!!!</h1>
+                <p class="lead">Here you can set the free hours in our life so that a burden is not for a particular day 
+                Even if you want to have one slot you can enter that . You can select your specific course and then you 
+                can se the experts advice for the study material . If you dont want any experts you can still go on with
+                your understanding on the study materials</p>
                 <hr class="my-4"/>
 
                 <!--main content-->
                 <div id="maincontent">
 
                     <div id="accordion1" >
-                        <div class="card">
+                        <div class="card" id="sidecard" >
                             <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -115,11 +118,11 @@
                                     			<div class="input-group-prepend">
                                            			<span class="input-group-text" id="inputGroupPrepend1">Username</span>
                                         		</div>
-                                        		 <select class="custom-select" id="validationServer02" 
-                                        		 aria-describedby="inputGroupPrepend1" th:field="*{studentsUserName}"
-                                        		 required="required">
-                                                 <option th:value="${username}" th:text="${username}">One</option>
-                                                 </select>
+                                        		 <input type="text" class="form-control"
+                                                 placeholder="Username" aria-describedby="inputGroupPrepend1" 
+                                                 id="studentsUserName" th:value="${username}" name="studentsUserName"
+                                        		 readonly="readonly" required="required" />
+                                                
                                         		<div class="invalid-feedback"> Enter the Username !</div>
                                       			<div class="valid-feedback"> Looks good! </div> 
                                     		</div>     
@@ -127,15 +130,15 @@
                                         <div class="form-row">
                                             <div class="col-md-6 mb-2">
                                                 <label for="validationServer01"><b>Slot 1</b> Start time </label>
-                                                <input type="time" class="form-control" id="validationServer01"
-                                                th:field="*{slotOneIn}" required="required"/>
+                                                <input type="time" class="form-control"
+                                                 id="slotOneIn"  name="slotOneIn" th:value="${schedule.getSlotOneIn()}" required="required"/> 
                                                 <div class="invalid-feedback"> Enter the correct slot !</div>
                                                 <div class="valid-feedback"> Looks good! </div> 
                                             </div>
                                             <div class="col-md-6 mb-2">
                                                 <label for="validationServer02">End time</label>
-                                                <input type="time" class="form-control" id="validationServer02" 
-                                                th:field="*{slotOneOut}" required="required"/>
+                                                <input type="time" class="form-control"  
+                                                id="slotOneOut" name="slotOneOut"  th:value="${schedule.getSlotOneOut()}" required="required"/>
                                                 <div class="invalid-feedback"> Enter the correct Name !</div>
                                                 <div class="valid-feedback"> Looks good! </div> 
                                             </div>
@@ -143,13 +146,15 @@
                                         <div class="form-row">
                                             <div class="col-md-6 mb-2">
                                                 <label for="validationServer01"><b>Slot 2</b> Start time </label>
-                                                <input type="time" class="form-control" th:field="*{slotTwoIn}" id="validationServer03"  />
+                                                <input type="time" class="form-control" id="slotTwoIn" name="slotTwoIn"
+                                                th:value="${schedule.getSlotTwoIn()}"   />
                                                 <div class="invalid-feedback"> Enter the correct slot !</div>
                                                 <div class="valid-feedback"> Looks good! </div> 
                                             </div>
                                             <div class="col-md-6 mb-2">
                                                 <label for="validationServer02">End time</label>
-                                                <input type="time" class="form-control" th:field="*{slotTwoOut}" id="validationServer04"  />
+                                                <input type="time" class="form-control" id="slotTwoOut" name="slotTwoOut" 
+                                                th:value="${schedule.getSlotTwoOut()}"  />
                                                 <div class="invalid-feedback"> Enter the correct Name !</div>
                                                 <div class="valid-feedback"> Looks good! </div> 
                                             </div>
@@ -157,24 +162,27 @@
                                         <div class="form-row">
                                             <div class="col-md-6 mb-2">
                                                 <label for="validationServer01"><b>Slot 3</b> Start time </label>
-                                                <input type="time" class="form-control" th:field="*{slotThreeIn}" id="validationServer05"  />
+                                                <input type="time" class="form-control" id="slotThreeIn" name="slotThreeIn"
+                                                th:value="${schedule.getSlotThreeIn()}"  />
                                                 <div class="invalid-feedback"> Enter the correct slot !</div>
                                                 <div class="valid-feedback"> Looks good! </div> 
                                             </div>
                                             <div class="col-md-6 mb-2">
                                                 <label for="validationServer02">End time</label>
-                                                <input type="time" class="form-control" th:field="*{slotThreeOut}" id="validationServer06"  />
+                                                <input type="time" class="form-control" id="slotThreeOut" name="slotThreeOut"
+                                                th:value="${schedule.getSlotThreeOut()}"  />
                                                 <div class="invalid-feedback"> Enter the correct Name !</div>
                                                 <div class="valid-feedback"> Looks good! </div> 
                                             </div>
                                         </div>
+                                        <p id="schedulermessage" th:text="${message}"></p>
                                        
                                         <button class="btn btn-primary" type="submit">Submit form</button>   
                                     </form>
                                 </div>
                             </div>
                         </div>
-                          <div class="card">
+                          <div class="card" id="sidecard">
                             <div class="card-header" id="headingTwo">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -191,11 +199,10 @@
                                     			<div class="input-group-prepend">
                                            			<span class="input-group-text" id="inputGroupPrepend1">Username</span>
                                         		</div>
-                                        		 <select class="custom-select" id="validationServer02" 
-                                        		 aria-describedby="inputGroupPrepend1" th:field="*{studentsUserName}"
-                                        		 required="required">
-                                                 <option th:value="${username}" th:text="${username}">One</option>
-                                                 </select>
+                                        		 <input type="text" class="form-control"
+                                                 placeholder="Username" aria-describedby="inputGroupPrepend1" 
+                                                 id="studentsUserName" th:value="${username}" name="studentsUserName"
+                                        		 readonly="readonly" required="required" />
                                         		<div class="invalid-feedback"> Enter the Username !</div>
                                       			<div class="valid-feedback"> Looks good! </div> 
                                     		</div>     
@@ -217,7 +224,7 @@
 
                         </div>
 
-                        <div class="card">
+                        <div class="card" id="sidecard">
                             <div class="card-header" id="headingThree">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
@@ -234,11 +241,10 @@
                                     			<div class="input-group-prepend">
                                            			<span class="input-group-text" id="inputGroupPrepend1">Username</span>
                                         		</div>
-                                        		 <select class="custom-select" id="validationServer02" 
-                                        		 aria-describedby="inputGroupPrepend1" 
-                                        		 required="required">
-                                                 <option th:value="${username}" th:text="${username}">One</option>
-                                                 </select>
+                                        		 <input type="text" class="form-control"
+                                                 placeholder="Username" aria-describedby="inputGroupPrepend1" 
+                                                 id="studentsUserName" th:value="${username}" name="studentsUserName"
+                                        		 readonly="readonly" required="required" />
                                         		<div class="invalid-feedback"> Enter the Username !</div>
                                       			<div class="valid-feedback"> Looks good! </div> 
                                     		</div>     
