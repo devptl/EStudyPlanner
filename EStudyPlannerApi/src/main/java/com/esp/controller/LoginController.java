@@ -20,7 +20,10 @@ import com.esp.service.StudentsService;
 
 @Controller
 @SessionAttributes({"username","fieldCourses", "mainCourses",
-	"courseforstudymaterial","minorCourses","studymaterials","expertsHasStudyMaterials"})
+	"courseforstudymaterial","minorCourses","studymaterials",
+	"expertsHasStudyMaterials","schedule","message","allExperts",
+	"button1","button2","button3","div1","div2","div3",
+	"shbutton1","shbutton2","shbutton3","shbutton4","shdiv1","shdiv2","shdiv3","shdiv4"})
 public class LoginController {
 
 	@Autowired

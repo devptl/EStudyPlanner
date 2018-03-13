@@ -77,6 +77,17 @@ public class Initialiser {
 		expertsHasStudyMaterials=expertsService.expertsHasStudyMAterialWithUsername(userName);
 		model.addAttribute("expertsHasStudyMaterials", expertsHasStudyMaterials);
 		
+		//initialise the togglers
+		model.addAttribute("button1", "btn btn-link");
+		model.addAttribute("div1", "collapse show");
+	
+		model.addAttribute("button2", "btn btn-link collapsed");
+		model.addAttribute("div2", "collapse");
+		
+		model.addAttribute("button3", "btn btn-link collapsed");
+		model.addAttribute("div3", "collapse");
+		
+		
 		
 	}
 
@@ -106,6 +117,16 @@ public class Initialiser {
 		String msg="";
 		model.addAttribute("message", msg);
 		
+		//initalise the minor courses
+		ArrayList<Courses> minorCourses = null;
+		minorCourses = coursesService.mainCourses();
+		model.addAttribute("minorCourses", minorCourses);
+		
+		//initalise the couseForStudyMaterial
+		String courseForStudyMaterial="";
+		model.addAttribute("courseforstudymaterial",courseForStudyMaterial);
+			
+		
 		//initalise the username
 		String username="";
 		model.addAttribute("username", username);
@@ -133,6 +154,11 @@ public class Initialiser {
 
 		// inital list of major courses
 		model.addAttribute("mainCourses", mainCourses);
+		
+		//initalise the minor courses
+		ArrayList<Courses> minorCourses = null;
+		minorCourses = coursesService.mainCourses();
+		model.addAttribute("minorCourses", minorCourses);
 	
 		//initalise the username
 		model.addAttribute("username", username);
@@ -145,7 +171,19 @@ public class Initialiser {
 		
 		//initialise the message
 		model.addAttribute("message", message);
+		
+		//initialise the togglers
+		model.addAttribute("shbutton1", "btn btn-link");
+		model.addAttribute("shdiv1", "collapse show");
+			
+		model.addAttribute("shbutton2", "btn btn-link collapsed");
+		model.addAttribute("shdiv2", "collapse");
+				
+		model.addAttribute("shbutton3", "btn btn-link collapsed");
+		model.addAttribute("shdiv3", "collapse");
 
+		model.addAttribute("shbutton4", "btn btn-link collapsed");
+		model.addAttribute("shdiv4", "collapse");
 	}
 
 }

@@ -12,6 +12,7 @@ import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
 import com.esp.model.Schedule;
 import com.esp.model.Students;
+import com.esp.model.StudentsHasCourses;
 
 @Service
 public class StudentsService {
@@ -104,6 +105,16 @@ public class StudentsService {
 			return false;
 		}
 
+	}
+	
+	
+	/**
+	 * To save the user with the courses in join table
+	 * 
+	 * @param s
+	 */
+	public void saveStudentsAndMinorCourse(StudentsHasCourses s) {
+		dtoOperation.getStudentsComponents().saveStudentsHasCourses(s);
 	}
 
 }

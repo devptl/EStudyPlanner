@@ -123,6 +123,13 @@ public class ExpertsService {
 		return s1;
 	}
 
+	/**
+	 * To get the expert has stuy material list accoriding to
+	 * the experts username and course Id
+	 * @param id
+	 * @param userName
+	 * @return {@link ExpertsHasStudyMaterials}
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMAterialWithUsernameAndCouseId(String id,String userName) {
 		ArrayList<ExpertsHasStudyMaterials> s1 = null;
@@ -141,5 +148,39 @@ public class ExpertsService {
 
 		return s1;
 	}
+	
+	
+	/**
+	 * To get the list of experts according to the given
+	 * course id 
+	 * @param id
+	 * @return {@link Experts}
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Experts> findExpertsWithCoursesId(int id) {
+		
+		ArrayList<Experts> s1 = null;
+
+		// To get the card type for a particular bank id
+		// Native SQL Query
+		String queryString = "select e.first_name,e.last_name,e.user_name,e.qualification,"
+				+ "e.year_of_experience,e.password,e.email from experts e inner join experts_has_courses ec"
+				+ " on e.user_name=ec.experts_user_name  and ec.courses_id_course="+id;
+		// Generate Query
+		Query query = entityManager.createNativeQuery(queryString, Experts.class);
+		// Map result set to list of Objects
+		s1 = (ArrayList<Experts>) query.getResultList();
+
+		return s1;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

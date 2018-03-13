@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esp.dto.DtoOperation;
+import com.esp.model.ExpertsHasStudyMaterials;
 import com.esp.model.StudyMaterials;
 
 @Service
@@ -17,6 +18,9 @@ public class StudyMaterialsService {
 	
 	@Autowired
 	private DtoOperation dtoOperation;
+	
+	@Autowired
+	private ExpertsService expertsService;
 	
 	@PersistenceContext
 	EntityManager entityManager;
@@ -36,6 +40,21 @@ public class StudyMaterialsService {
 
 		return s1;
 	}
+	
+	
+
+	public ArrayList<StudyMaterials> showStudyMaterialsByUserNameAndCourseId( String courseforstudymaterial,String expertsUserName) {
+		ArrayList<StudyMaterials> s1 = new ArrayList<StudyMaterials>();
+		
+		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials
+		=expertsService.expertsHasStudyMAterialWithUsernameAndCouseId(courseforstudymaterial, expertsUserName);
+		
+		expertsHasStudyMaterials.forEach(x->s1.add(dtoOperation.getStudyMaterialsComponents().findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
+
+		return s1;
+	}
+	
+	
 	
 	public ArrayList<StudyMaterials> allStudyMaterials()
 	{

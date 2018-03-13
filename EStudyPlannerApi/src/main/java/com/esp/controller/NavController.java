@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
-import com.esp.model.Schedule;
 import com.esp.model.Students;
-import com.esp.model.StudentsHasCourses;
 import com.esp.service.Initialiser;
 
 @Controller
@@ -35,18 +33,6 @@ public class NavController {
 		return "front";
 	}
 
-	/**
-	 * To set the initial display of scheduler page
-	 * 
-	 * @return {@link Scheduler.html}
-	 */
-	@RequestMapping(value = "/Scheduler", method = RequestMethod.GET)
-	public String schedulerDisplay(@ModelAttribute("Schedule") Schedule schedule,
-			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
-
-		initialiser.schedulerInitialiserWithoutParameter(model);
-		return "Scheduler";
-	}
 
 	/**
 	 * To set the intial display of Courses page

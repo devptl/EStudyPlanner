@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.esp.dto.DtoOperation;
 import com.esp.model.Courses;
-import com.esp.model.StudentsHasCourses;
 
 @Service
 public class CoursesService {
@@ -98,14 +97,10 @@ public class CoursesService {
 	}
 
 	/**
-	 * To save the user with the courses in join table
-	 * 
-	 * @param s
+	 * To get the courses with particualarr id
+	 * @param id
+	 * @return {@link Courses}
 	 */
-	public void saveUserAndMainCourse(StudentsHasCourses s) {
-		dtoOperation.getStudentsComponents().saveStudentsHasCourses(s);
-	}
-	
 	public Courses getCourseWithId(int id)
 	{
 		return dtoOperation.getCoursesComponents().findOneCourse(id);

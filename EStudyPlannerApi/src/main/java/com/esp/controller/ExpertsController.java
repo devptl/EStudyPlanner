@@ -2,6 +2,8 @@ package com.esp.controller;
 
 import java.util.ArrayList;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,18 +23,25 @@ import com.esp.model.StudyMaterials;
 import com.esp.service.CoursesService;
 import com.esp.service.ExpertsService;
 import com.esp.service.Initialiser;
+import com.esp.service.SMTPMailSender;
 import com.esp.service.StudyMaterialsService;
 
+
 @Controller
-@SessionAttributes({ "username", "fieldCourses", "mainCourses", "minorCourses","studymaterials","expertsHasStudyMaterials"})
+@SessionAttributes({ "username", "fieldCourses", "mainCourses",
+	"minorCourses","studymaterials","expertsHasStudyMaterials",
+	"button1","button2","button3","div1","div2","div3"})
 public class ExpertsController {
+
+	@Autowired 
+	private SMTPMailSender sMTPMailSender;  
 
 	@Autowired
 	private CoursesService coursesService;
 
 	@Autowired
 	private ExpertsService expertsService;
-
+		
 	@Autowired
 	private Initialiser initialiser;
 
@@ -84,6 +93,13 @@ public class ExpertsController {
 
 		// inital list of major courses
 		model.addAttribute("mainCourses", mainCourses);
+		
+		//initialise the togglers
+		model.addAttribute("button1", "btn btn-link collapsed");
+		model.addAttribute("div1", "collapse ");
+			
+		model.addAttribute("button2", "btn btn-link");
+		model.addAttribute("div2", "collapse show");
 
 		return "Experts";
 	}
@@ -119,6 +135,14 @@ public class ExpertsController {
 		ArrayList<StudyMaterials> studyMaterials = studyMaterialsService.showStudyMaterialsByCourseid(id);
 
 		initialiser.expertInitialiserWithParameters(studyMaterials, model);
+		
+		//initialise the togglers
+		model.addAttribute("button2", "btn btn-link collapsed");
+		model.addAttribute("div2", "collapse ");
+					
+		model.addAttribute("button3", "btn btn-link");
+		model.addAttribute("div3", "collapse show");
+		
 
 		return "Experts";
 	}
@@ -131,23 +155,39 @@ public class ExpertsController {
 	 * @param loggedUser
 	 * @param model
 	 * @return {@link Experts.html}
+	 * @throws MessagingException 
 	 */
 	@RequestMapping(value = "/expertsRegistration", method = RequestMethod.POST)
-	public String expertRegistrationController(@ModelAttribute("Experts") Experts expert,
-			@ModelAttribute("Students") Students student, @ModelAttribute("LoggedUser") LoggedUser loggedUser,
+	public String expertRegistrationController(@ModelAttribute("Courses") Courses mainCourse,
+			@ModelAttribute("Experts") Experts expert,
+			@ModelAttribute("Students") Students student,
+			@ModelAttribute("LoggedUser") LoggedUser loggedUser,
 			ModelMap model) {
 
 		if (expertsService.expertsRegistration(expert)) {
 
-			
 
 			String userName = loggedUser.getUserName();
 			// initalise the username
 			initialiser.expertInitialiser(userName,model);
 			
+			String emailId=expert.getEmail();
+			String subject="Thanku Expert "+expert.getFirstName()+" for registration";
+			String messege="We are very thankfull for your support your"
+					+ " can now set the study material and provide your valuable feeds to us ";
+
+			try {
+			sMTPMailSender.send(emailId, subject, messege);
+			}
+			catch(Exception e)
+			{
+				System.out.println("network problem");
+			}
+			
+			
 			model.addAttribute("username", userName);
 
-			return "Expert";
+			return "Experts";
 		} else {
 			initialiser.frontInitialiser(model);
 			return "front";
@@ -166,8 +206,10 @@ public class ExpertsController {
 	 * @return
 	 */
 	@RequestMapping(value = "/ExpertsSuggestedMaterials", method = RequestMethod.POST)
-	public String expertsSuggestedMaterials(@ModelAttribute("Courses") Courses mainCourse,@ModelAttribute("Experts") Experts expert,
-			@ModelAttribute("Students") Students student, @ModelAttribute("LoggedUser") LoggedUser loggedUser,
+	public String expertsSuggestedMaterials(@ModelAttribute("Courses") Courses mainCourse,
+			@ModelAttribute("Experts") Experts expert,
+			@ModelAttribute("Students") Students student,
+			@ModelAttribute("LoggedUser") LoggedUser loggedUser,
 			@RequestParam String studyMaterialsList,
 			@RequestParam String userName,
 			@RequestParam String courseforstudymaterial,
