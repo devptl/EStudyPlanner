@@ -68,5 +68,13 @@ public class ExpertsComponents {
 		expertsHasStudyMaterialsRepository.save(ex);
 	}
 	
+	/**
+	 * To delete from experts has StudyMaterial tables
+	 * @param ex
+	 */
+	public void deleteExpertsHasStudyMaterials(ExpertsHasStudyMaterials ex) {
+		expertsHasStudyMaterialsRepository.delete(ex);
+	}
+	
 
 }

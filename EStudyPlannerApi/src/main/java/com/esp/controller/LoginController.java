@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.esp.model.Courses;
 import com.esp.model.Experts;
@@ -18,6 +19,8 @@ import com.esp.service.Initialiser;
 import com.esp.service.StudentsService;
 
 @Controller
+@SessionAttributes({"username","fieldCourses", "mainCourses",
+	"courseforstudymaterial","minorCourses","studymaterials","expertsHasStudyMaterials"})
 public class LoginController {
 
 	@Autowired
@@ -25,7 +28,7 @@ public class LoginController {
 
 	@Autowired
 	private ExpertsService expertsService;
-
+	
 	@Autowired
 	private Initialiser initialiser;
 
@@ -59,7 +62,10 @@ public class LoginController {
 		} else {
 			if (expertsService.expertsLogin(loggedUser)) {
 
-				initialiser.expertInitialiser(model);
+				String userName=loggedUser.getUserName();
+				initialiser.expertInitialiser(userName,model);
+				
+				
 				return "Experts";
 			} else {
 				initialiser.frontInitialiser(model);

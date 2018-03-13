@@ -10,21 +10,13 @@ public class Students {
 	private String userName;
 	private String firstName;
 	private String lastName;
-
-	private String city;
-	private String state;
-	private int zipCode;
+	private String email;
 	private int field;
 	private int guardiansIdGuardians;
-	
 	private String password;
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public String getUserName() {
+		return userName;
 	}
 
 	public String getFirstName() {
@@ -35,20 +27,8 @@ public class Students {
 		return lastName;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public int getZipCode() {
-		return zipCode;
+	public String getEmail() {
+		return email;
 	}
 
 	public int getField() {
@@ -59,7 +39,13 @@ public class Students {
 		return guardiansIdGuardians;
 	}
 
+	public String getPassword() {
+		return password;
+	}
 
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -69,20 +55,8 @@ public class Students {
 		this.lastName = lastName;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public void setZipCode(int zipCode) {
-		this.zipCode = zipCode;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public void setField(int field) {
@@ -93,25 +67,24 @@ public class Students {
 		this.guardiansIdGuardians = guardiansIdGuardians;
 	}
 
-	
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public Students() {
 
 	}
 
-	public Students(String userName, String firstName, String lastName, String city, String state, int zipCode,
-			int field, int guardiansIdGuardians, String password) {
-	
+	public Students(String userName, String firstName, String lastName, String email, int field,
+			int guardiansIdGuardians, String password) {
+
 		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.city = city;
-		this.state = state;
-		this.zipCode = zipCode;
+		this.email = email;
 		this.field = field;
 		this.guardiansIdGuardians = guardiansIdGuardians;
 		this.password = password;
 	}
 
-	
 }

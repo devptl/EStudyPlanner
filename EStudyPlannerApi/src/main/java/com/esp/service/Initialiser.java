@@ -8,7 +8,9 @@ import org.springframework.ui.ModelMap;
 
 import com.esp.model.Courses;
 import com.esp.model.Experts;
+import com.esp.model.ExpertsHasStudyMaterials;
 import com.esp.model.Schedule;
+import com.esp.model.StudyMaterials;
 
 @Service
 public class Initialiser {
@@ -18,6 +20,9 @@ public class Initialiser {
 
 	@Autowired
 	private ExpertsService expertsService;
+	
+	@Autowired
+	private StudyMaterialsService studyMaterialsService;
 
 	/**
 	 * This methord is to initialise the values for the front page
@@ -38,12 +43,24 @@ public class Initialiser {
 	 * 
 	 * @param model
 	 */
-	public void expertInitialiser(ModelMap model) {
-
+	public void expertInitialiser(String userName,ModelMap model) {
+		
+		//initalise the username
+		model.addAttribute("username",userName);
+		
 		// intial list of fields
 		ArrayList<Courses> fieldCourses = null;
 		fieldCourses = coursesService.fieldCourses();
 		model.addAttribute("fieldCourses", fieldCourses);
+		
+		//initalise the couseForStudyMaterial
+		String courseForStudyMaterial="";
+		model.addAttribute("courseforstudymaterial",courseForStudyMaterial);
+		
+		//initalise study materials
+		ArrayList<StudyMaterials> studyMaterials=null;
+		studyMaterials=studyMaterialsService.allStudyMaterials();
+		model.addAttribute("studymaterials",studyMaterials);
 
 		// inital list of major courses
 		ArrayList<Courses> mainCourses = null;
@@ -54,27 +71,23 @@ public class Initialiser {
 		ArrayList<Courses> minorCourses = null;
 		minorCourses = coursesService.mainCourses();
 		model.addAttribute("minorCourses", minorCourses);
+		
+		//initialse the suggested list
+		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials=null;
+		expertsHasStudyMaterials=expertsService.expertsHasStudyMAterialWithUsername(userName);
+		model.addAttribute("expertsHasStudyMaterials", expertsHasStudyMaterials);
+		
+		
 	}
 
-	/**
-	 * This method is to initialise the values once the expert select the courses
-	 * 
-	 * @param mainCourses
-	 * @param minorCourses
-	 * @param model
-	 */
-	public void expertInitialiserWithParameters(ArrayList<Courses> mainCourses, ArrayList<Courses> minorCourses,
-			ModelMap model) {
-		//initalise the field courses
-		ArrayList<Courses> fieldCourses = null;
-		fieldCourses = coursesService.fieldCourses();
-		model.addAttribute("fieldCourses", fieldCourses);
-
-		// inital list of major courses
-		model.addAttribute("mainCourses", mainCourses);
-
-		// inital list of minor courses
-		model.addAttribute("minorCourses", minorCourses);
+	
+	public void expertInitialiserWithParameters( ArrayList<StudyMaterials> studyMaterials,ModelMap model) {
+		
+		
+		
+		//initalise study materials
+		model.addAttribute("studymaterials",studyMaterials);
+		
 	}
 
 	/**

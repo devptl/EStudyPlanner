@@ -2,11 +2,17 @@ package com.esp.service;
 
 import java.util.ArrayList;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esp.dto.DtoOperation;
 import com.esp.model.Experts;
+import com.esp.model.ExpertsHasCourses;
+import com.esp.model.ExpertsHasStudyMaterials;
 import com.esp.model.LoggedUser;
 
 @Service
@@ -14,6 +20,9 @@ public class ExpertsService {
 
 	@Autowired
 	private DtoOperation dtoOperation;
+
+	@PersistenceContext
+	EntityManager entityManager;
 
 	/**
 	 * For registration of particular expert in database
@@ -43,6 +52,7 @@ public class ExpertsService {
 			return false;
 		} else {
 			if (dtoOperation.getExpertsComponents().findOneExpert(loginId).getPassword().equals(l1.getPassword())) {
+
 				return true;
 			}
 
@@ -52,12 +62,84 @@ public class ExpertsService {
 	}
 
 	/**
+	 * To save data in the expert has courses table
+	 * 
+	 * @param expertsHasCourses
+	 */
+	public void expertHasCourses(ExpertsHasCourses expertsHasCourses) {
+
+		dtoOperation.getExpertsComponents().saveExpertsHasCourses(expertsHasCourses);
+
+	}
+
+	public void expertsHasStudyMAterials(String courseforstudymaterial, String[] studyMaterialId, String userName) {
+		int i, id;
+		ArrayList<ExpertsHasStudyMaterials> ex = expertsHasStudyMAterialWithUsernameAndCouseId(courseforstudymaterial,
+				userName);
+
+		// delete all entry with the username of expert
+		ex.forEach(x -> dtoOperation.getExpertsComponents().deleteExpertsHasStudyMaterials(x));
+
+		for (i = 0; i < studyMaterialId.length; i++) {
+
+			// getting the id from list
+			id = Integer.parseInt(studyMaterialId[i]);
+			// creating object
+			ExpertsHasStudyMaterials expertsHasStudyMaterials = new ExpertsHasStudyMaterials(userName, id);
+			// saving the object to database
+			dtoOperation.getExpertsComponents().saveExpertsHasStudyMaterials(expertsHasStudyMaterials);
+
+		}
+	}
+
+	/**
 	 * To get the list of all experts
 	 * 
 	 * @return {@link Experts}
 	 */
 	public ArrayList<Experts> getAllExperts() {
 		return dtoOperation.getExpertsComponents().allExperts();
+	}
+
+	/**
+	 * list all the study material with a particular expert username
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMAterialWithUsername(String userName) {
+		ArrayList<ExpertsHasStudyMaterials> s1 = null;
+
+		// To get the card type for a particular bank id
+		// Native SQL Query
+		String queryString = "select experts_user_name,study_materials_id_study_materials from experts_has_study_materials"
+				+ " where experts_user_name =\"" + userName + "\"";
+		// Generate Query
+		Query query = entityManager.createNativeQuery(queryString, ExpertsHasStudyMaterials.class);
+		// Map result set to list of Objects
+		s1 = (ArrayList<ExpertsHasStudyMaterials>) query.getResultList();
+
+		return s1;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMAterialWithUsernameAndCouseId(String id,String userName) {
+		ArrayList<ExpertsHasStudyMaterials> s1 = null;
+
+		// To get the card type for a particular bank id
+		// Native SQL Query
+		String queryString = "select ehs.experts_user_name,ehs.study_materials_id_study_materials"
+				+ "  from experts_has_study_materials ehs inner join courses c inner join study_materials sm "
+				+ " on ehs.study_materials_id_study_materials = sm.id_study_materials"
+				+ "  and sm.courses_id_course = c.id_course "
+				+ "  and ehs.experts_user_name = \""+userName+"\"  and c.course_name=\""+id+"\"";
+		// Generate Query
+		Query query = entityManager.createNativeQuery(queryString, ExpertsHasStudyMaterials.class);
+		// Map result set to list of Objects
+		s1 = (ArrayList<ExpertsHasStudyMaterials>) query.getResultList();
+
+		return s1;
 	}
 
 }

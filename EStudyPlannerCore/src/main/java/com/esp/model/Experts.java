@@ -10,6 +10,7 @@ public class Experts {
 	private String userName;
 	private String firstName;
 	private String lastName;
+	private String email;
 
 	private String qualification;
 	private int yearOfExperience;
@@ -63,15 +64,24 @@ public class Experts {
 		this.yearOfExperience = yearOfExperience;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public Experts() {
 	}
 
-	public Experts(String userName, String firstName, String lastName, String qualification, int yearOfExperience,
-			String password) {
-
+	public Experts(String userName, String firstName, String lastName, String email, String qualification,
+			int yearOfExperience, String password) {
+		super();
 		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.email = email;
 		this.qualification = qualification;
 		this.yearOfExperience = yearOfExperience;
 		this.password = password;

@@ -151,18 +151,25 @@
                             </div>
                             <div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion1">
                                 <div class="card-body">
-                                    <form class="needs-validation" >
-
-                                        <div class="input-group">
-                                            <select class="custom-select" id="inputminorcourse">
-                                                <option th:each="minorCourse :${minorCourses.toArray()}"  
-                                                th:text="${minorCourse.getCourseName()}">One</option>
+                                    <form class="needs-validation" th:object="${ExpertsHasCourses}" action="/ExpertsHasMinorCourses" method="post">
+										<div class="form-group">
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                           			<span class="input-group-text" id="inputGroupPrepend1">Username</span>
+                                        		</div>
+                                        		 <input type="text" class="form-control"  id="expertsUserName"
+                                        		 name="expertsUserName"
+                                                 placeholder="Username" aria-describedby="inputGroupPrepend1" 
+                                                 th:value="${username}" 
+                                        		 readonly="readonly" required="required" />
+                                    		</div>     
+                                 		</div>
+                                        <div class="form-group">
+                                            <select class="custom-select" id="coursesIdCourse" name="coursesIdCourse" >
+                                                <option th:each="minorCourse :${minorCourses.toArray()}" 
+                                                th:value="${minorCourse.getIdCourse()}" th:text="${minorCourse.getCourseName()}">One</option>
                                                
                                             </select>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" id="addminorcourse" type="button">Add</button>
-                                                <button class="btn btn-outline-secondary" id="removeminorcourse" type="button">Remove</button>
-                                            </div>
                                         </div>
 
                                         <div class="form-group" id="expertlist">
@@ -189,31 +196,36 @@
                             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion1">
                                 <div class="card-body">
 
-                                    <form class="needs-validation" >
-
-                                        <div class="input-group">
-                                            <select class="custom-select" id="selectminorcourse">
-                                                <option selected="selected">Choose...</option>
-                                                <option >One</option>
-                                                <option >Two</option>
-                                                <option >Three</option>
-                                            </select>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" id="minorcourse" type="submit">Show Material</button>
-
-                                            </div>
-                                        </div>
-                                    </form>
-
-
-                                    <form class="needs-validation" id="setstudymaterial" >
-
+                                    <form class="needs-validation" id="setstudymaterial" action="/ExpertsSuggestedMaterials" method="post">
+										<div class="form-group">
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                           			<span class="input-group-text" id="inputGroupPrepend1">Username</span>
+                                        		</div>
+                                        		 <input type="text" class="form-control"
+                                                 placeholder="Username" aria-describedby="inputGroupPrepend1" 
+                                                 th:value="${username}" name="userName"
+                                        		 readonly="readonly" required="required" />
+                                    		</div>     
+                                 		</div>
+                                 		
+                                 		<div class="form-group">
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                           			<span class="input-group-text" id="inputGroupPrepend1">Minor Course</span>
+                                        		</div>
+                                        		 <input type="text" class="form-control"
+                                                 placeholder="Minorcourse" aria-describedby="inputGroupPrepend1" 
+                                                 th:value="${courseforstudymaterial}" name="courseforstudymaterial"
+                                        		 readonly="readonly" required="required" />
+                                    		</div>     
+                                 		</div>
+                                 		
                                         <div class="input-group">
                                             <select class="custom-select" id="inputstudymaterial">
-                                                <option selected="selected">Choose...</option>
-                                                <option >One</option>
-                                                <option >Two</option>
-                                                <option >Three</option>
+                                                <option th:each="studymaterial :${studymaterials.toArray()}" 
+                                                th:value="${studymaterial.getIdStudyMaterials()}" th:text="${studymaterial.getIdStudyMaterials()}+' >> '+${studymaterial.getStudyMaterialLink()}">Choose...</option>
+    
                                             </select>
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" id="addstudymaterial" type="button">Add</button>
@@ -221,13 +233,16 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group" id="expertlist">
-                                            <label for="studymaterial">My suggested Minor Course List</label>
-                                            <ol class="list-group" id="studymaterial">
-                                                <li class="list-group-item">One</li>
-
-                                            </ol>
-                                        </div> 
+                                        <div class="form-group" id="expertlist" >
+    										<label for="exampleFormControlSelect2">My content ordered list</label>
+    										<select multiple="multiple" class="form-control" 
+    										 id="studyMaterialsList" name="studyMaterialsList">
+      											<option th:each="expertsHasStudyMaterial :${expertsHasStudyMaterials.toArray()}" 
+                                                th:value="${expertsHasStudyMaterial.getStudyMaterialsIdStudyMaterials()}" 
+                                                th:text="${expertsHasStudyMaterial.getStudyMaterialsIdStudyMaterials()}" selected="selected">1</option>
+      											
+    										</select>
+  											</div>
                                         <button class="btn btn-primary" type="submit">Save Changes</button> 
                                     </form>
                                 </div>

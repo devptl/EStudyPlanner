@@ -206,30 +206,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="validationServer03">City</label>
-                                                <input type="text" class="form-control" id="validationServer03" placeholder="City"
-                                                  th:field="*{city}" required="required"/>
-                                                <div class="invalid-feedback"> Enter the City !</div>
-                                                <div class="valid-feedback"> Looks good! </div> 
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="validationServer04">State</label>
-                                                <input type="text" class="form-control" id="validationServer04" placeholder="State"
-                                                  th:field="*{state}" required="required"/>
-                                                <div class="invalid-feedback"> Enter the State !</div>
-                                                <div class="valid-feedback"> Looks good! </div> 
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="validationServer05">Zip</label>
-                                                <input type="text" class="form-control " id="validationServer05" placeholder="ZipCode"
-                                                  th:field="*{zipCode}" required="required"/>
-                                                <div class="invalid-feedback"> Enter the Zip code!</div>
-                                                <div class="valid-feedback"> Looks good! </div> 
-                                            </div>
-                                        </div>
-
+                                       
                                         <div class="form-group">
                                             <label for="validationServer06">Field</label>
                                             <select class="custom-select" id="validationServer06"   th:field="*{field}" required="required">
@@ -242,6 +219,18 @@
                                         </div>
                                         
                                          <div class="form-group">
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                          			<span class="input-group-text" id="inputGroupPrepend2">Email ID</span>
+                                        		</div>
+                                        		<input type="text" class="form-control" id="validationServerPassword" placeholder="Email" 
+                                        		 th:field="*{email}" aria-describedby="inputGroupPrepend2" required="required"/>
+                                        		<div class="invalid-feedback"> Enter the Email !</div>
+                                      			<div class="valid-feedback"> Looks good! </div> 
+                                    		</div>     
+                                 		</div>
+                                                                              
+                                        <div class="form-group">
               								<div class="input-group">
                                     			<div class="input-group-prepend">
                                           			<span class="input-group-text" id="inputGroupPrepend2">Password</span>
@@ -319,9 +308,10 @@
                                             <label for="validationServer06">Qualification</label>
                                             <select class="custom-select" id="validationServer06"  th:field="*{qualification}" required="required">
                                                 <option value="0">Open this select menu</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                                <option value="1">Graduation</option>
+                                                <option value="2">Masters</option>
+                                                <option value="3">Docterate</option> 
+                                                <option value="4">Others</option>
                                             </select>
                                             <div class="invalid-feedback"> Not a valid course !</div>
                                             <div class="valid-feedback"> Looks good! </div> 
@@ -334,10 +324,23 @@
                                                 <option value="1">One</option>
                                                 <option value="2">Two</option>
                                                 <option value="3">Three</option>
+                                                <option value="3">Four or Four Plus</option>
                                             </select>
                                             <div class="invalid-feedback"> Not a valid course !</div>
                                             <div class="valid-feedback"> Looks good! </div> 
                                         </div>
+                                        
+                                        <div class="form-group">
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                          			<span class="input-group-text" id="inputGroupPrepend2">Email ID</span>
+                                        		</div>
+                                        		<input type="text" class="form-control" id="validationServerPassword" placeholder="Email" 
+                                        		 th:field="*{email}" aria-describedby="inputGroupPrepend2" required="required"/>
+                                        		<div class="invalid-feedback"> Enter the Email !</div>
+                                      			<div class="valid-feedback"> Looks good! </div> 
+                                    		</div>     
+                                 		</div>
 
 										<div class="form-group">
               								<div class="input-group">
@@ -350,6 +353,7 @@
                                       			<div class="valid-feedback"> Looks good! </div> 
                                     		</div>     
                                  		</div>
+                                 		
                                  		<div class="form-group">
                                         	<button type="button" id="alreadHaveAccountButton" class="btn btn-dark " data-toggle="modal" data-target="#exampleModalCenter">
                			                	 Already have an accout ? Click here !!

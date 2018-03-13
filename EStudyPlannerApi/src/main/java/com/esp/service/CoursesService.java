@@ -105,5 +105,10 @@ public class CoursesService {
 	public void saveUserAndMainCourse(StudentsHasCourses s) {
 		dtoOperation.getStudentsComponents().saveStudentsHasCourses(s);
 	}
+	
+	public Courses getCourseWithId(int id)
+	{
+		return dtoOperation.getCoursesComponents().findOneCourse(id);
+	}
 
 }
