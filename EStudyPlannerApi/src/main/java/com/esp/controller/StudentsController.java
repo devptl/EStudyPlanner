@@ -69,7 +69,7 @@ public class StudentsController {
 			String emailId=student.getEmail();
 			String subject="Thanku "+student.getFirstName()+" for registration";
 			String messege="We are very thankfull for your support your"
-					+ " can now set your set your schedule and proceed with your studies ";
+					+ " can now set your schedule and proceed with your studies ";
 			try {
 	
 			sMTPMailSender.send(emailId, subject, messege);

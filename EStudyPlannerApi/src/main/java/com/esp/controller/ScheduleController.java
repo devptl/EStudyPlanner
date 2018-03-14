@@ -11,24 +11,41 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.esp.model.Courses;
 import com.esp.model.Schedule;
 import com.esp.model.StudentsHasCourses;
+import com.esp.model.StudentsHasExperts;
 import com.esp.model.StudyMaterials;
 import com.esp.service.ScheduleService;
+import com.esp.service.StudentsService;
 import com.esp.service.StudyMaterialsService;
 
 @Controller
 @SessionAttributes({"username", "schedule","message","mainCourses",
-	"minorCourses","allExperts","courseforstudymaterial",
+	"minorCourses","allExperts","courseforstudymaterial","minorCourse","studyMaterials",
 	"shbutton1","shbutton2","shbutton3","shbutton4","shdiv1","shdiv2","shdiv3","shdiv4"})
 public class ScheduleController {
 
 	@Autowired
 	private ScheduleService scheduleService;
 	
-	
 	@Autowired
 	private StudyMaterialsService studyMaterialsService;
+	
+	@Autowired
+	private StudentsService studentsService;
+	
+	
+	/**
+	 * To set the intial display of Courses page
+	 * 
+	 * @return {@link Courses.html}
+	 */
+	@RequestMapping(value = "/StudyMaterials", method = RequestMethod.GET)
+	public String coursesDisplay() {
+		return "Courses";
+	}
+	
 	
 	/**
 	 * To set the initial display of scheduler page
@@ -89,13 +106,25 @@ public class ScheduleController {
 	@RequestMapping(value = "/showStudyMaterials", method = RequestMethod.POST)
 	public String showStudyMaterials(@ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses,
+			@RequestParam String studentsUserName,
 			@RequestParam String courseforstudymaterial,
 			@RequestParam String expertsUserName,ModelMap model) {
 		
-		ArrayList<StudyMaterials> s1=
-				studyMaterialsService.showStudyMaterialsByUserNameAndCourseId(courseforstudymaterial, expertsUserName);
-
+		ArrayList<StudyMaterials> s1;
+		StudentsHasExperts se=new StudentsHasExperts(studentsUserName,expertsUserName);
 		
+		if(expertsUserName.equals("default"))
+		{
+		  s1=studyMaterialsService.showStudyMaterialsByCourseName(courseforstudymaterial);
+		}
+		else
+		{
+		  s1=studyMaterialsService.showStudyMaterialsByUserNameAndCourseId(courseforstudymaterial, expertsUserName);
+		}
+		
+		studentsService.saveStudentsHasExperts(se);
+		
+		model.addAttribute("minorCourse", courseforstudymaterial);
 		model.addAttribute("studyMaterials",s1);
 		
 		return "Courses";

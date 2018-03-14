@@ -21,7 +21,6 @@ public class DtoOperation {
 	@Autowired
 	private ExpertsComponents expertsComponents;
 	
-
 	@Autowired
 	private StudyMaterialsComponents studyMaterialsComponents;
 	

@@ -175,6 +175,40 @@ public class ExpertsService {
 	}
 	
 	
+	public Experts findExpertByUsername(String userName)
+	{
+		return dtoOperation.getExpertsComponents().findOneExpert(userName);
+	}
+	
+	/**
+	 * To find the expert with particular username
+	 * @param userName
+	 * @return
+	 */
+	public Experts findOneExpert(String userName,String email) {
+		Experts e1=null;
+		
+		if(dtoOperation.getExpertsComponents().findOneExpert(userName).getEmail().equals(email))
+		{
+		e1=dtoOperation.getExpertsComponents().findOneExpert(userName);	
+		}
+		
+		return e1;
+	}
+	
+	public Experts changeTheExpertPassword(String userName,String oldPassword,String newPassword) {
+		Experts e1=null;
+		
+		if(dtoOperation.getExpertsComponents().findOneExpert(userName).getPassword().equals(oldPassword))
+		{
+		e1=dtoOperation.getExpertsComponents().findOneExpert(userName);
+		e1.setPassword(newPassword);
+		dtoOperation.getExpertsComponents().saveExpert(e1);
+		}
+		
+		return e1;
+	}
+	
 	
 	
 	

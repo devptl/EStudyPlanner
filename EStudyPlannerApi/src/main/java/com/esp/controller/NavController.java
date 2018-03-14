@@ -6,14 +6,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
 import com.esp.model.Students;
 import com.esp.service.Initialiser;
 
 @Controller
+@SessionAttributes({"fieldCourses","msg"})
 public class NavController {
 
 	@Autowired
@@ -34,14 +35,5 @@ public class NavController {
 	}
 
 
-	/**
-	 * To set the intial display of Courses page
-	 * 
-	 * @return {@link Courses.html}
-	 */
-	@RequestMapping(value = "/Courses", method = RequestMethod.GET)
-	public String coursesDisplay() {
-		return "Courses";
-	}
 
 }

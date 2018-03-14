@@ -13,6 +13,7 @@ import com.esp.model.LoggedUser;
 import com.esp.model.Schedule;
 import com.esp.model.Students;
 import com.esp.model.StudentsHasCourses;
+import com.esp.model.StudentsHasExperts;
 
 @Service
 public class StudentsService {
@@ -108,13 +109,57 @@ public class StudentsService {
 	}
 	
 	
+	
+	public Students findStudentByUsername(String userName) {
+	return dtoOperation.getStudentsComponents().findOneStudent(userName);
+	}
+		
+	
 	/**
-	 * To save the user with the courses in join table
+	 * To find a student with particular username
+	 * @param userName
+	 * @return {@link Students}
+	 */
+	public Students findOneStudent(String userName,String email) {
+		Students s1=null;
+		
+		if(dtoOperation.getStudentsComponents().findOneStudent(userName).getEmail().equals(email))
+		{
+			s1=dtoOperation.getStudentsComponents().findOneStudent(userName);
+		}
+		
+		return s1;
+	}
+	
+	public Students changeTheStudentPassword(String userName,String oldPassword,String newPassword) {
+		Students s1=null;
+		
+		if(dtoOperation.getStudentsComponents().findOneStudent(userName).getPassword().equals(oldPassword))
+		{
+			s1=dtoOperation.getStudentsComponents().findOneStudent(userName);
+			s1.setPassword(newPassword);
+			dtoOperation.getStudentsComponents().saveStudent(s1);
+		}
+		
+		return s1;
+	}
+	
+	
+	/**
+	 * To save the student with the courses in join table
 	 * 
 	 * @param s
 	 */
 	public void saveStudentsAndMinorCourse(StudentsHasCourses s) {
 		dtoOperation.getStudentsComponents().saveStudentsHasCourses(s);
+	}
+	
+	/**
+	 * To save the student that has experts in join table
+	 * @param se
+	 */
+	public void saveStudentsHasExperts(StudentsHasExperts se) {
+		dtoOperation.getStudentsComponents().saveStudentsHasExperts(se);
 	}
 
 }

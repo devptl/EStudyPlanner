@@ -47,7 +47,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Reports</a>
+                            <a class="nav-link disabled" href="#">Study Materials</a>
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
@@ -221,8 +221,9 @@
                                     		</div>     
                                  		</div>
 										
-										<div class="input-group">
-                                            <select class="custom-select" id="minorcourse" th:field="*{coursesIdCourse}">
+										<div class="form-group">
+                                            <label for="validationServer03">Select the Minor Course</label>
+                                            <select class="custom-select" id="validationServer03"  th:field="*{coursesIdCourse}" required="required">
                                                 <option th:each="minorCourse :${minorCourses.toArray()}" 
                                                 th:value="${minorCourse.getIdCourse()}" th:text="${minorCourse.getCourseName()}">Choose...</option>
     
@@ -277,7 +278,7 @@
                                         <div class="form-group">
                                             <label for="validationServer01">Select your Expert</label>
                                             <select class="custom-select" id="validationServer01" name="expertsUserName" required="required">
-                                                <option value="0">I am my expert</option>
+                                                <option value="default">I am my expert</option>
                                                 <option th:each="allExpert :${allExperts.toArray()}"  
                                                 th:value="${allExpert.getUserName()}" th:text="${allExpert.getFirstName()}">One</option>
                                                 

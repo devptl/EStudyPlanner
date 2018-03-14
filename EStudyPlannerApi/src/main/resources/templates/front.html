@@ -47,13 +47,13 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Reports</a>
+                            <a class="nav-link disabled" href="#">Study Materials</a>
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
                         <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
-                        <button type="button" id="loginButton" class="btn btn-dark my-2 my-sm-0" data-toggle="modal" data-target="#exampleModalCenter">
+                        <button type="button" id="loginButton" class="btn btn-dark my-2 my-sm-0" data-toggle="modal" data-target="#exampleModalCenter1">
                			LogIn
            				</button>
                     </form>
@@ -98,13 +98,15 @@
                 <p class="lead">Want to learn something new then register here . Experts can also give their valuable time just register once and then u can 
                 your important feeds . Student can select their field and can get the study material . They can see the experts advice for the study material 
                 in their respective fields </p>
+                
+                <p id="schedulermessage" th:text="${msg}"></p>
                 <hr class="my-4"/>
                 
                 
             
 
-            	<!-- Modal -->
-            	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            	<!-- Modal for Login -->
+            	<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 	<div class="modal-dialog modal-dialog-centered" role="document">
                     	<div class="modal-content" id="modalcontent">
                         	<div class="modal-header">
@@ -153,12 +155,154 @@
                                             <div class="valid-feedback"> Looks good! </div> 
                                   	</div>     
                                  </div>
+                                 <div class="form-group">
+                                        	<button type="button" id="alreadHaveAccountButton" class="btn btn-dark " data-toggle="modal" data-target="#exampleModalCenter2">
+               			                	 Forgot the Password ? Click here !!
+           				                	</button>
+           				         </div>
+           				         <div class="form-group">
+                                        	<button type="button" id="alreadHaveAccountButton" class="btn btn-dark " data-toggle="modal" data-target="#exampleModalCenter3">
+               			                	 Change the password ? Click here !!
+           				                	</button>
+           				         </div>     
                                  <hr class="my-4"/>
                             	 <button type="submit" class="btn btn-primary">Submit</button>
                             	 <button type="reset" class="btn btn-primary">Reset</button>
                         	  </form>
                      		</div>
                    		</div>
+                   	</div>
+                  </div>
+                   		
+                   		
+                 <!-- Forgot the password modal -->
+                 <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                	<div class="modal-dialog modal-dialog-centered" role="document">
+                    	<div class="modal-content" id="modalcontent">
+                        	<div class="modal-header">
+                           		<h5 class="modal-title" id="exampleModalLongTitle">Forgot the Password</h5>
+                            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                	<span aria-hidden="true">&times;</span>
+                            	</button>
+                        	</div>
+                        	<div class="modal-body">
+                        	  <form class="needs-validation" action="/forgotThePassword" method="post">
+                        	  	<div class="form-group">
+              						<div class="input-group">
+                                    	<div class="input-group-prepend">
+                                           <span class="input-group-text" id="inputGroupPrepend1">Username</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="validationServerUsername" 
+                                        placeholder="Username" aria-describedby="inputGroupPrepend1" 
+                                        name="userName" required="required"/>
+                                        <div class="invalid-feedback"> Enter the Username !</div>
+                                      	<div class="valid-feedback"> Looks good! </div> 
+                                    </div>     
+                                 </div>
+                                 <div class="form-group">
+              						<div class="input-group">
+                                    	<div class="input-group-prepend">
+                                           <span class="input-group-text" id="inputGroupPrepend2">Email</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="validationServerPassword" 
+                                        placeholder="Email" aria-describedby="inputGroupPrepend2"
+                                        name="email" required="required"/>
+                                        <div class="invalid-feedback"> Enter the Password !</div>
+                                      	<div class="valid-feedback"> Looks good! </div> 
+                                    </div>     
+                                 </div>
+                                  <div class="form-group">
+              						<div class="input-group">
+                                    	<div class="input-group-prepend">
+                                           <span class="input-group-text" id="inputGroupPrepend3">Select Role</span>
+                                        </div>
+                                            <select class="custom-select" aria-describedby="inputGroupPrepend3"
+                                            name="role" id="validationServer07" required="required">
+                                                <option value="1">Student</option>
+                                                <option value="2">Expert</option>
+                                            </select>
+                                            <div class="invalid-feedback"> Not a valid course !</div>
+                                            <div class="valid-feedback"> Looks good! </div> 
+                                  	</div>     
+                                 </div>
+                                 <hr class="my-4"/>
+                            	 <button type="submit" class="btn btn-primary">Submit</button>
+                            	 <button type="reset" class="btn btn-primary">Reset</button>
+                        	  </form>
+                     		</div>
+                   		</div>
+                   	</div>
+                  </div>
+                   		
+                   		
+                  <!-- Change the password modal -->
+                  <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                		<div class="modal-dialog modal-dialog-centered" role="document">
+                    		<div class="modal-content" id="modalcontent">
+                        		<div class="modal-header">
+                           				<h5 class="modal-title" id="exampleModalLongTitle">Change the Password</h5>
+                            			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                		<span aria-hidden="true">&times;</span>
+                            			</button>
+                        			</div>
+                        	<div class="modal-body">
+                        	  <form class="needs-validation" action="/changeThePassword" method="post">
+                        	  	<div class="form-group">
+              						<div class="input-group">
+                                    	<div class="input-group-prepend">
+                                           <span class="input-group-text" id="inputGroupPrepend1">Username</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="validationServerUsername" 
+                                        placeholder="Username" aria-describedby="inputGroupPrepend1" 
+                                        name="userName" required="required"/>
+                                        <div class="invalid-feedback"> Enter the Username !</div>
+                                      	<div class="valid-feedback"> Looks good! </div> 
+                                    </div>     
+                                 </div>
+                                 <div class="form-group">
+              						<div class="input-group">
+                                    	<div class="input-group-prepend">
+                                           <span class="input-group-text" id="inputGroupPrepend2">Old Password</span>
+                                        </div>
+                                        <input type="password" class="form-control" id="validationServerPassword" 
+                                        placeholder="Old Password" aria-describedby="inputGroupPrepend2"
+                                        name="oldPassword" required="required"/>
+                                        <div class="invalid-feedback"> Enter the Password !</div>
+                                      	<div class="valid-feedback"> Looks good! </div> 
+                                    </div>     
+                                 </div>
+                                 <div class="form-group">
+              						<div class="input-group">
+                                    	<div class="input-group-prepend">
+                                           <span class="input-group-text" id="inputGroupPrepend2">New Password</span>
+                                        </div>
+                                        <input type="password" class="form-control" id="validationServerPassword" 
+                                        placeholder="New Password" aria-describedby="inputGroupPrepend2"
+                                        name="newPassword" required="required"/>
+                                        <div class="invalid-feedback"> Enter the Password !</div>
+                                      	<div class="valid-feedback"> Looks good! </div> 
+                                    </div>     
+                                 </div>
+                                  <div class="form-group">
+              						<div class="input-group">
+                                    	<div class="input-group-prepend">
+                                           <span class="input-group-text" id="inputGroupPrepend3">Select Role</span>
+                                        </div>
+                                            <select class="custom-select" aria-describedby="inputGroupPrepend3"
+                                             name="role" id="validationServer07" required="required">
+                                                <option value="1">Student</option>
+                                                <option value="2">Expert</option>
+                                            </select>
+                                            <div class="invalid-feedback"> Not a valid course !</div>
+                                            <div class="valid-feedback"> Looks good! </div> 
+                                  	</div>     
+                                 </div>
+                                 <hr class="my-4"/>
+                            	 <button type="submit" class="btn btn-primary">Submit</button>
+                            	 <button type="reset" class="btn btn-primary">Reset</button>
+                        	  </form>
+                     		</div>
+                   		</div>	
                 	</div>
             	</div>
                 
@@ -243,7 +387,7 @@
                                  		</div>
                                         
                                         <div class="form-group">
-                                        	<button type="button" id="alreadHaveAccountButton" class="btn btn-dark " data-toggle="modal" data-target="#exampleModalCenter">
+                                        	<button type="button" id="alreadHaveAccountButton" class="btn btn-dark " data-toggle="modal" data-target="#exampleModalCenter1">
                			                	 Already have an accout ? Click here !!
            				                	</button>
            				                </div>

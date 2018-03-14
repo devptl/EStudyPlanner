@@ -35,6 +35,10 @@ public class Initialiser {
 		ArrayList<Courses> fieldCourses = null;
 		fieldCourses = coursesService.fieldCourses();
 		model.addAttribute("fieldCourses", fieldCourses);
+		
+		String msg="";
+		model.addAttribute("msg", msg);
+		
 
 	}
 

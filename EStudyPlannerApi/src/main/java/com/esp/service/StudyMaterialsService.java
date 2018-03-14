@@ -41,6 +41,26 @@ public class StudyMaterialsService {
 		return s1;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ArrayList<StudyMaterials> showStudyMaterialsByCourseName(String minorCourseName) {
+		ArrayList<StudyMaterials> s1 = null;
+
+		// To get the card type for a particular bank id
+		// Native SQL Query
+		String queryString = "select s.id_study_materials,s.study_material_link,s.courses_id_course"
+				+ " from study_materials s inner join courses c "
+				+ "on s.courses_id_course=c.id_course "
+				+ "and c.course_name =\""+minorCourseName+"\""; 
+		// Generate Query
+		Query query = entityManager.createNativeQuery(queryString, StudyMaterials.class);
+		// Map result set to list of Objects
+		s1 = (ArrayList<StudyMaterials>) query.getResultList();
+
+		return s1;
+	}
+	
+	
+	
 	
 
 	public ArrayList<StudyMaterials> showStudyMaterialsByUserNameAndCourseId( String courseforstudymaterial,String expertsUserName) {
