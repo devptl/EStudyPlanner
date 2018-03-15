@@ -29,7 +29,7 @@ public class StudyMaterialsService {
 	public ArrayList<StudyMaterials> showStudyMaterialsByCourseid(int minorCourseId) {
 		ArrayList<StudyMaterials> s1 = null;
 
-		// To get the card type for a particular bank id
+		// To get the study material with the particular course id
 		// Native SQL Query
 		String queryString = "select * from study_materials"
 				+ " where courses_id_course = "+ minorCourseId;
@@ -45,7 +45,7 @@ public class StudyMaterialsService {
 	public ArrayList<StudyMaterials> showStudyMaterialsByCourseName(String minorCourseName) {
 		ArrayList<StudyMaterials> s1 = null;
 
-		// To get the card type for a particular bank id
+		// To get the study material with particular course name 
 		// Native SQL Query
 		String queryString = "select s.id_study_materials,s.study_material_link,s.courses_id_course"
 				+ " from study_materials s inner join courses c "
@@ -60,22 +60,31 @@ public class StudyMaterialsService {
 	}
 	
 	
-	
-	
-
+	/**
+	 * To get the study materials list with expert name
+	 * and the course name
+	 * @param courseforstudymaterial
+	 * @param expertsUserName
+	 * @return
+	 */
 	public ArrayList<StudyMaterials> showStudyMaterialsByUserNameAndCourseId( String courseforstudymaterial,String expertsUserName) {
 		ArrayList<StudyMaterials> s1 = new ArrayList<StudyMaterials>();
 		
+		//getting the list
 		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials
 		=expertsService.expertsHasStudyMAterialWithUsernameAndCouseId(courseforstudymaterial, expertsUserName);
 		
+		//setting the list to return to controller
 		expertsHasStudyMaterials.forEach(x->s1.add(dtoOperation.getStudyMaterialsComponents().findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
 
 		return s1;
 	}
 	
 	
-	
+	/**
+	 * To list all the available study materials
+	 * @return
+	 */
 	public ArrayList<StudyMaterials> allStudyMaterials()
 	{
 		return dtoOperation.getStudyMaterialsComponents().allStudyMaterials();

@@ -31,6 +31,8 @@ public class ScheduleService {
 	 * @return
 	 */
 	public int[] checkSchedule(Schedule schedule) {
+
+		// difference of the timmings
 		int[] diff = new int[3];
 
 		diff[0] = differnceOfTime(schedule.getSlotOneIn(), schedule.getSlotOneOut());

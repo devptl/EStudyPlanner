@@ -26,22 +26,20 @@ import com.esp.service.Initialiser;
 import com.esp.service.SMTPMailSender;
 import com.esp.service.StudyMaterialsService;
 
-
 @Controller
-@SessionAttributes({ "username", "fieldCourses", "mainCourses",
-	"minorCourses","studymaterials","expertsHasStudyMaterials",
-	"button1","button2","button3","div1","div2","div3"})
+@SessionAttributes({ "username", "fieldCourses", "mainCourses", "minorCourses", "studymaterials",
+		"expertsHasStudyMaterials", "button1", "button2", "button3", "div1", "div2", "div3" })
 public class ExpertsController {
 
-	@Autowired 
-	private SMTPMailSender sMTPMailSender;  
+	@Autowired
+	private SMTPMailSender sMTPMailSender;
 
 	@Autowired
 	private CoursesService coursesService;
 
 	@Autowired
 	private ExpertsService expertsService;
-		
+
 	@Autowired
 	private Initialiser initialiser;
 
@@ -59,7 +57,7 @@ public class ExpertsController {
 	@RequestMapping(value = "/Experts", method = RequestMethod.GET)
 	public String expertDisplay(@ModelAttribute("Courses") Courses mainCourse, ModelMap model) {
 
-		initialiser.expertInitialiser("sanket",model);
+		initialiser.expertInitialiser("sanket", model);
 		return "Experts";
 	}
 
@@ -93,11 +91,11 @@ public class ExpertsController {
 
 		// inital list of major courses
 		model.addAttribute("mainCourses", mainCourses);
-		
-		//initialise the togglers
+
+		// initialise the togglers
 		model.addAttribute("button1", "btn btn-link collapsed");
 		model.addAttribute("div1", "collapse ");
-			
+
 		model.addAttribute("button2", "btn btn-link");
 		model.addAttribute("div2", "collapse show");
 
@@ -118,31 +116,29 @@ public class ExpertsController {
 
 		expertsService.expertHasCourses(expertsHasCourses);
 		int id = expertsHasCourses.getCoursesIdCourse();
-		String userName=expertsHasCourses.getExpertsUserName();
-		
-		
-		//initalise the couseForStudyMaterial
-		String courseForStudyMaterial=coursesService.getCourseWithId(id).getCourseName();
-		model.addAttribute("courseforstudymaterial",courseForStudyMaterial);
-		
-		
-		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials
-		=expertsService.expertsHasStudyMAterialWithUsernameAndCouseId(courseForStudyMaterial, userName);
-	   //initialse the suggested list			
+		String userName = expertsHasCourses.getExpertsUserName();
+
+		// initalise the couseForStudyMaterial
+		String courseForStudyMaterial = coursesService.getCourseWithId(id).getCourseName();
+		model.addAttribute("courseforstudymaterial", courseForStudyMaterial);
+
+		// initialise the suggested list if already present
+		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials = expertsService
+				.expertsHasStudyMAterialWithUsernameAndCouseId(courseForStudyMaterial, userName);
+
+		// initialse the suggested list
 		model.addAttribute("expertsHasStudyMaterials", expertsHasStudyMaterials);
-		
 
 		ArrayList<StudyMaterials> studyMaterials = studyMaterialsService.showStudyMaterialsByCourseid(id);
 
 		initialiser.expertInitialiserWithParameters(studyMaterials, model);
-		
-		//initialise the togglers
+
+		// initialise the togglers
 		model.addAttribute("button2", "btn btn-link collapsed");
 		model.addAttribute("div2", "collapse ");
-					
+
 		model.addAttribute("button3", "btn btn-link");
 		model.addAttribute("div3", "collapse show");
-		
 
 		return "Experts";
 	}
@@ -155,40 +151,37 @@ public class ExpertsController {
 	 * @param loggedUser
 	 * @param model
 	 * @return {@link Experts.html}
-	 * @throws MessagingException 
+	 * @throws MessagingException
 	 */
 	@RequestMapping(value = "/expertsRegistration", method = RequestMethod.POST)
 	public String expertRegistrationController(@ModelAttribute("Courses") Courses mainCourse,
-			@ModelAttribute("Experts") Experts expert,
-			@ModelAttribute("Students") Students student,
-			@ModelAttribute("LoggedUser") LoggedUser loggedUser,
-			ModelMap model) {
+			@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
+			@ModelAttribute("LoggedUser") LoggedUser loggedUser, ModelMap model) {
 
 		if (expertsService.expertsRegistration(expert)) {
 
-
 			String userName = loggedUser.getUserName();
 			// initalise the username
-			initialiser.expertInitialiser(userName,model);
-			
-			String emailId=expert.getEmail();
-			String subject="Thanku Expert "+expert.getFirstName()+" for registration";
-			String messege="We are very thankfull for your support your"
+			initialiser.expertInitialiser(userName, model);
+
+			// sending the mail on registration
+			String emailId = expert.getEmail();
+			String subject = "Thanku Expert " + expert.getFirstName() + " for registration";
+			String messege = "We are very thankfull for your support your"
 					+ " can now set the study material and provide your valuable feeds to us ";
 
 			try {
-			sMTPMailSender.send(emailId, subject, messege);
-			}
-			catch(Exception e)
-			{
+				sMTPMailSender.send(emailId, subject, messege);
+			} catch (Exception e) {
 				System.out.println("network problem");
 			}
-			
-			
-			model.addAttribute("username", userName);
 
+			model.addAttribute("username", userName);
 			return "Experts";
 		} else {
+
+			// on invalid registration when expert already exist with username
+			model.addAttribute("msg", "expert with same username alredy exist");
 			initialiser.frontInitialiser(model);
 			return "front";
 		}
@@ -207,24 +200,22 @@ public class ExpertsController {
 	 */
 	@RequestMapping(value = "/ExpertsSuggestedMaterials", method = RequestMethod.POST)
 	public String expertsSuggestedMaterials(@ModelAttribute("Courses") Courses mainCourse,
-			@ModelAttribute("Experts") Experts expert,
-			@ModelAttribute("Students") Students student,
-			@ModelAttribute("LoggedUser") LoggedUser loggedUser,
-			@RequestParam String studyMaterialsList,
-			@RequestParam String userName,
-			@RequestParam String courseforstudymaterial,
-		 ModelMap model) {
+			@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
+			@ModelAttribute("LoggedUser") LoggedUser loggedUser, @RequestParam String studyMaterialsList,
+			@RequestParam String userName, @RequestParam String courseforstudymaterial, ModelMap model) {
 
-		 String [] studyMaterialId=studyMaterialsList.split(",");     		 
-		 
-		 expertsService.expertsHasStudyMAterials(courseforstudymaterial,studyMaterialId, userName);
-		 
-		 ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials
-			=expertsService.expertsHasStudyMAterialWithUsernameAndCouseId(courseforstudymaterial, userName);
-		 //initialse the suggested list			
-			model.addAttribute("expertsHasStudyMaterials", expertsHasStudyMaterials);
-		
-		 
+		String[] studyMaterialId = studyMaterialsList.split(",");
+
+		// to save the list of study material suggested by expert
+		expertsService.expertsHasStudyMAterials(courseforstudymaterial, studyMaterialId, userName);
+
+		// to get the list of studyy material for display
+		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials = expertsService
+				.expertsHasStudyMAterialWithUsernameAndCouseId(courseforstudymaterial, userName);
+
+		// initialse the suggested list
+		model.addAttribute("expertsHasStudyMaterials", expertsHasStudyMaterials);
+
 		return "Experts";
 
 	}

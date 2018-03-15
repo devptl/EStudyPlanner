@@ -41,7 +41,7 @@ public class CoursesService {
 	public ArrayList<Courses> fieldCourses() {
 		ArrayList<Courses> s1 = null;
 
-		// To get the card type for a particular bank id
+		// To get the field courses list
 		// Native SQL Query
 		String queryString = "select id_course,course_name,course_duration,parent_course_id from courses"
 				+ " where parent_course_id = 0";
@@ -62,7 +62,7 @@ public class CoursesService {
 	public ArrayList<Courses> mainCourses() {
 		ArrayList<Courses> s1 = null;
 
-		// To get the card type for a particular bank id
+		// To get the major courses list
 		// Native SQL Query
 		String queryString = "select id_course,course_name,course_duration,parent_course_id from courses "
 				+ "where parent_course_id > 0 and parent_course_id < 10 ";
@@ -84,7 +84,7 @@ public class CoursesService {
 	public ArrayList<Courses> mainCoursesById(int id) {
 		ArrayList<Courses> s1 = null;
 
-		// To get the card type for a particular bank id
+		// To get the course list with particular parent id
 		// Native SQL Query
 		String queryString = "select id_course,course_name,course_duration,parent_course_id from courses "
 				+ "where parent_course_id = " + id;
@@ -98,11 +98,11 @@ public class CoursesService {
 
 	/**
 	 * To get the courses with particualarr id
+	 * 
 	 * @param id
 	 * @return {@link Courses}
 	 */
-	public Courses getCourseWithId(int id)
-	{
+	public Courses getCourseWithId(int id) {
 		return dtoOperation.getCoursesComponents().findOneCourse(id);
 	}
 

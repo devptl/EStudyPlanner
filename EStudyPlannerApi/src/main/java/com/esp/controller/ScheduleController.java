@@ -21,21 +21,20 @@ import com.esp.service.StudentsService;
 import com.esp.service.StudyMaterialsService;
 
 @Controller
-@SessionAttributes({"username", "schedule","message","mainCourses",
-	"minorCourses","allExperts","courseforstudymaterial","minorCourse","studyMaterials",
-	"shbutton1","shbutton2","shbutton3","shbutton4","shdiv1","shdiv2","shdiv3","shdiv4"})
+@SessionAttributes({ "username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
+		"courseforstudymaterial", "minorCourse", "studyMaterials", "shbutton1", "shbutton2", "shbutton3", "shbutton4",
+		"shdiv1", "shdiv2", "shdiv3", "shdiv4" })
 public class ScheduleController {
 
 	@Autowired
 	private ScheduleService scheduleService;
-	
+
 	@Autowired
 	private StudyMaterialsService studyMaterialsService;
-	
+
 	@Autowired
 	private StudentsService studentsService;
-	
-	
+
 	/**
 	 * To set the intial display of Courses page
 	 * 
@@ -45,8 +44,7 @@ public class ScheduleController {
 	public String coursesDisplay() {
 		return "Courses";
 	}
-	
-	
+
 	/**
 	 * To set the initial display of scheduler page
 	 * 
@@ -58,8 +56,6 @@ public class ScheduleController {
 
 		return "Scheduler";
 	}
-
-	
 
 	/**
 	 * To save the schedule when particular save has to be their
@@ -73,29 +69,31 @@ public class ScheduleController {
 	public String scheduleEntry(@ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
 
-		//checking the difference of timings 
+		// checking the difference of timings
 		int diff[] = scheduleService.checkSchedule(schedule);
-		
-		//if any of the time difference is less than zero
-		//schedule wouldn't be saved or updated
+
+		// if any of the time difference is less than zero
+		// schedule wouldn't be saved or updated
 		if (diff[0] > 0 && diff[1] > 0 && diff[2] > 0) {
 			scheduleService.saveSchedule(schedule, model);
 		} else {
 			scheduleService.dontSaveSchedule(schedule, model);
 		}
-		
+
+		// setting the togglers
 		model.addAttribute("shbutton1", "btn btn-link collapsed");
 		model.addAttribute("shdiv1", "collapse");
-			
+
 		model.addAttribute("shbutton2", "btn btn-link");
 		model.addAttribute("shdiv2", "collapse show");
 
 		return "Scheduler";
 
 	}
-	
+
 	/**
 	 * To Show the study material to the student
+	 * 
 	 * @param schedule
 	 * @param studentsHasCourses
 	 * @param courseforstudymaterial
@@ -106,31 +104,30 @@ public class ScheduleController {
 	@RequestMapping(value = "/showStudyMaterials", method = RequestMethod.POST)
 	public String showStudyMaterials(@ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses,
-			@RequestParam String studentsUserName,
-			@RequestParam String courseforstudymaterial,
-			@RequestParam String expertsUserName,ModelMap model) {
-		
+			@RequestParam String studentsUserName, @RequestParam String courseforstudymaterial,
+			@RequestParam String expertsUserName, ModelMap model) {
+
+		// initialising the study material for display
 		ArrayList<StudyMaterials> s1;
-		StudentsHasExperts se=new StudentsHasExperts(studentsUserName,expertsUserName);
-		
-		if(expertsUserName.equals("default"))
-		{
-		  s1=studyMaterialsService.showStudyMaterialsByCourseName(courseforstudymaterial);
+		StudentsHasExperts se = new StudentsHasExperts(studentsUserName, expertsUserName);
+
+		if (expertsUserName.equals("default")) {
+			// if the student select i m my expert
+			s1 = studyMaterialsService.showStudyMaterialsByCourseName(courseforstudymaterial);
+		} else {
+			// if the student select some other expert
+			s1 = studyMaterialsService.showStudyMaterialsByUserNameAndCourseId(courseforstudymaterial, expertsUserName);
 		}
-		else
-		{
-		  s1=studyMaterialsService.showStudyMaterialsByUserNameAndCourseId(courseforstudymaterial, expertsUserName);
-		}
-		
+
+		// saving the experts with student in student has experts
 		studentsService.saveStudentsHasExperts(se);
-		
+
+		// setting the maincourse and study material for display
 		model.addAttribute("minorCourse", courseforstudymaterial);
-		model.addAttribute("studyMaterials",s1);
-		
+		model.addAttribute("studyMaterials", s1);
+
 		return "Courses";
 
 	}
-	
 
-	
 }

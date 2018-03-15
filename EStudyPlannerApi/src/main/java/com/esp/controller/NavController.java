@@ -14,7 +14,7 @@ import com.esp.model.Students;
 import com.esp.service.Initialiser;
 
 @Controller
-@SessionAttributes({"fieldCourses","msg"})
+@SessionAttributes({ "fieldCourses", "msg" })
 public class NavController {
 
 	@Autowired
@@ -30,10 +30,9 @@ public class NavController {
 	public String homeDisplay(@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
 			@ModelAttribute("LoggedUser") LoggedUser loggedUser, ModelMap model) {
 
+		// setting the initial display for front page
 		initialiser.frontInitialiser(model);
 		return "front";
 	}
-
-
 
 }
