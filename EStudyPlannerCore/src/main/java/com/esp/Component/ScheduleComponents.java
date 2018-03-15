@@ -1,5 +1,7 @@
 package com.esp.Component;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,15 @@ public class ScheduleComponents {
 	 */
 	public Schedule findOneSchedule(String id) {
 		return scheduleRepository.findOne(id); 
+	}
+	
+	/**
+	 * To get the all the schedules 
+	 * @return {@link Schedule}
+	 */
+	public ArrayList<Schedule> allSchedule()
+	{
+		return (ArrayList<Schedule>) scheduleRepository.findAll();
 	}
 	
 	/**

@@ -6,12 +6,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
 import com.esp.model.Students;
 import com.esp.service.Initialiser;
+import com.esp.service.SetTimer;
 
 @Controller
 @SessionAttributes({ "fieldCourses", "msg" })
@@ -19,6 +21,9 @@ public class NavController {
 
 	@Autowired
 	private Initialiser initialiser;
+	
+	@Autowired
+	private SetTimer setTimer;
 
 	/**
 	 * To set the front.html as home page
@@ -29,10 +34,28 @@ public class NavController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homeDisplay(@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
 			@ModelAttribute("LoggedUser") LoggedUser loggedUser, ModelMap model) {
+		
+		
 
 		// setting the initial display for front page
 		initialiser.frontInitialiser(model);
 		return "front";
 	}
+	
+	@RequestMapping(value = "/timer", method = RequestMethod.GET)
+	@ResponseBody
+	public String startTimer()
+	{
+		try {
+		//setTimer.runScheduler();
+		}
+		catch(Exception e)
+		{
+			System.out.println("the thread exception");
+		}
+		
+		return "timer not has started";
+	}
+	
 
 }
