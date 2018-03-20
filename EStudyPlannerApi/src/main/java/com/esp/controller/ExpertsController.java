@@ -27,8 +27,9 @@ import com.esp.service.SMTPMailSender;
 import com.esp.service.StudyMaterialsService;
 
 @Controller
-@SessionAttributes({ "username", "fieldCourses", "mainCourses", "minorCourses", "studymaterials",
-		"expertsHasStudyMaterials", "button1", "button2", "button3", "div1", "div2", "div3" })
+@SessionAttributes({ "vediolink","username", "fieldCourses", "mainCourses", "minorCourses", "studymaterials",
+		"expertGivenStudyMaterials", "addStudyMaterialMessage", "button1", "button2", "button3", "button4", "div1",
+		"div2", "div3", "div4" })
 public class ExpertsController {
 
 	@Autowired
@@ -126,12 +127,18 @@ public class ExpertsController {
 		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials = expertsService
 				.expertsHasStudyMAterialWithUsernameAndCouseId(courseForStudyMaterial, userName);
 
+		ArrayList<StudyMaterials> expertGivenStudyMaterials = studyMaterialsService
+				.getStudyMaterials(expertsHasStudyMaterials);
+
 		// initialse the suggested list
-		model.addAttribute("expertsHasStudyMaterials", expertsHasStudyMaterials);
+		model.addAttribute("expertGivenStudyMaterials", expertGivenStudyMaterials);
 
 		ArrayList<StudyMaterials> studyMaterials = studyMaterialsService.showStudyMaterialsByCourseid(id);
 
 		initialiser.expertInitialiserWithParameters(studyMaterials, model);
+
+		// initialise the addmsg as empty
+		model.addAttribute("addStudyMaterialMessage", "");
 
 		// initialise the togglers
 		model.addAttribute("button2", "btn btn-link collapsed");
@@ -139,6 +146,9 @@ public class ExpertsController {
 
 		model.addAttribute("button3", "btn btn-link");
 		model.addAttribute("div3", "collapse show");
+
+		model.addAttribute("button4", "btn btn-link");
+		model.addAttribute("div4", "collapse show");
 
 		return "Experts";
 	}
@@ -213,11 +223,65 @@ public class ExpertsController {
 		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials = expertsService
 				.expertsHasStudyMAterialWithUsernameAndCouseId(courseforstudymaterial, userName);
 
+		ArrayList<StudyMaterials> expertGivenStudyMaterials = studyMaterialsService
+				.getStudyMaterials(expertsHasStudyMaterials);
 		// initialse the suggested list
-		model.addAttribute("expertsHasStudyMaterials", expertsHasStudyMaterials);
+		model.addAttribute("expertGivenStudyMaterials", expertGivenStudyMaterials);
+
+		model.addAttribute("addStudyMaterialMessage", "");
+
+		model.addAttribute("button4", "btn btn-link collapsed");
+		model.addAttribute("div4", "collapse ");
 
 		return "Experts";
 
 	}
+
+	/**
+	 * When expert add the study material to particualar course in the database
+	 * 
+	 * @param mainCourse
+	 * @param expertsHasCourses
+	 * @param courseforstudymaterial
+	 * @param title
+	 * @param link
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/addStudyMaterials", method = RequestMethod.POST)
+	public String addStudyMaterials(@ModelAttribute("Courses") Courses mainCourse,
+			@ModelAttribute("ExpertsHasCourses") ExpertsHasCourses expertsHasCourses,
+			@RequestParam String courseforstudymaterial, @RequestParam String title, @RequestParam String link,
+			ModelMap model) {
+
+		Courses c = coursesService.findCourseByName(courseforstudymaterial);
+		int courseId = c.getIdCourse();
+
+		studyMaterialsService.saveStudyMaterial(courseId, title, link);
+
+		model.addAttribute("addStudyMaterialMessage", "Added a new Study Material");
+
+		model.addAttribute("button3", "btn btn-link collapsed");
+		model.addAttribute("div3", "collapse ");
+
+		return "Experts";
+	}
+	
+	
+	@RequestMapping(value = "/showExpertVedios", method = RequestMethod.POST)
+	public String showExpertVedios(@ModelAttribute("Courses") Courses mainCourse,
+			@ModelAttribute("ExpertsHasCourses") ExpertsHasCourses expertsHasCourses,
+			@RequestParam String studyMaterialsLink,
+			ModelMap model) {
+		
+		model.addAttribute("vediolink", studyMaterialsLink);
+		
+		
+		return "Experts";
+	}
+	
+	
+	
+	
 
 }

@@ -79,7 +79,18 @@ public class Initialiser {
 		//initialse the suggested list
 		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials=null;
 		expertsHasStudyMaterials=expertsService.expertsHasStudyMAterialWithUsername(userName);
-		model.addAttribute("expertsHasStudyMaterials", expertsHasStudyMaterials);
+		
+        ArrayList<StudyMaterials> expertGivenStudyMaterials = studyMaterialsService.getStudyMaterials(expertsHasStudyMaterials);
+		// initialse the suggested list
+		model.addAttribute("expertGivenStudyMaterials", expertGivenStudyMaterials);
+		
+		//initialise vedio
+		model.addAttribute("vediolink", "https://www.youtube-nocookie.com/embed/wlLfNls75RY?rel=0");
+		
+		
+		//initialise the msg
+		String addStudyMaterialMessage="";
+		model.addAttribute("addStudyMaterialMessage", addStudyMaterialMessage);
 		
 		//initialise the togglers
 		model.addAttribute("button1", "btn btn-link");
@@ -90,6 +101,9 @@ public class Initialiser {
 		
 		model.addAttribute("button3", "btn btn-link collapsed");
 		model.addAttribute("div3", "collapse");
+		
+		model.addAttribute("button4", "btn btn-link collapsed");
+		model.addAttribute("div4", "collapse");
 		
 		
 		

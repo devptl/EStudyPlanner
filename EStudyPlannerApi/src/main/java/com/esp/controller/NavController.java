@@ -21,7 +21,7 @@ public class NavController {
 
 	@Autowired
 	private Initialiser initialiser;
-	
+
 	@Autowired
 	private SetTimer setTimer;
 
@@ -34,28 +34,27 @@ public class NavController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homeDisplay(@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
 			@ModelAttribute("LoggedUser") LoggedUser loggedUser, ModelMap model) {
-		
-		
 
 		// setting the initial display for front page
 		initialiser.frontInitialiser(model);
 		return "front";
 	}
-	
+
+	/**
+	 * To set the timer
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/timer", method = RequestMethod.GET)
 	@ResponseBody
-	public String startTimer()
-	{
+	public String startTimer() {
 		try {
-		//setTimer.runScheduler();
-		}
-		catch(Exception e)
-		{
+			// setTimer.runScheduler();
+		} catch (Exception e) {
 			System.out.println("the thread exception");
 		}
-		
+
 		return "timer not has started";
 	}
-	
 
 }

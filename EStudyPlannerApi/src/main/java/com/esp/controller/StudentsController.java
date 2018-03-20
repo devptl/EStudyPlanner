@@ -121,6 +121,13 @@ public class StudentsController {
 
 	}
 
+	/**
+	 * When student sets the minor courses
+	 * @param schedule
+	 * @param studentsHasCourses
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/entryUserAndMinorCourse", method = RequestMethod.POST)
 	public String entryStudentWithMinorCourse(@ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {

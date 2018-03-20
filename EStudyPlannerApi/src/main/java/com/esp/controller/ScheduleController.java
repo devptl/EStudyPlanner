@@ -15,6 +15,7 @@ import com.esp.model.Courses;
 import com.esp.model.Schedule;
 import com.esp.model.StudentsHasCourses;
 import com.esp.model.StudentsHasExperts;
+import com.esp.model.StudentsHasStudyMaterials;
 import com.esp.model.StudyMaterials;
 import com.esp.service.ScheduleService;
 import com.esp.service.StudentsService;
@@ -22,8 +23,9 @@ import com.esp.service.StudyMaterialsService;
 
 @Controller
 @SessionAttributes({ "username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
-		"courseforstudymaterial", "minorCourse", "studyMaterials", "shbutton1", "shbutton2", "shbutton3", "shbutton4",
-		"shdiv1", "shdiv2", "shdiv3", "shdiv4" })
+		"courseforstudymaterial", "minorCourse", "studyMaterials", "vediolink", "shbutton1", "shbutton2", "shbutton3",
+		"shbutton4", "studentCompletedMaterials", "noOfVedios", "perCompleted", "shdiv1", "shdiv2", "shdiv3",
+		"shdiv4" })
 public class ScheduleController {
 
 	@Autowired
@@ -81,8 +83,6 @@ public class ScheduleController {
 		}
 
 		// setting the togglers
-		model.addAttribute("shbutton1", "btn btn-link collapsed");
-		model.addAttribute("shdiv1", "collapse");
 
 		model.addAttribute("shbutton2", "btn btn-link");
 		model.addAttribute("shdiv2", "collapse show");
@@ -122,9 +122,27 @@ public class ScheduleController {
 		// saving the experts with student in student has experts
 		studentsService.saveStudentsHasExperts(se);
 
+		ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials = studyMaterialsService
+				.getCompletedList(studentsUserName);
+
+		ArrayList<StudyMaterials> studylist = studyMaterialsService
+				.getStudyMaterialsForStudent(studentCompletedMaterials);
+
+		float perCompleted = studyMaterialsService.trackCourseCompletion(s1, studentCompletedMaterials);
+
+		// completed percent initialisation
+		model.addAttribute("perCompleted", perCompleted);
+
+		// completed percent initialisation
+		model.addAttribute("noOfVedios", s1.size());
+
+		// completed list initialisation
+		model.addAttribute("studentCompletedMaterials", studylist);
+
 		// setting the maincourse and study material for display
 		model.addAttribute("minorCourse", courseforstudymaterial);
 		model.addAttribute("studyMaterials", s1);
+		model.addAttribute("vediolink", "https://www.youtube-nocookie.com/embed/wlLfNls75RY?rel=0");
 
 		return "Courses";
 

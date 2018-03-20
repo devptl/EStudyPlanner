@@ -4,7 +4,6 @@ public class LoggedUser {
 
 	private String userName;
 	private String password;
-	private int role;
 
 	public String getUserName() {
 		return userName;
@@ -12,10 +11,6 @@ public class LoggedUser {
 
 	public String getPassword() {
 		return password;
-	}
-
-	public int getRole() {
-		return role;
 	}
 
 	public void setUserName(String userName) {
@@ -26,19 +21,15 @@ public class LoggedUser {
 		this.password = password;
 	}
 
-	public void setRole(int role) {
-		this.role = role;
-	}
-
 	public LoggedUser() {
 
 	}
 
-	public LoggedUser(String userName, String password, int role) {
+	public LoggedUser(String userName, String password) {
 		super();
 		this.userName = userName;
 		this.password = password;
-		this.role = role;
+
 	}
 
 }

@@ -124,30 +124,36 @@ public class StudentsService {
 	 * @param userName
 	 * @return {@link Students}
 	 */
-	public Students findOneStudent(String userName, String email) {
-		Students s1 = null;
+	public boolean findOneStudent(String userName, String email) {
 
-		// checking if student exist
-		if (dtoOperation.getStudentsComponents().findOneStudent(userName).getEmail().equals(email)) {
-			s1 = dtoOperation.getStudentsComponents().findOneStudent(userName);
+		if (dtoOperation.getStudentsComponents().findOneStudent(userName) == null) {
+			return false;
+		} else {// checking if student exist
+			if (dtoOperation.getStudentsComponents().findOneStudent(userName).getEmail().equals(email)) {
+				
+				return true;
+			}
+			return false;
 		}
-
-		return s1;
 	}
 
-	public Students changeTheStudentPassword(String userName, String oldPassword, String newPassword) {
-		Students s1 = null;
+	public boolean changeTheStudentPassword(String userName, String oldPassword, String newPassword) {
 
 		// checking is student exist
-		if (dtoOperation.getStudentsComponents().findOneStudent(userName).getPassword().equals(oldPassword)) {
-			s1 = dtoOperation.getStudentsComponents().findOneStudent(userName);
+		if (dtoOperation.getStudentsComponents().findOneStudent(userName) == null) {
+			return false;
+		} else {
+			if (dtoOperation.getStudentsComponents().findOneStudent(userName).getPassword().equals(oldPassword)) {
+				Students s1 = dtoOperation.getStudentsComponents().findOneStudent(userName);
 
-			// setting the new password
-			s1.setPassword(newPassword);
-			dtoOperation.getStudentsComponents().saveStudent(s1);
+				// setting the new password
+				s1.setPassword(newPassword);
+				dtoOperation.getStudentsComponents().saveStudent(s1);
+				return true;
+			}
+			return false;
 		}
 
-		return s1;
 	}
 
 	/**

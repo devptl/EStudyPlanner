@@ -28,29 +28,15 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="/Experts">Experts</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link disabled" href="#">Scheduler</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Courses
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="navbar">
-                                <a class="dropdown-item" href="#">Engineering</a>
-                                <a class="dropdown-item" href="#">Medical</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Commerce</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Study Materials</a>
-                        </li>
+                        
+                        
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
@@ -72,31 +58,22 @@
 
                 <!--main content-->
                 <div id="maincontent">
+               		
+                
+                
                     <div id="accordion1" >
                         <div class="card" id="sidecard" >
                             <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
                                     <button th:class="${button1}" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        # Course Selector
+                                        # Major Course Selector
                                     </button>
                                 </h5>
                             </div>
                             <div id="collapseOne" th:class="${div1}" aria-labelledby="headingOne" data-parent="#accordion1">
                                 <div class="card-body">
                                     <form class="needs-validation" th:object="${Courses}" action="/ExpertsByMainId" method="post">
-                                        <div class="form-group">
-                                            <label for="validationServer01">Select the Field</label>
-                                            <select class="custom-select" id="validationServer01" onchange="/ExpertsByMainId" required="required">
-                                                <option value="">Open this select menu</option>
-                                                <option th:each="fieldCourse :${fieldCourses.toArray()}"  
-                                                th:value="${fieldCourse.getIdCourse()}" th:text="${fieldCourse.getCourseName()}">One</option>
-                                               
-                                            </select>
-                                            <div class="invalid-feedback"> Not a valid Field !</div>
-                                            <div class="valid-feedback"> Looks good! </div> 
-                                        </div>
-
-                                        <div class="form-group">
+                                           <div class="form-group">
                                             <label for="validationServer02">Select the Major Course</label>
                                             <select class="custom-select" id="validationServer02" th:field="*{idCourse}" required="required">
                                                 <option th:each="mainCourse :${mainCourses.toArray()}"  
@@ -106,7 +83,7 @@
                                             <div class="invalid-feedback"> Not a valid major course !</div>
                                             <div class="valid-feedback"> Looks good! </div> 
                                         </div>
-                                        <button class="btn btn-primary" type="submit">Submit form</button>   
+                                        <button class="btn btn-primary" type="submit">Select Major Course</button>   
                                     </form>
                                 </div>
                             </div>
@@ -116,7 +93,7 @@
                             <div class="card-header" id="headingTwo">
                                 <h5 class="mb-0">
                                     <button th:class="${button2}" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                        # Create minor course order list
+                                        # Minor Course Selector
                                     </button>
                                 </h5>
                             </div>
@@ -142,25 +119,18 @@
                                                
                                             </select>
                                         </div>
-
-                                        <div class="form-group" id="expertlist">
-                                            <label for="minorlist">My suggested Minor Course List</label>
-                                            <ol class="list-group" id="minorlist">
-                                               
-
-                                            </ol>
-                                        </div> 
-                                        <button class="btn btn-primary" type="submit">Save Changes</button> 
+                                        <button class="btn btn-primary" type="submit">Select Minor Course</button> 
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card" id="sidecard">
+                      
+                         <div class="card" id="sidecard">
                             <div class="card-header" id="headingThree">
                                 <h5 class="mb-0">
                                     <button th:class="${button3}" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                        # Minor course manage content
+                                        # Minor Course Content Manager
                                     </button>
                                 </h5>
                             </div>
@@ -195,12 +165,12 @@
                                         <div class="input-group">
                                             <select class="custom-select" id="inputstudymaterial">
                                                 <option th:each="studymaterial :${studymaterials.toArray()}" 
-                                                th:value="${studymaterial.getIdStudyMaterials()}" th:text="${studymaterial.getIdStudyMaterials()}+' >> '+${studymaterial.getStudyMaterialLink()}">Choose...</option>
+                                                th:value="${studymaterial.getIdStudyMaterials()}" th:text="${studymaterial.getTitle()}">Choose...</option>
     
                                             </select>
                                             <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" id="addstudymaterial" type="button">Add</button>
-                                                <button class="btn btn-outline-secondary" id="removestudymaterial" type="button">Remove</button>
+                                                <button class="btn btn-dark" id="addstudymaterial" type="button">Add</button>
+                                                <button class="btn btn-secondary" id="removestudymaterial" type="button">Remove</button>
                                             </div>
                                         </div>
 
@@ -208,9 +178,9 @@
     										<label for="exampleFormControlSelect2">My content ordered list</label>
     										<select multiple="multiple" class="form-control" 
     										 id="studyMaterialsList" name="studyMaterialsList">
-      											<option th:each="expertsHasStudyMaterial :${expertsHasStudyMaterials.toArray()}" 
-                                                th:value="${expertsHasStudyMaterial.getStudyMaterialsIdStudyMaterials()}" 
-                                                th:text="${expertsHasStudyMaterial.getStudyMaterialsIdStudyMaterials()}" selected="selected">1</option>
+      											<option th:each="expertGivenStudyMaterial :${expertGivenStudyMaterials.toArray()}" 
+                                                th:value="${expertGivenStudyMaterial.getIdStudyMaterials()}" 
+                                                th:text="${expertGivenStudyMaterial.getTitle()}" selected="selected">1</option>
       											
     										</select>
   											</div>
@@ -219,7 +189,92 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                          <div class="card" id="sidecard">
+                            <div class="card-header" id="headingFour">
+                                <h5 class="mb-0">
+                                    <button th:class="${button4}" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                        # Add Study Materials
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFour" th:class="${div4}" aria-labelledby="headingFour" data-parent="#accordion1">
+                                <div class="card-body">
+
+                                <form class="needs-validation" action="/addStudyMaterials" method="post">
+										
+										<div class="form-group">
+											<p> To add the study material from YOUTUBE just add the title and the embedded link you can get by : 
+											<br/>Click on SHARE -> Click on EMBED -> Copy the content -> Select the src link -> Copy it -> Paste it in Embedded Link </p>
+										</div>
+										
+										
+                                 		<div class="form-group">
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                           			<span class="input-group-text" id="inputGroupPrepend1">Minor Course</span>
+                                        		</div>
+                                        		 <input type="text" class="form-control"
+                                                 placeholder="Minorcourse" aria-describedby="inputGroupPrepend1" 
+                                                 th:value="${courseforstudymaterial}" name="courseforstudymaterial"
+                                        		 required="required" />
+                                    		</div>     
+                                 		</div>
+                                 		
+                                 		<div class="form-group">
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                          			<span class="input-group-text" id="inputGroupPrepend2">Title</span>
+                                        		</div>
+                                        		<input type="text" class="form-control" id="validationServerPassword" placeholder="Title" 
+                                        		 name="title" aria-describedby="inputGroupPrepend2" required="required"/>
+                                        		<div class="invalid-feedback"> Enter the title !</div>
+                                      			<div class="valid-feedback"> Looks good! </div> 
+                                    		</div>     
+                                 		</div>
+                                                                              
+                                        <div class="form-group">
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                          			<span class="input-group-text" id="inputGroupPrepend2">Embedded link</span>
+                                        		</div>
+                                        		<input type="text" class="form-control" id="validationServerPassword" placeholder="Link to embbed th vedio" 
+                                        		 name="link" aria-describedby="inputGroupPrepend2" required="required"/>
+                                        		<div class="invalid-feedback"> Enter the Link !</div>
+                                      			<div class="valid-feedback"> Looks good! </div> 
+                                    		</div>     
+                                 		</div>
+                                 		<p id="schedulermessage" th:text="${addStudyMaterialMessage}"></p>
+                                 		
+                                        <button class="btn btn-primary" type="submit">Add Material</button> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+ 
+				 <form class="needs-validation" action="/showExpertVedios" id="setstudymaterial"  method="post">
+                		<h3>Study Materials</h3>
+                		
+                		<div class="input-group">
+                    		<select class="custom-select" id="validationServer02" name="studyMaterialsLink" required="required">
+                    			<option th:each="studymaterial :${studymaterials.toArray()}"  
+                        		th:value="${studymaterial.getStudyMaterialLink()}" th:text="${studymaterial.getTitle()}">One</option>
+                                                
+                   	 		</select>
+                        <div class="input-group-append">
+                   	 	<button class="btn btn-dark" type="submit">Select Vedio</button>
+                   	 	</div>
+                   </div>
+                   </form>
+                    <hr class="my-4"/>
+                    
+                    <p class="lead">
+                        <iframe id="vedioframe" th:src="${vediolink}" 
+                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="allowfullscreen"></iframe>
+                        
+                    </p>
+                               
+                
                 </div>
             </div>
 

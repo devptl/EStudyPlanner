@@ -106,4 +106,18 @@ public class CoursesService {
 		return dtoOperation.getCoursesComponents().findOneCourse(id);
 	}
 
+	public Courses findCourseByName(String name) {
+		
+		Courses c=null;
+		
+		String queryString = "select * from courses where course_name =\""+name+"\"";
+		// Generate Query
+		Query query = entityManager.createNativeQuery(queryString, Courses.class);
+		// Map result set to list of Objects
+		c = (Courses) query.getSingleResult();
+		
+		return c;
+				
+	}
+	
 }

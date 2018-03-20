@@ -22,9 +22,9 @@ import com.esp.service.StudentsService;
 
 @Controller
 @SessionAttributes({ "username", "fieldCourses", "mainCourses", "courseforstudymaterial", "minorCourses",
-		"studymaterials", "expertsHasStudyMaterials", "schedule", "message", "allExperts", "button1", "button2",
-		"button3", "div1", "div2", "div3", "msg", "shbutton1", "shbutton2", "shbutton3", "shbutton4", "shdiv1",
-		"shdiv2", "shdiv3", "shdiv4" })
+		"studymaterials", "expertGivenStudyMaterials", "addStudyMaterialMessage", "schedule", "message", "allExperts",
+		"button1", "button2", "button3", "button4", "div1", "div2", "div3", "div4", "msg", "shbutton1", "shbutton2",
+		"shbutton3", "shbutton4", "shdiv1", "shdiv2", "shdiv3", "shdiv4" })
 public class LoginController {
 
 	@Autowired
@@ -58,36 +58,35 @@ public class LoginController {
 			@ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
 
-		// checking the role of the user
-		if (loggedUser.getRole() == 1) {
-			if (studentsService.studentsLogin(loggedUser, model)) {
+		if (studentsService.studentsLogin(loggedUser, model)) {
+			
+			//set the toggle as schedule already set
+			model.addAttribute("shbutton1", "btn btn-link collapsed");
+			model.addAttribute("shdiv1", "collapse");
+				
+			model.addAttribute("shbutton2", "btn btn-link ");
+			model.addAttribute("shdiv2", "collapse show");
 
-				// on successfull login sending to scheduler page
-				return "Scheduler";
-			} else {
+			// on successfull login sending to scheduler page
+			return "Scheduler";
+		}
 
-				// on invalid login setting msg and redirect to front page
-				model.addAttribute("msg", "invalid username or password");
-				return "front";
-			}
+		else if (expertsService.expertsLogin(loggedUser)) {
+
+			// initialsing the username for expert
+			String userName = loggedUser.getUserName();
+			initialiser.expertInitialiser(userName, model);
+
+			// on successfull login sending to experts page
+			return "Experts";
 
 		} else {
-			if (expertsService.expertsLogin(loggedUser)) {
 
-				// initialsing the username for expert
-				String userName = loggedUser.getUserName();
-				initialiser.expertInitialiser(userName, model);
-
-				// on successfull login sending to experts page
-				return "Experts";
-			} else {
-
-				// on invalid login redirecting back to front page
-				model.addAttribute("msg", "invalid username or password");
-				return "front";
-			}
-
+			// on invalid login redirecting back to front page
+			model.addAttribute("msg", "invalid username or password");
+			return "front";
 		}
+
 	}
 
 	/**
@@ -106,45 +105,43 @@ public class LoginController {
 	@RequestMapping(value = "/forgotThePassword", method = RequestMethod.POST)
 	public String forgotThePassword(@ModelAttribute("LoggedUser") LoggedUser loggedUser,
 			@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
-			@RequestParam String userName, @RequestParam String email, @RequestParam int role, ModelMap model) {
+			@RequestParam String userName, @RequestParam String email, ModelMap model) {
 		String msg = new String();
 		try {
 
-			// to check the role
-			if (role == 1) {
-				// checking if student exist with username and that email
-				if (studentsService.findOneStudent(userName, email) == null) {
+			// checking if student exist with username and that email
+			if (studentsService.findOneStudent(userName, email)) {
 
-				} else {
+				// sending the mail to student with password
+				Students s1 = studentsService.findStudentByUsername(userName);
+				msg = "Sending mail to : " + s1.getEmail() + " for the Username : " + s1.getUserName();
+				String text = "The user we think that you forgot the password your password is " + s1.getPassword();
 
-					// sending the mail to student with password
-					Students s1 = studentsService.findOneStudent(userName, email);
-					msg = "Sending mail to : " + s1.getEmail() + " for the Username : " + s1.getUserName();
-					String text = "The user we think that you forgot the password your password is " + s1.getPassword();
-
-					sMTPMailSender.send(s1.getEmail(), "Forgot the password alert", text);
-				}
-
-			} else {
-				// checking if experts exist the username and email
-				if (expertsService.findOneExpert(userName, email) == null) {
-
-				} else {
-
-					// sending the mail to expert with password
-					Experts e1 = expertsService.findOneExpert(userName, email);
-					msg = "Sending mail to : " + e1.getEmail() + " for the Username : " + e1.getUserName();
-
-					String text = "The Expert " + e1.getFirstName()
-							+ " we think that you forgot the password your password is " + e1.getPassword();
-
-					sMTPMailSender.send(e1.getEmail(), "Forgot the password alert", text);
-				}
-
+				sMTPMailSender.send(s1.getEmail(), "Forgot the password alert", text);
 			}
+
+			else if (expertsService.findOneExpert(userName, email)) { 
+				// checking if experts exist the username and email
+
+				// sending the mail to expert with password
+				Experts e1 = expertsService.findExpertByUsername(userName);
+				msg = "Sending mail to : " + e1.getEmail() + " for the Username : " + e1.getUserName();
+
+				String text = "The Expert " + e1.getFirstName()
+						+ " we think that you forgot the password your password is " + e1.getPassword();
+
+				sMTPMailSender.send(e1.getEmail(), "Forgot the password alert", text);
+			
+			}else
+			{
+				msg = "invalid attempt to get user";
+				System.out.println("invalid attempt to get user");	
+			}
+
 		} catch (Exception e) {
-			msg = "invalid attempt to get user";
-			System.out.println("invalid attempt to get user");
+			System.out.println("network error");
+			model.addAttribute("msg", msg);
+			
 		}
 
 		model.addAttribute("msg", msg);
@@ -169,48 +166,42 @@ public class LoginController {
 	public String changeThePassword(@ModelAttribute("LoggedUser") LoggedUser loggedUser,
 			@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
 			@RequestParam String userName, @RequestParam String oldPassword, @RequestParam String newPassword,
-			@RequestParam int role, ModelMap model) {
+			ModelMap model) {
 
 		String msg = new String();
 
 		try {
-			// to check the role
-			if (role == 1) {
-				// checking if student exist with username and that email
-				if (studentsService.changeTheStudentPassword(userName, oldPassword, newPassword) == null) {
 
-				} else {
+			// checking if student exist with username and that email
+			if (studentsService.changeTheStudentPassword(userName, oldPassword, newPassword)) {
 
-					// sending the mail to student with new password after the change
-					Students s1 = studentsService.findStudentByUsername(userName);
-					msg = "student the password changed";
+				// sending the mail to student with new password after the change
+				Students s1 = studentsService.findStudentByUsername(userName);
+				msg = "student the password changed";
 
-					String text = "The user your password is changed make sure your do not "
-							+ "disclose the password .The new password is " + s1.getPassword();
+				String text = "The user your password is changed make sure your do not "
+						+ "disclose the password .The new password is " + s1.getPassword();
 
-					sMTPMailSender.send(s1.getEmail(), "Forgot the password alert", text);
+				sMTPMailSender.send(s1.getEmail(), "Forgot the password alert", text);
 
-				}
-			} else {
-				// checking if experts exist the username and email
-				if (expertsService.changeTheExpertPassword(userName, oldPassword, newPassword) == null) {
+			} else if (expertsService.changeTheExpertPassword(userName, oldPassword, newPassword)) {
 
-				} else {
+				// sending the mail to expert with new password after the change
+				Experts e1 = expertsService.findExpertByUsername(userName);
+				msg = "experts password is changed";
+				String text = "The Expert " + e1.getFirstName() + " your password is changed make sure your do not "
+						+ "disclose the password .The new password is " + e1.getPassword();
 
-					// sending the mail to expert with new password after the change
-					Experts e1 = expertsService.findExpertByUsername(userName);
-					msg = "experts password is changed";
-					String text = "The Expert " + e1.getFirstName() + " your password is changed make sure your do not "
-							+ "disclose the password .The new password is " + e1.getPassword();
+				sMTPMailSender.send(e1.getEmail(), "Forgot the password alert", text);
 
-					sMTPMailSender.send(e1.getEmail(), "Forgot the password alert", text);
-
-				}
-
+			}else
+			{
+				msg = "invalid attempt to change password";
+				System.out.println("invalid attempt to change password");
 			}
+
 		} catch (Exception e) {
-			msg = "invalid attempt to change password";
-			System.out.println("invalid attempt to change password");
+			System.out.println("network error");
 		}
 
 		model.addAttribute("msg", msg);

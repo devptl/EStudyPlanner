@@ -19,44 +19,14 @@
 
             <!--navigation menu-->
             <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary" id="navbar">
+                <div class="col-md-11 mb-2">
                 <a class="navbar-brand" href="/">E-Study and Planner</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Experts</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Scheduler</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Courses
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="navbar">
-                                <a class="dropdown-item" href="#">Engineering</a>
-                                <a class="dropdown-item" href="#">Medical</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Commerce</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Study Materials</a>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                        <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
+                </div>
+                
+                <div class="col-md-1 mb-2" id="divlogin">
                         <button type="button" id="loginButton" class="btn btn-dark my-2 my-sm-0" data-toggle="modal" data-target="#exampleModalCenter1">
                			LogIn
            				</button>
-                    </form>
                     
                 </div>
             </nav>
@@ -96,7 +66,7 @@
             <div class="jumbotron" id="main">
                 <h1 class="display-4">Register Here!!!</h1>
                 <p class="lead">Want to learn something new then register here . Experts can also give their valuable time just register once and then u can 
-                your important feeds . Student can select their field and can get the study material . They can see the experts advice for the study material 
+                give your important feeds . Student can select their field and can get the study material . They can see the experts advice for the study material 
                 in their respective fields </p>
                 
                 <p id="schedulermessage" th:text="${msg}"></p>
@@ -141,32 +111,19 @@
                                       	<div class="valid-feedback"> Looks good! </div> 
                                     </div>     
                                  </div>
-                                 <div class="form-group">
-              						<div class="input-group">
-                                    	<div class="input-group-prepend">
-                                           <span class="input-group-text" id="inputGroupPrepend3">Select Role</span>
-                                        </div>
-                                            <select class="custom-select" aria-describedby="inputGroupPrepend3"
-                                            th:field="*{role}" id="validationServer07" required="required">
-                                                <option value="1">Student</option>
-                                                <option value="2">Expert</option>
-                                            </select>
-                                            <div class="invalid-feedback"> Not a valid course !</div>
-                                            <div class="valid-feedback"> Looks good! </div> 
-                                  	</div>     
-                                 </div>
-                                 <div class="form-group">
+                                 
+                                 <div class="form-row" id="divforgotpassword">
                                         	<button type="button" id="alreadHaveAccountButton" class="btn btn-dark " data-toggle="modal" data-target="#exampleModalCenter2">
-               			                	 Forgot the Password ? Click here !!
+               			                	 Forgot the Password ? 
            				                	</button>
            				         </div>
-           				         <div class="form-group">
+           				         <div class="form-row" >
                                         	<button type="button" id="alreadHaveAccountButton" class="btn btn-dark " data-toggle="modal" data-target="#exampleModalCenter3">
-               			                	 Change the password ? Click here !!
+               			                	 Change the password ? 
            				                	</button>
            				         </div>     
                                  <hr class="my-4"/>
-                            	 <button type="submit" class="btn btn-primary">Submit</button>
+                            	 <button type="submit" class="btn btn-primary">Login</button>
                             	 <button type="reset" class="btn btn-primary">Reset</button>
                         	  </form>
                      		</div>
@@ -178,7 +135,7 @@
                  <!-- Forgot the password modal -->
                  <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 	<div class="modal-dialog modal-dialog-centered" role="document">
-                    	<div class="modal-content" id="modalcontent">
+                    	<div class="modal-content" id="modalcontent1">
                         	<div class="modal-header">
                            		<h5 class="modal-title" id="exampleModalLongTitle">Forgot the Password</h5>
                             	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -211,22 +168,13 @@
                                       	<div class="valid-feedback"> Looks good! </div> 
                                     </div>     
                                  </div>
-                                  <div class="form-group">
-              						<div class="input-group">
-                                    	<div class="input-group-prepend">
-                                           <span class="input-group-text" id="inputGroupPrepend3">Select Role</span>
-                                        </div>
-                                            <select class="custom-select" aria-describedby="inputGroupPrepend3"
-                                            name="role" id="validationServer07" required="required">
-                                                <option value="1">Student</option>
-                                                <option value="2">Expert</option>
-                                            </select>
-                                            <div class="invalid-feedback"> Not a valid course !</div>
-                                            <div class="valid-feedback"> Looks good! </div> 
-                                  	</div>     
-                                 </div>
+                                 
+                                 <div class="form-row" id="warningtext">
+                                        	<p>** Password will be send to the mail Id </p>
+           				         </div> 
+                                 
                                  <hr class="my-4"/>
-                            	 <button type="submit" class="btn btn-primary">Submit</button>
+                            	 <button type="submit" class="btn btn-primary">Send me the Mail</button>
                             	 <button type="reset" class="btn btn-primary">Reset</button>
                         	  </form>
                      		</div>
@@ -238,7 +186,7 @@
                   <!-- Change the password modal -->
                   <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 		<div class="modal-dialog modal-dialog-centered" role="document">
-                    		<div class="modal-content" id="modalcontent">
+                    		<div class="modal-content" id="modalcontent1">
                         		<div class="modal-header">
                            				<h5 class="modal-title" id="exampleModalLongTitle">Change the Password</h5>
                             			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -283,22 +231,9 @@
                                       	<div class="valid-feedback"> Looks good! </div> 
                                     </div>     
                                  </div>
-                                  <div class="form-group">
-              						<div class="input-group">
-                                    	<div class="input-group-prepend">
-                                           <span class="input-group-text" id="inputGroupPrepend3">Select Role</span>
-                                        </div>
-                                            <select class="custom-select" aria-describedby="inputGroupPrepend3"
-                                             name="role" id="validationServer07" required="required">
-                                                <option value="1">Student</option>
-                                                <option value="2">Expert</option>
-                                            </select>
-                                            <div class="invalid-feedback"> Not a valid course !</div>
-                                            <div class="valid-feedback"> Looks good! </div> 
-                                  	</div>     
-                                 </div>
+                                 
                                  <hr class="my-4"/>
-                            	 <button type="submit" class="btn btn-primary">Submit</button>
+                            	 <button type="submit" class="btn btn-primary">Change the Password</button>
                             	 <button type="reset" class="btn btn-primary">Reset</button>
                         	  </form>
                      		</div>
@@ -402,7 +337,8 @@
                                                 <div class="valid-feedback"> </div> 
                                             </div>
                                         </div>
-                                        <button class="btn btn-primary" type="submit">Submit form</button>
+                                        <button class="btn btn-primary" type="submit">Register</button>
+                                        <button type="reset" class="btn btn-primary">Reset</button>
                                     </form>
                                 </div>
                             </div>
@@ -449,7 +385,10 @@
                                         </div>
                                         
                                         <div class="form-group">
-                                            <label for="validationServer06">Qualification</label>
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                          			<span class="input-group-text" id="inputGroupPrepend2">Qualifivation</span>
+                                        		</div>
                                             <select class="custom-select" id="validationServer06"  th:field="*{qualification}" required="required">
                                                 <option value="0">Open this select menu</option>
                                                 <option value="1">Graduation</option>
@@ -457,21 +396,22 @@
                                                 <option value="3">Docterate</option> 
                                                 <option value="4">Others</option>
                                             </select>
-                                            <div class="invalid-feedback"> Not a valid course !</div>
-                                            <div class="valid-feedback"> Looks good! </div> 
+                                            </div>
                                         </div>
                                         
-                                        <div class="form-group">
-                                            <label for="validationServer07">Year of Experience</label>
-                                            <select class="custom-select" id="validationServer07"   th:field="*{yearOfExperience}" required="required">
+                                         <div class="form-group">
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                          			<span class="input-group-text" id="inputGroupPrepend2">Year of Experience</span>
+                                        		</div>
+                                               <select class="custom-select" id="validationServer07"   th:field="*{yearOfExperience}" required="required">
                                                 <option value="0">Open this select menu</option>
                                                 <option value="1">One</option>
                                                 <option value="2">Two</option>
                                                 <option value="3">Three</option>
                                                 <option value="3">Four or Four Plus</option>
                                             </select>
-                                            <div class="invalid-feedback"> Not a valid course !</div>
-                                            <div class="valid-feedback"> Looks good! </div> 
+                                            </div>
                                         </div>
                                         
                                         <div class="form-group">
@@ -514,7 +454,8 @@
                                                 <div class="valid-feedback"> </div> 
                                             </div>
                                         </div>
-                                        <button class="btn btn-primary" type="submit">Submit form</button>
+                                        <button class="btn btn-primary" type="submit">Register</button>
+                                        <button type="reset" class="btn btn-primary">Reset</button>
                                     </form>
                                 </div>
                             </div>

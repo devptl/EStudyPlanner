@@ -26,29 +26,12 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Experts</a>
-                        </li>
+                       
                         <li class="nav-item">
                             <a class="nav-link" href="/Scheduler">Scheduler</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Cources
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="navbar">
-                                <a class="dropdown-item" href="#">Engineering</a>
-                                <a class="dropdown-item" href="#">Medical</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Commerce</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Study Materials</a>
-                        </li>
+                       
+                        
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
@@ -148,7 +131,7 @@
                                         </div>
                                         <p id="schedulermessage" th:text="${message}"></p>
                                        
-                                        <button class="btn btn-primary" type="submit">Submit form</button>   
+                                        <button class="btn btn-primary" type="submit">Save Schedule</button>   
                                     </form>
                                 </div>
                             </div>
@@ -188,7 +171,7 @@
                                             <div class="invalid-feedback"> Not a valid major course !</div>
                                             <div class="valid-feedback"> Looks good! </div> 
                                         </div>
-                                        <button class="btn btn-primary" type="submit">Submit form</button>   
+                                        <button class="btn btn-primary" type="submit">Select Major Course</button>   
                                     </form>
                                 </div>
                             </div>
@@ -231,7 +214,7 @@
                                             <div class="invalid-feedback"> Not a valid minor course !</div>
                                             <div class="valid-feedback"> Looks good! </div> 
                                         </div>
-                                        <button class="btn btn-primary" type="submit">Submit form</button>
+                                        <button class="btn btn-primary" type="submit">Select Minor Course</button>
                                     </form>
 									</div>
                             </div>
@@ -286,7 +269,7 @@
                                             <div class="invalid-feedback"> Not a valid Field !</div>
                                             <div class="valid-feedback"> Looks good! </div> 
                                         </div>
-                                        <button class="btn btn-primary" type="submit">Submit form</button>   
+                                        <button class="btn btn-primary" type="submit">Select Expert</button>   
                                     </form>
                                 </div>
                             </div>

@@ -7,5 +7,7 @@ import com.esp.model.Courses;
 
 @Repository
 public interface CoursesRepository  extends JpaRepository<Courses,Integer>{
+	
+	
 
 }

@@ -10,6 +10,8 @@ public class StudyMaterials {
 	private int idStudyMaterials;
 	private String studyMaterialLink;
 	private int coursesIdCourse;
+	private String title;
+	
 
 	public int getIdStudyMaterials() {
 		return idStudyMaterials;
@@ -35,15 +37,26 @@ public class StudyMaterials {
 		this.coursesIdCourse = coursesIdCourse;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public StudyMaterials() {
 
 	}
 
-	public StudyMaterials(int idStudyMaterials, String studyMaterialLink, int coursesIdCourse) {
+	public StudyMaterials(int idStudyMaterials, String studyMaterialLink, int coursesIdCourse, String title) {
 		super();
 		this.idStudyMaterials = idStudyMaterials;
 		this.studyMaterialLink = studyMaterialLink;
 		this.coursesIdCourse = coursesIdCourse;
+		this.title = title;
 	}
+
+	
 
 }

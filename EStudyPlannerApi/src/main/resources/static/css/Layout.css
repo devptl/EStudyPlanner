@@ -2,6 +2,14 @@
 	background-image: url("../images/bodybackground.png");
 }
 
+#divlogin{
+	float:left;
+}
+
+#divforgotpassword{
+	float:left;
+}
+
 #navbar{
 	opacity: 0.85 !important;
 	background-image: url("../images/navbackground.jpg");
@@ -26,8 +34,17 @@
 	background-image: url("../images/loginbackground.jpg");
 }
 
+#modalcontent1{
+	background-image: url("../images/loginbackground.jpg");
+}
+
+#warningtext{
+	color: red;
+    font-weight: bolder;
+}
+
 #maincontent {
-	height: 1000px;
+	height: 2000px;
 }
 
 #maincard{
@@ -61,6 +78,10 @@
 	margin-top: 2%;
 }
 
+#studentslist {
+	margin-top: 2%;
+}
+
 #studyMaterialsList{
 	background: #e2dbdb;
 	
@@ -74,3 +95,15 @@
 	color: red!important;
     font-weight: bolder!important;
 }
+
+#vedioframe{
+	margin-left: 4%;
+    height: 550px;
+    width: 92%;
+    border-width: 4px;
+    border-color: black;
+}
+	
+	
+	
+	

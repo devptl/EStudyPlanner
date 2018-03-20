@@ -20,32 +20,24 @@
             <!--navigation menu-->
             <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary" id="navbar">
                 <a class="navbar-brand" href="/">E-Study and Planner</a>
+                <br/>
+                <hr class="my-4"/>
+                
+                
+                
+                
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Experts</a>
-                        </li>
+                         
                         <li class="nav-item">
                             <a class="nav-link" href="/Scheduler">Scheduler</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Cources
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="navbar">
-                                <a class="dropdown-item" href="#">Engineering</a>
-                                <a class="dropdown-item" href="#">Medical</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Commerce</a>
-                            </div>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="/StudyMaterials">Study Materials</a>
                         </li>
@@ -93,27 +85,113 @@
             <div class="jumbotron" id="main">
                 <h1 class="display-4">Lets start with <span th:text="${minorCourse}">MBBS !!!</span></h1>
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                    <div class="progress-bar" role="progressbar" th:style="'width: '+${perCompleted}+'%;'" th:aria-valuenow="${perCompleted}" th:text="${perCompleted}" aria-valuemin="0" aria-valuemax="100">25%</div>
+                    <hr class="my-4"/>
                 </div>
+                <p class="lead">The material will be listed below .Its time for you to learn somthing on the topic .</p>
                 
                 <!--main content-->
                 <div id="maincontent">
                 
-                	<div class="form-group">
-                   	<label for="validationServer02">StudyMaterials</label>
-                    	<select multiple="multiple" class="custom-select" id="validationServer02" required="required">
-                    		<option th:each="studyMaterial :${studyMaterials.toArray()}"  
-                        	th:value="${studyMaterial.getIdStudyMaterials()}" th:text="${studyMaterial.getStudyMaterialLink()}">One</option>
+             
+            
+                    <div id="accordion1" >
+                        <div class="card" id="sidecard" >
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button th:class="${shbutton1}" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        # My Completed list
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseOne" th:class="${shdiv1}" aria-labelledby="headingOne" data-parent="#accordion1">
+                                <div class="card-body">
+                                
+                                    <form  action="/StudentCompletedMaterials" method="post">
+                                       <div class="form-group">
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                           			<span class="input-group-text" id="inputGroupPrepend1">Username</span>
+                                        		</div>
+                                        		 <input type="text" class="form-control"
+                                                 placeholder="Username" aria-describedby="inputGroupPrepend1" 
+                                                 id="studentsUserName" th:value="${username}" name="studentsUserName"
+                                        		 readonly="readonly" required="required" />
                                                 
-                   	 	</select>
-                   </div>
+                                        		<div class="invalid-feedback"> Enter the Username !</div>
+                                      			<div class="valid-feedback"> Looks good! </div> 
+                                    		</div>     
+                                        </div>
+                                        
+                                       <div class="form-group">
+              								<div class="input-group">
+                                    			<div class="input-group-prepend">
+                                           			<span class="input-group-text" id="inputGroupPrepend1">No of Vedios To Complete</span>
+                                        		</div>
+                                        		 <input type="text" class="form-control"
+                                                 placeholder="No of vedios" aria-describedby="inputGroupPrepend1" 
+                                                 id="noOfVedios" th:value="${noOfVedios}" name="noOfVedios"
+                                        		 readonly="readonly" required="required" />
+                                              
+                                    		</div>     
+                                        </div>
+                                        
+                                       <div class="input-group">
+                                            <select class="custom-select" id="inputstudymaterial">
+                                               <option th:each="studyMaterial :${studyMaterials.toArray()}" 
+                                                 th:value="${studyMaterial.getIdStudyMaterials()}" th:text="${studyMaterial.getTitle()}">Choose...</option>
+    
+                                                  </select>
+                                               <div class="input-group-append">
+                                              <button class="btn btn-dark" id="addstudymaterial" type="button">Add</button>
+                                              <button class="btn btn-secondary" id="removestudymaterial" type="button">Remove</button>
+                                             </div>
+                                        </div>
 
-                    <p class="lead">This is the introduction part of the course and what all it contains detail links and the material will be listed 
-                    below .Its time for you to learn somthing on the topic .</p>
+                                       <div class="form-group" id="studentslist" >
+                                            <label for="exampleFormControlSelect2">My Completed vedios</label>
+    		                                   <select multiple="multiple" class="form-control" 
+                                                id="studyMaterialsList" name="studyMaterialsList">
+      		                                     <option th:each="studentCompletedMaterial :${studentCompletedMaterials.toArray()}" 
+                                                th:value="${studentCompletedMaterial.getIdStudyMaterials()}" 
+                                                th:text="${studentCompletedMaterial.getTitle()}" selected="selected"></option>
+      											
+    		                                  </select>
+  	                                  </div>
+                                     <button class="btn btn-primary" type="submit">Update My List</button> 
+                                  </form>
+                                  
+                                 </div>
+                              </div>
+                          </div>
+                       </div>
+                
+                
+                
+                
+                
+                
+                
+                	<form class="needs-validation" id="setstudymaterial" action="/showVedios" method="post">
+                		<h3>Study Materials</h3>
+                		
+                		<div class="input-group">
+                    		<select class="custom-select" id="validationServer02" name="studyMaterialsLink" required="required">
+                    			<option th:each="studyMaterial :${studyMaterials.toArray()}"  
+                        		th:value="${studyMaterial.getStudyMaterialLink()}" th:text="${studyMaterial.getTitle()}">One</option>
+                                                
+                   	 		</select>
+                        <div class="input-group-append">
+                   	 	<button class="btn btn-dark" type="submit">Select Vedio</button>
+                   	 	</div>
+                   </div>
+                   </form>
                     <hr class="my-4"/>
-                    <p>This part contain the material that will be provided to you </p>
+                    
                     <p class="lead">
-                        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                        <iframe id="vedioframe" th:src="${vediolink}" 
+                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="allowfullscreen"></iframe>
+                        
                     </p>
                 </div>
 
@@ -129,5 +207,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <script src="js/coursesjs.js" ></script>
 </body>
 </html>

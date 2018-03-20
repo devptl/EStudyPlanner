@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esp.model.StudentsHasStudyMaterials;
 import com.esp.model.Students;
 import com.esp.model.StudentsHasCourses;
 import com.esp.model.StudentsHasExperts;
 import com.esp.repository.StudentsHasCoursesRepository;
 import com.esp.repository.StudentsHasExpertsRepository;
+import com.esp.repository.StudentsHasStudyMaterialsRepository;
 import com.esp.repository.StudentsRepository;
 
 @Service
@@ -23,6 +25,9 @@ public class StudentsComponents {
 	
 	@Autowired
 	private StudentsHasExpertsRepository studentsHasExpertsRepository;
+	
+	@Autowired
+	private StudentsHasStudyMaterialsRepository studentsHasStudyMaterialsRepository;
 
 	/**
 	 * return list of all Students
@@ -67,6 +72,23 @@ public class StudentsComponents {
 	public void saveStudentsHasExperts(StudentsHasExperts sh) {
 		studentsHasExpertsRepository.save(sh);
 	}
+	
+	/**
+	 * To save the student has Study Material
+	 * @param sh
+	 */
+	public void saveStudentsHasStudyMaterials(StudentsHasStudyMaterials sh) {
+		studentsHasStudyMaterialsRepository.save(sh);
+	}
+	
+	/**
+	 * To delete row from student has study material
+	 * @param sh
+	 */
+	public void deleteStudentsHasStudyMaterials(StudentsHasStudyMaterials sh) {
+		studentsHasStudyMaterialsRepository.delete(sh);
+	}
+	
 
 
 }

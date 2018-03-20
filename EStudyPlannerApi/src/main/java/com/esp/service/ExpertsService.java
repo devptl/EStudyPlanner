@@ -189,15 +189,18 @@ public class ExpertsService {
 	 * @param userName
 	 * @return
 	 */
-	public Experts findOneExpert(String userName, String email) {
-		Experts e1 = null;
+	public boolean findOneExpert(String userName, String email) {
 
-		// to find the experts with particualr username and email
-		if (dtoOperation.getExpertsComponents().findOneExpert(userName).getEmail().equals(email)) {
-			e1 = dtoOperation.getExpertsComponents().findOneExpert(userName);
+		if (dtoOperation.getExpertsComponents().findOneExpert(userName) == null) {
+			return false;
+		} else {
+			// to find the experts with particualr username and email
+			if (dtoOperation.getExpertsComponents().findOneExpert(userName).getEmail().equals(email)) {
+				return true;
+			}
+
+			return false;
 		}
-
-		return e1;
 	}
 
 	/**
@@ -209,19 +212,24 @@ public class ExpertsService {
 	 * @param newPassword
 	 * @return
 	 */
-	public Experts changeTheExpertPassword(String userName, String oldPassword, String newPassword) {
-		Experts e1 = null;
+	public boolean changeTheExpertPassword(String userName, String oldPassword, String newPassword) {
 
-		// checking that the expert exist
-		if (dtoOperation.getExpertsComponents().findOneExpert(userName).getPassword().equals(oldPassword)) {
-			e1 = dtoOperation.getExpertsComponents().findOneExpert(userName);
+		if (dtoOperation.getExpertsComponents().findOneExpert(userName) == null) {
+			return false;
+		} else {
+			// checking that the expert exist
+			if (dtoOperation.getExpertsComponents().findOneExpert(userName).getPassword().equals(oldPassword)) {
+				Experts e1 = dtoOperation.getExpertsComponents().findOneExpert(userName);
 
-			// saving the new password
-			e1.setPassword(newPassword);
-			dtoOperation.getExpertsComponents().saveExpert(e1);
+				// saving the new password
+				e1.setPassword(newPassword);
+				dtoOperation.getExpertsComponents().saveExpert(e1);
+
+				return true;
+			}
+
+			return false;
 		}
 
-		return e1;
 	}
-
 }

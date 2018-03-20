@@ -40,6 +40,7 @@ public class StudyMaterialsComponents {
 	public void saveStudyMaterial(StudyMaterials s) {
 		studyMaterialsRepository.save(s);
 	}
+	
 
 
 }
