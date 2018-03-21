@@ -27,9 +27,9 @@ import com.esp.service.SMTPMailSender;
 import com.esp.service.StudyMaterialsService;
 
 @Controller
-@SessionAttributes({ "vediolink","username", "fieldCourses", "mainCourses", "minorCourses", "studymaterials",
-		"expertGivenStudyMaterials", "addStudyMaterialMessage", "button1", "button2", "button3", "button4", "div1",
-		"div2", "div3", "div4" })
+@SessionAttributes({ "onLoadFun", "vediolink", "username", "fieldCourses", "mainCourses", "minorCourses",
+		"studymaterials", "expertGivenStudyMaterials", "addStudyMaterialMessage", "button1", "button2", "button3",
+		"button4", "div1", "courseforstudymaterial", "div2", "div3", "div4" })
 public class ExpertsController {
 
 	@Autowired
@@ -93,6 +93,9 @@ public class ExpertsController {
 		// inital list of major courses
 		model.addAttribute("mainCourses", mainCourses);
 
+		// initialise onload function
+		model.addAttribute("onLoadFun", "expertsSetting('coursesIdCourse')");
+
 		// initialise the togglers
 		model.addAttribute("button1", "btn btn-link collapsed");
 		model.addAttribute("div1", "collapse ");
@@ -109,7 +112,7 @@ public class ExpertsController {
 	 * @param mainCourse
 	 * @param expertsHasCourses
 	 * @param model
-	 * @return
+	 * @return {@link Experts.html}
 	 */
 	@RequestMapping(value = "/ExpertsHasMinorCourses", method = RequestMethod.POST)
 	public String expertsHasMinorCourses(@ModelAttribute("Courses") Courses mainCourse,
@@ -139,6 +142,9 @@ public class ExpertsController {
 
 		// initialise the addmsg as empty
 		model.addAttribute("addStudyMaterialMessage", "");
+
+		// initialise onload function
+		model.addAttribute("onLoadFun", "expertsSetting('inputstudymaterial')");
 
 		// initialise the togglers
 		model.addAttribute("button2", "btn btn-link collapsed");
@@ -206,7 +212,7 @@ public class ExpertsController {
 	 * @param loggedUser
 	 * @param studyMaterialsList
 	 * @param model
-	 * @return
+	 * @return {@link Experts.html}
 	 */
 	@RequestMapping(value = "/ExpertsSuggestedMaterials", method = RequestMethod.POST)
 	public String expertsSuggestedMaterials(@ModelAttribute("Courses") Courses mainCourse,
@@ -228,6 +234,9 @@ public class ExpertsController {
 		// initialse the suggested list
 		model.addAttribute("expertGivenStudyMaterials", expertGivenStudyMaterials);
 
+		// initialise onload function
+		model.addAttribute("onLoadFun", "expertsSetting('inputstudymaterial')");
+
 		model.addAttribute("addStudyMaterialMessage", "");
 
 		model.addAttribute("button4", "btn btn-link collapsed");
@@ -246,7 +255,7 @@ public class ExpertsController {
 	 * @param title
 	 * @param link
 	 * @param model
-	 * @return
+	 * @return {@link Experts.html}
 	 */
 	@RequestMapping(value = "/addStudyMaterials", method = RequestMethod.POST)
 	public String addStudyMaterials(@ModelAttribute("Courses") Courses mainCourse,
@@ -259,6 +268,9 @@ public class ExpertsController {
 
 		studyMaterialsService.saveStudyMaterial(courseId, title, link);
 
+		// initialise onload function
+		model.addAttribute("onLoadFun", "expertsSetting('vediotitle')");
+
 		model.addAttribute("addStudyMaterialMessage", "Added a new Study Material");
 
 		model.addAttribute("button3", "btn btn-link collapsed");
@@ -266,22 +278,28 @@ public class ExpertsController {
 
 		return "Experts";
 	}
-	
-	
+
+	/**
+	 * To show the vedios in to experts
+	 * 
+	 * @param mainCourse
+	 * @param expertsHasCourses
+	 * @param studyMaterialsLink
+	 * @param model
+	 * @return {@link Experts.html}
+	 */
 	@RequestMapping(value = "/showExpertVedios", method = RequestMethod.POST)
 	public String showExpertVedios(@ModelAttribute("Courses") Courses mainCourse,
 			@ModelAttribute("ExpertsHasCourses") ExpertsHasCourses expertsHasCourses,
-			@RequestParam String studyMaterialsLink,
-			ModelMap model) {
-		
+			@RequestParam String studyMaterialsLink, ModelMap model) {
+
+		// initialise onload function
+		model.addAttribute("onLoadFun", "expertsSetting('vedioselector')");
+
+		// initialise the vedio link
 		model.addAttribute("vediolink", studyMaterialsLink);
-		
-		
+
 		return "Experts";
 	}
-	
-	
-	
-	
 
 }

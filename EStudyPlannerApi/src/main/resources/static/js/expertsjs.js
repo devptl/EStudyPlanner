@@ -1,7 +1,8 @@
 
-$(document).ready( function ()
+function expertsSetting(focusId)
 {
-    
+	
+	document.getElementById(focusId).focus();
 
     $("#addstudymaterial").click(function ()
     {
@@ -27,4 +28,4 @@ $(document).ready( function ()
     
     
     
-});
+}

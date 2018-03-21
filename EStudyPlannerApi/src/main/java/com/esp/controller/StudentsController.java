@@ -21,12 +21,11 @@ import com.esp.model.StudentsHasCourses;
 import com.esp.service.CoursesService;
 import com.esp.service.ExpertsService;
 import com.esp.service.Initialiser;
-
 import com.esp.service.SMTPMailSender;
 import com.esp.service.StudentsService;
 
 @Controller
-@SessionAttributes({ "username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
+@SessionAttributes({ "onLoadSchedule", "username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
 		"courseforstudymaterial", "shbutton1", "shbutton2", "shbutton3", "shbutton4", "shdiv1", "shdiv2", "shdiv3",
 		"shdiv4" })
 public class StudentsController {
@@ -94,7 +93,7 @@ public class StudentsController {
 	 * @param schedule
 	 * @param studentsHasCourses
 	 * @param model
-	 * @return
+	 * @return {@link Scheduler.html}
 	 */
 	@RequestMapping(value = "/entryUserAndMainCourse", method = RequestMethod.POST)
 	public String entryStudentWithMainCourse(@ModelAttribute("Schedule") Schedule schedule,
@@ -106,6 +105,9 @@ public class StudentsController {
 		ArrayList<Courses> minorCourses = null;
 		minorCourses = coursesService.mainCoursesById(id);
 		model.addAttribute("minorCourses", minorCourses);
+
+		// initialise onload function
+		model.addAttribute("onLoadSchedule", "scheduleSetting('minorcourseselector')");
 
 		// setting the togglers
 		model.addAttribute("shbutton1", "btn btn-link collapsed");
@@ -123,10 +125,11 @@ public class StudentsController {
 
 	/**
 	 * When student sets the minor courses
+	 * 
 	 * @param schedule
 	 * @param studentsHasCourses
 	 * @param model
-	 * @return
+	 * @return {@link Scheduler.html}
 	 */
 	@RequestMapping(value = "/entryUserAndMinorCourse", method = RequestMethod.POST)
 	public String entryStudentWithMinorCourse(@ModelAttribute("Schedule") Schedule schedule,
@@ -146,6 +149,10 @@ public class StudentsController {
 		ArrayList<Experts> allExperts = expertsService.findExpertsWithCoursesId(id);
 		model.addAttribute("allExperts", allExperts);
 
+		// initialise onload function
+		model.addAttribute("onLoadSchedule", "scheduleSetting('expertselector')");
+
+		// setting the togglers
 		model.addAttribute("shbutton1", "btn btn-link collapsed");
 		model.addAttribute("shdiv1", "collapse");
 

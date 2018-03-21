@@ -11,8 +11,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
     <link rel="stylesheet" href="css/Layout.css" />
     <title>E - Study Planner</title>
+    
+    <head>
+    <script src="js/schedulerjs.js" ></script>
+    </head>
 
-    <body>
+    <body th:onload="${onLoadSchedule}">
 
         <div class="container">
 
@@ -163,7 +167,7 @@
                                  		</div>
                                         <div class="form-group">
                                             <label for="validationServer02">Select the Major Course</label>
-                                            <select class="custom-select" id="validationServer02" th:field="*{coursesIdCourse}" required="required">
+                                            <select class="custom-select" id="maincourseselector" th:field="*{coursesIdCourse}" required="required">
                                                 <option th:each="mainCourse :${mainCourses.toArray()}"  
                                                 th:value="${mainCourse.getIdCourse()}" th:text="${mainCourse.getCourseName()}">One</option>
                                                
@@ -206,7 +210,7 @@
 										
 										<div class="form-group">
                                             <label for="validationServer03">Select the Minor Course</label>
-                                            <select class="custom-select" id="validationServer03"  th:field="*{coursesIdCourse}" required="required">
+                                            <select class="custom-select" id="minorcourseselector"  th:field="*{coursesIdCourse}" required="required">
                                                 <option th:each="minorCourse :${minorCourses.toArray()}" 
                                                 th:value="${minorCourse.getIdCourse()}" th:text="${minorCourse.getCourseName()}">Choose...</option>
     
@@ -260,7 +264,7 @@
                                                                   		
                                         <div class="form-group">
                                             <label for="validationServer01">Select your Expert</label>
-                                            <select class="custom-select" id="validationServer01" name="expertsUserName" required="required">
+                                            <select class="custom-select" id="expertselector" name="expertsUserName" required="required">
                                                 <option value="default">I am my expert</option>
                                                 <option th:each="allExpert :${allExperts.toArray()}"  
                                                 th:value="${allExpert.getUserName()}" th:text="${allExpert.getFirstName()}">One</option>

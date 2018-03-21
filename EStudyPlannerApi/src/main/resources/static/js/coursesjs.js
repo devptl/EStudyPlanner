@@ -2,9 +2,11 @@
  * 
  */
 
-$(document).ready( function ()
+function courseSetting(focusId)
 {
-    
+	
+	document.getElementById(focusId).focus();
+ 
 
     $("#addstudymaterial").click(function ()
     {
@@ -30,4 +32,4 @@ $(document).ready( function ()
     
     
     
-});
+}

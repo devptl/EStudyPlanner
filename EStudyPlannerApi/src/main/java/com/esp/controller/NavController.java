@@ -43,18 +43,19 @@ public class NavController {
 	/**
 	 * To set the timer
 	 * 
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping(value = "/timer", method = RequestMethod.GET)
 	@ResponseBody
 	public String startTimer() {
 		try {
-			// setTimer.runScheduler();
+			//starting the timer 
+		    setTimer.runScheduler();
 		} catch (Exception e) {
 			System.out.println("the thread exception");
 		}
 
-		return "timer not has started";
+		return "timer has started";
 	}
 	
 

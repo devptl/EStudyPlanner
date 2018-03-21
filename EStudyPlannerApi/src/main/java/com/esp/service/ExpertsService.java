@@ -14,6 +14,7 @@ import com.esp.model.Experts;
 import com.esp.model.ExpertsHasCourses;
 import com.esp.model.ExpertsHasStudyMaterials;
 import com.esp.model.LoggedUser;
+import com.esp.model.Students;
 import com.esp.model.StudentsHasExperts;
 
 @Service
@@ -29,6 +30,7 @@ public class ExpertsService {
 	 * For registration of particular expert in database
 	 * 
 	 * @param e
+	 *            - {@link Experts}
 	 * @return registrationStatus
 	 */
 	public boolean expertsRegistration(Experts e) {
@@ -46,6 +48,7 @@ public class ExpertsService {
 	 * When a particular experts logs in with a specific username
 	 * 
 	 * @param l1
+	 *            - {@link LoggedUser}
 	 * @return loginStatus
 	 */
 	public boolean expertsLogin(LoggedUser l1) {
@@ -77,6 +80,14 @@ public class ExpertsService {
 
 	}
 
+	/**
+	 * To get the list of study materials experts have listed
+	 * 
+	 * @param courseforstudymaterial
+	 * @param studyMaterialId
+	 * @param userName
+	 *            - {@link Experts}
+	 */
 	public void expertsHasStudyMAterials(String courseforstudymaterial, String[] studyMaterialId, String userName) {
 		int i, id;
 		ArrayList<ExpertsHasStudyMaterials> ex = expertsHasStudyMAterialWithUsernameAndCouseId(courseforstudymaterial,
@@ -110,7 +121,8 @@ public class ExpertsService {
 	 * list all the study material with a particular expert username
 	 * 
 	 * @param userName
-	 * @return
+	 *            - {@link Experts}
+	 * @return {@link ExpertsHasStudyMaterials}
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMAterialWithUsername(String userName) {
@@ -133,7 +145,9 @@ public class ExpertsService {
 	 * and course Id
 	 * 
 	 * @param id
+	 *            - CourseID
 	 * @param userName
+	 *            - {@link Experts}
 	 * @return {@link ExpertsHasStudyMaterials}
 	 */
 	@SuppressWarnings("unchecked")
@@ -160,6 +174,7 @@ public class ExpertsService {
 	 * To get the list of experts according to the given course id
 	 * 
 	 * @param id
+	 *            - CourseID
 	 * @return {@link Experts}
 	 */
 	@SuppressWarnings("unchecked")
@@ -184,7 +199,7 @@ public class ExpertsService {
 	 * To find and expert with his username
 	 * 
 	 * @param userName
-	 * @return
+	 * @return {@link Experts}
 	 */
 	public Experts findExpertByUsername(String userName) {
 		return dtoOperation.getExpertsComponents().findOneExpert(userName);
@@ -194,7 +209,10 @@ public class ExpertsService {
 	 * To find the expert with particular username
 	 * 
 	 * @param userName
-	 * @return
+	 *            - {@link Experts}
+	 * @param email
+	 *            - {@link Experts}
+	 * @return loginStatus
 	 */
 	public boolean findOneExpert(String userName, String email) {
 
@@ -215,9 +233,10 @@ public class ExpertsService {
 	 * the new password
 	 * 
 	 * @param userName
+	 *            - {@link Experts}
 	 * @param oldPassword
 	 * @param newPassword
-	 * @return
+	 * @return changepassword Status
 	 */
 	public boolean changeTheExpertPassword(String userName, String oldPassword, String newPassword) {
 
@@ -241,15 +260,17 @@ public class ExpertsService {
 	}
 
 	/**
-	 * To get the list of experts student has applied for
+	 * To get the list of Experts student has applied for
 	 * 
 	 * @param userName
-	 * @return
+	 *            - {@link Students}
+	 * @return {@link StudentsHasExperts}
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<StudentsHasExperts> getExpertForStudent(String userName) {
 		ArrayList<StudentsHasExperts> c = null;
 
+		// To get the Experts list
 		String queryString = "select * from students_has_experts where students_user_name=\"" + userName + "\"";
 		// Generate Query
 		Query query = entityManager.createNativeQuery(queryString, StudentsHasExperts.class);
@@ -264,12 +285,14 @@ public class ExpertsService {
 	 * To get the list of student following particular expert
 	 * 
 	 * @param userName
-	 * @return
+	 *            - {@link Experts}
+	 * @return {@link StudentsHasExperts}
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<StudentsHasExperts> getStudentsForExpert(String userName) {
 		ArrayList<StudentsHasExperts> c = null;
 
+		// To get the student list
 		String queryString = "select * from students_has_experts where experts_user_name=\"" + userName + "\"";
 		// Generate Query
 		Query query = entityManager.createNativeQuery(queryString, StudentsHasExperts.class);

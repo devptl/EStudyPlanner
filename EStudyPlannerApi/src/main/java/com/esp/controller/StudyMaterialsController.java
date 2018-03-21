@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.esp.model.Courses;
 import com.esp.model.StudentsHasStudyMaterials;
 import com.esp.model.StudyMaterials;
 import com.esp.service.StudyMaterialsService;
 
 @Controller
-@SessionAttributes({ "username", "minorCourse", "studyMaterials", "vediolink", "studentCompletedMaterials",
-		"perCompleted","noOfVedios", "shbutton1", "shdiv1" })
+@SessionAttributes({ "onLoadCourses", "username", "minorCourse", "studyMaterials", "vediolink",
+		"studentCompletedMaterials", "perCompleted", "noOfVedios", "shbutton1", "shdiv1" })
 public class StudyMaterialsController {
 
 	@Autowired
@@ -27,41 +28,58 @@ public class StudyMaterialsController {
 	 * 
 	 * @param studyMaterialsLink
 	 * @param model
-	 * @return
+	 * @return {@link Courses.html}
 	 */
 	@RequestMapping(value = "/showVedios", method = RequestMethod.POST)
 	public String showVedios(@RequestParam String studyMaterialsLink, ModelMap model) {
 
+		// initialise onload function
+		model.addAttribute("onLoadCourses", "courseSetting('vedioselector')");
+
+		// initialising the vediolink
 		model.addAttribute("vediolink", studyMaterialsLink);
 
 		return "Courses";
 
 	}
 
+	/**
+	 * When a student completes the study material and add it to the list
+	 * 
+	 * @param studentsUserName
+	 * @param noOfVedios
+	 * @param studyMaterialsList
+	 * @param model
+	 * @return {@link Courses.html}
+	 */
 	@RequestMapping(value = "/StudentCompletedMaterials", method = RequestMethod.POST)
-	public String studentCompletedMaterials(@RequestParam String studentsUserName,
-			@RequestParam int noOfVedios,
+	public String studentCompletedMaterials(@RequestParam String studentsUserName, @RequestParam int noOfVedios,
 			@RequestParam String studyMaterialsList, ModelMap model) {
 
 		String[] studyMaterialId = studyMaterialsList.split(",");
 
+		// saving the list to the student has study materials
 		studyMaterialsService.saveStudentHasStudyMaterials(studyMaterialId, studentsUserName);
 
 		ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials = studyMaterialsService
 				.getCompletedList(studentsUserName);
-		
+
+		// getting the new list of completed study materials
 		ArrayList<StudyMaterials> studylist = studyMaterialsService
 				.getStudyMaterialsForStudent(studentCompletedMaterials);
-		
-		
-		float comp=studentCompletedMaterials.size();
-        float perCompleted = (comp*100)/noOfVedios;
-        		
-        //completed percent initialisation
-      	model.addAttribute("perCompleted",perCompleted);
-	
+
+		// setting the percent
+		float comp = studentCompletedMaterials.size();
+		float perCompleted = (comp * 100) / noOfVedios;
+
+		// completed percent initialisation
+		model.addAttribute("perCompleted", perCompleted);
+
 		// new completed list initialisation
 		model.addAttribute("studentCompletedMaterials", studylist);
+
+		// initialise onload function
+		model.addAttribute("onLoadCourses", "courseSetting('inputstudymaterial')");
 
 		model.addAttribute("shbutton1", "btn btn-link");
 		model.addAttribute("shdiv1", "collapse show");

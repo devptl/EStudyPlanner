@@ -26,10 +26,11 @@ import com.esp.service.SMTPMailSender;
 import com.esp.service.StudentsService;
 
 @Controller
-@SessionAttributes({ "username", "fieldCourses", "mainCourses", "courseforstudymaterial", "minorCourses",
-		"studymaterials", "expertGivenStudyMaterials", "addStudyMaterialMessage", "schedule", "message", "allExperts",
-		"button1", "button2", "button3", "button4", "div1", "div2", "div3", "div4", "msg", "shbutton1", "shbutton2",
-		"adminForStudentsList","adminForExpertsList","shbutton3", "shbutton4", "shdiv1", "shdiv2", "shdiv3", "shdiv4" })
+@SessionAttributes({ "onLoadFun", "onLoadSchedule", "username", "fieldCourses", "mainCourses", "courseforstudymaterial",
+		"minorCourses", "studymaterials", "expertGivenStudyMaterials", "addStudyMaterialMessage", "schedule", "message",
+		"allExperts", "button1", "button2", "button3", "button4", "div1", "div2", "div3", "div4", "msg", "shbutton1",
+		"shbutton2", "adminForStudentsList", "adminForExpertsList", "shbutton3", "shbutton4", "shdiv1", "shdiv2",
+		"shdiv3", "shdiv4" })
 public class LoginController {
 
 	@Autowired
@@ -40,9 +41,9 @@ public class LoginController {
 
 	@Autowired
 	private SMTPMailSender sMTPMailSender;
-	
+
 	@Autowired
-	private AdminService adminService; 
+	private AdminService adminService;
 
 	@Autowired
 	private Initialiser initialiser;
@@ -58,7 +59,7 @@ public class LoginController {
 	 * @param schedule
 	 * @param studentsHasCourses
 	 * @param model
-	 * @return {@link Experts.html} or {@link Scheduler.html}
+	 * @return {@link Experts.html} or {@link Scheduler.html} or {@link Admin.html}
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
@@ -67,11 +68,14 @@ public class LoginController {
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
 
 		if (studentsService.studentsLogin(loggedUser, model)) {
-			
-			//set the toggle as schedule already set
+
+			// initialise onload function
+			model.addAttribute("onLoadSchedule", "scheduleSetting('maincourseselector')");
+
+			// set the toggle as schedule already set
 			model.addAttribute("shbutton1", "btn btn-link collapsed");
 			model.addAttribute("shdiv1", "collapse");
-				
+
 			model.addAttribute("shbutton2", "btn btn-link ");
 			model.addAttribute("shdiv2", "collapse show");
 
@@ -88,18 +92,19 @@ public class LoginController {
 			// on successfull login sending to experts page
 			return "Experts";
 
-		} 
-		else if(adminService.adminLogin(loggedUser)) {
-			
+		} else if (adminService.adminLogin(loggedUser)) {
+
+			// login as admin
+			// initialising the admin for students
 			ArrayList<AdminForStudents> adminForStudentsList = adminService.getAdminForStudent();
 			model.addAttribute("adminForStudentsList", adminForStudentsList);
-			
+
+			// initialising the admin for experts
 			ArrayList<AdminForExperts> adminForExpertsList = adminService.getAdminForExperts();
 			model.addAttribute("adminForExpertsList", adminForExpertsList);
-			
+
 			return "Admin";
-		}
-		else {
+		} else {
 
 			// on invalid login redirecting back to front page
 			model.addAttribute("msg", "invalid username or password");
@@ -119,7 +124,7 @@ public class LoginController {
 	 * @param email
 	 * @param role
 	 * @param model
-	 * @return
+	 * @return {@link front.html}
 	 */
 	@RequestMapping(value = "/forgotThePassword", method = RequestMethod.POST)
 	public String forgotThePassword(@ModelAttribute("LoggedUser") LoggedUser loggedUser,
@@ -139,7 +144,7 @@ public class LoginController {
 				sMTPMailSender.send(s1.getEmail(), "Forgot the password alert", text);
 			}
 
-			else if (expertsService.findOneExpert(userName, email)) { 
+			else if (expertsService.findOneExpert(userName, email)) {
 				// checking if experts exist the username and email
 
 				// sending the mail to expert with password
@@ -150,19 +155,19 @@ public class LoginController {
 						+ " we think that you forgot the password your password is " + e1.getPassword();
 
 				sMTPMailSender.send(e1.getEmail(), "Forgot the password alert", text);
-			
-			}else
-			{
+
+			} else {
 				msg = "invalid attempt to get user";
-				System.out.println("invalid attempt to get user");	
+				System.out.println("invalid attempt to get user");
 			}
 
 		} catch (Exception e) {
 			System.out.println("network error");
 			model.addAttribute("msg", msg);
-			
+
 		}
 
+		// setting the message for front page
 		model.addAttribute("msg", msg);
 		return "front";
 	}
@@ -179,7 +184,7 @@ public class LoginController {
 	 * @param newPassword
 	 * @param role
 	 * @param model
-	 * @return
+	 * @return {@link front.html}
 	 */
 	@RequestMapping(value = "/changeThePassword", method = RequestMethod.POST)
 	public String changeThePassword(@ModelAttribute("LoggedUser") LoggedUser loggedUser,
@@ -213,8 +218,7 @@ public class LoginController {
 
 				sMTPMailSender.send(e1.getEmail(), "Forgot the password alert", text);
 
-			}else
-			{
+			} else {
 				msg = "invalid attempt to change password";
 				System.out.println("invalid attempt to change password");
 			}
@@ -223,6 +227,7 @@ public class LoginController {
 			System.out.println("network error");
 		}
 
+		// setting the message for front page
 		model.addAttribute("msg", msg);
 		return "front";
 	}

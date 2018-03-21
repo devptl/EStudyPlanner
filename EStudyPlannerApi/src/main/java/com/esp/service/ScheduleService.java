@@ -28,7 +28,7 @@ public class ScheduleService {
 	 * To get the difference of timing
 	 * 
 	 * @param schedule
-	 * @return
+	 * @return {@link Integer}
 	 */
 	public int[] checkSchedule(Schedule schedule) {
 
@@ -45,9 +45,9 @@ public class ScheduleService {
 	/**
 	 * Get the diffence between time in and out
 	 * 
-	 * @param t1
-	 * @param t2
-	 * @return
+	 * @param t1 - time in hours
+	 * @param t2 - time in mins
+	 * @return {@link Integer}
 	 */
 	public static int differnceOfTime(String t1, String t2) {
 
@@ -78,7 +78,7 @@ public class ScheduleService {
 	/**
 	 * To save the schedule in the database and set the other display
 	 * 
-	 * @param s
+	 * @param s - {@link Schedule}
 	 * @param model
 	 */
 	public void saveSchedule(Schedule schedule, ModelMap model) {
@@ -114,8 +114,8 @@ public class ScheduleService {
 	/**
 	 * To find the schedule with the particualar username
 	 * 
-	 * @param username
-	 * @return
+	 * @param username - {@link Students}
+	 * @return {@link Schedule}
 	 */
 	public Schedule findSchedule(String username) {
 		return dtoOperation.getScheduleComponents().findOneSchedule(username);

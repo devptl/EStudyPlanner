@@ -26,6 +26,12 @@ public class StudyMaterialsService {
 	@PersistenceContext
 	EntityManager entityManager;
 
+	/**
+	 * To get the list of study material by Course ID
+	 * 
+	 * @param minorCourseId
+	 * @return {@link StudyMaterials}
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<StudyMaterials> showStudyMaterialsByCourseid(int minorCourseId) {
 		ArrayList<StudyMaterials> s1 = null;
@@ -41,6 +47,12 @@ public class StudyMaterialsService {
 		return s1;
 	}
 
+	/**
+	 * To get the list of study material with particular course name
+	 * 
+	 * @param minorCourseName
+	 * @return {@link StudyMaterials}
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<StudyMaterials> showStudyMaterialsByCourseName(String minorCourseName) {
 		ArrayList<StudyMaterials> s1 = null;
@@ -83,14 +95,23 @@ public class StudyMaterialsService {
 	/**
 	 * To list all the available study materials
 	 * 
-	 * @return
+	 * @return {@link StudyMaterials}
 	 */
 	public ArrayList<StudyMaterials> allStudyMaterials() {
 		return dtoOperation.getStudyMaterialsComponents().allStudyMaterials();
 	}
 
+	/**
+	 * To Save the Study material in database
+	 * 
+	 * @param coursId
+	 * @param title
+	 * @param link
+	 */
 	public void saveStudyMaterial(int coursId, String title, String link) {
 		StudyMaterials s = new StudyMaterials();
+
+		// setting the Id title link
 		s.setCoursesIdCourse(coursId);
 		s.setTitle(title);
 		s.setStudyMaterialLink(link);
@@ -101,7 +122,7 @@ public class StudyMaterialsService {
 	 * To get the study material with the particular student username
 	 * 
 	 * @param studentsUserName
-	 * @return
+	 * @return {@link StudentsHasStudyMaterials}
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<StudentsHasStudyMaterials> getCompletedList(String studentsUserName) {
@@ -134,6 +155,8 @@ public class StudyMaterialsService {
 		int i, id;
 		for (i = 0; i < studyMaterialId.length; i++) {
 			id = Integer.parseInt(studyMaterialId[i]);
+
+			// saving the list to databse
 			StudentsHasStudyMaterials s = new StudentsHasStudyMaterials(studentsUserName, id, "completed");
 			dtoOperation.getStudentsComponents().saveStudentsHasStudyMaterials(s);
 
@@ -142,36 +165,42 @@ public class StudyMaterialsService {
 
 	/**
 	 * To get the study material list with the experts name
+	 * 
 	 * @param expertsHasStudyMaterials
-	 * @return
+	 * @return {@link StudyMaterials}
 	 */
 	public ArrayList<StudyMaterials> getStudyMaterials(ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials) {
-		ArrayList<StudyMaterials> s1=new ArrayList<StudyMaterials>();
-		
-		expertsHasStudyMaterials.forEach(x->s1.add(dtoOperation.getStudyMaterialsComponents().findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
-		
+		ArrayList<StudyMaterials> s1 = new ArrayList<StudyMaterials>();
+
+		expertsHasStudyMaterials.forEach(x -> s1.add(dtoOperation.getStudyMaterialsComponents()
+				.findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
+
 		return s1;
 	}
-	
-	/** 
+
+	/**
 	 * To get the study material list with student name
+	 * 
 	 * @param studentCompletedMaterials
-	 * @return
+	 * @return {@link StudyMaterials}
 	 */
-	public ArrayList<StudyMaterials> getStudyMaterialsForStudent(ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials) {
-		ArrayList<StudyMaterials> s1=new ArrayList<StudyMaterials>();
-		
-		studentCompletedMaterials.forEach(x->s1.add(dtoOperation.getStudyMaterialsComponents().findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
-		
+	public ArrayList<StudyMaterials> getStudyMaterialsForStudent(
+			ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials) {
+		ArrayList<StudyMaterials> s1 = new ArrayList<StudyMaterials>();
+
+		// getting the list
+		studentCompletedMaterials.forEach(x -> s1.add(dtoOperation.getStudyMaterialsComponents()
+				.findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
+
 		return s1;
 	}
 
 	/**
 	 * To track how much course he has completed
 	 * 
-	 * @param s1
+	 * @param s1 - {@link StudyMaterials}
 	 * @param studentCompletedMaterials
-	 * @return
+	 * @return {@link Float}
 	 */
 	public float trackCourseCompletion(ArrayList<StudyMaterials> s1,
 			ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials) {

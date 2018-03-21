@@ -21,6 +21,13 @@ public class SetTimer {
 	@Autowired
 	private SMTPMailSender sMTPMailSender;
 
+	/**
+	 * To set the timer when the free slot for particular student is present the
+	 * timer will send the mail to their respective mail id when the hour of the
+	 * slot matches the current hour
+	 * 
+	 * @throws InterruptedException
+	 */
 	@Scheduled(cron = "0 0 * ? * *")
 	public void runScheduler() throws InterruptedException {
 		ArrayList<Schedule> allSchedule = dtoOperation.getScheduleComponents().allSchedule();

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.esp.dto.DtoOperation;
 import com.esp.model.Courses;
+import com.esp.model.Experts;
+import com.esp.model.Students;
 
 @Service
 public class CoursesService {
@@ -99,7 +101,7 @@ public class CoursesService {
 	/**
 	 * To get the courses with particualarr id
 	 * 
-	 * @param id
+	 * @param id - CourseID
 	 * @return {@link Courses}
 	 */
 	public Courses getCourseWithId(int id) {
@@ -110,6 +112,7 @@ public class CoursesService {
 
 		Courses c = null;
 
+		// To find the courses by name
 		String queryString = "select * from courses where course_name =\"" + name + "\"";
 		// Generate Query
 		Query query = entityManager.createNativeQuery(queryString, Courses.class);
@@ -123,13 +126,14 @@ public class CoursesService {
 	/**
 	 * Get the Courses list with particular student has registered
 	 * 
-	 * @param userName
-	 * @return
+	 * @param userName - {@link Students}
+	 * @return {@link Courses} 
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<Courses> getCoursesForStudent(String userName) {
 		ArrayList<Courses> c = null;
 
+		// To find the couses list for particular student
 		String queryString = "select c.id_course,c.course_name,c.course_duration,c.parent_course_id from"
 				+ " courses c inner join students_has_courses sh" + " on c.id_course=sh.courses_id_course "
 				+ "and sh.students_user_name=\"" + userName + "\"";
@@ -145,13 +149,14 @@ public class CoursesService {
 	/**
 	 * Get the Courses list with particular expert has registered
 	 * 
-	 * @param userName
-	 * @return
+	 * @param userName - {@link Experts}
+	 * @return {@link Courses}
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<Courses> getCoursesForExpert(String userName) {
 		ArrayList<Courses> c = null;
 
+		// To fint the course list for expert
 		String queryString = "select c.id_course,c.course_name,c.course_duration,c.parent_course_id from"
 				+ " courses c inner join experts_has_courses eh" + " on c.id_course=eh.courses_id_course "
 				+ "and eh.experts_user_name=\"" + userName + "\"";

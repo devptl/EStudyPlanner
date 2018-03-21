@@ -22,7 +22,7 @@ import com.esp.service.StudentsService;
 import com.esp.service.StudyMaterialsService;
 
 @Controller
-@SessionAttributes({ "username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
+@SessionAttributes({ "onLoadSchedule","username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
 		"courseforstudymaterial", "minorCourse", "studyMaterials", "vediolink", "shbutton1", "shbutton2", "shbutton3",
 		"shbutton4", "studentCompletedMaterials", "noOfVedios", "perCompleted", "shdiv1", "shdiv2", "shdiv3",
 		"shdiv4" })
@@ -65,7 +65,7 @@ public class ScheduleController {
 	 * @param schedule
 	 * @param studentsHasCourses
 	 * @param model
-	 * @return
+	 * @return {@link Scheduler.html}
 	 */
 	@RequestMapping(value = "/enterSchedule", method = RequestMethod.POST)
 	public String scheduleEntry(@ModelAttribute("Schedule") Schedule schedule,
@@ -99,7 +99,7 @@ public class ScheduleController {
 	 * @param courseforstudymaterial
 	 * @param expertsUserName
 	 * @param model
-	 * @return
+	 * @return {@link Courses.html}
 	 */
 	@RequestMapping(value = "/showStudyMaterials", method = RequestMethod.POST)
 	public String showStudyMaterials(@ModelAttribute("Schedule") Schedule schedule,
@@ -132,6 +132,9 @@ public class ScheduleController {
 
 		// completed percent initialisation
 		model.addAttribute("perCompleted", perCompleted);
+		
+		// initialise onload function
+		model.addAttribute("onLoadCourses", "courseSetting('vedioselector')");
 
 		// completed percent initialisation
 		model.addAttribute("noOfVedios", s1.size());
@@ -141,7 +144,9 @@ public class ScheduleController {
 
 		// setting the maincourse and study material for display
 		model.addAttribute("minorCourse", courseforstudymaterial);
+		//setting the study materials
 		model.addAttribute("studyMaterials", s1);
+		//default vedio to be shown 
 		model.addAttribute("vediolink", "https://www.youtube-nocookie.com/embed/wlLfNls75RY?rel=0");
 
 		return "Courses";

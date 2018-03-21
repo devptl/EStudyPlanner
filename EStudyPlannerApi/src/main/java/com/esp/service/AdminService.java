@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esp.controller.AdminController;
 import com.esp.dto.DtoOperation;
 import com.esp.model.AdminForExperts;
 import com.esp.model.AdminForStudents;
@@ -39,8 +40,8 @@ public class AdminService {
 	/**
 	 * For login as an admin
 	 * 
-	 * @param l1
-	 * @return
+	 * @param l1 - {@link LoggedUser}
+	 * @return {@link AdminController}
 	 */
 	public boolean adminLogin(LoggedUser l1) {
 		String loginId = l1.getUserName();
@@ -62,11 +63,12 @@ public class AdminService {
 	/**
 	 * Return the full detail of the student
 	 * 
-	 * @return
+	 * @return {@link AdminForStudents}
 	 */
 	public ArrayList<AdminForStudents> getAdminForStudent() {
 		ArrayList<AdminForStudents> adminForStudentsList = new ArrayList<AdminForStudents>();
 
+		// getting list of all the students
 		ArrayList<Students> students = dtoOperation.getStudentsComponents().allStudents();
 
 		int i;
@@ -101,11 +103,12 @@ public class AdminService {
 	/**
 	 * To get the details statistics for experts
 	 * 
-	 * @return
+	 * @return {@link AdminForExperts}
 	 */
 	public ArrayList<AdminForExperts> getAdminForExperts() {
 		ArrayList<AdminForExperts> adminForExpertsList = new ArrayList<AdminForExperts>();
 
+		// getting the list of all the experts
 		ArrayList<Experts> experts = dtoOperation.getExpertsComponents().allExperts();
 
 		int i;

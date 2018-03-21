@@ -33,7 +33,7 @@ public class StudentsService {
 	/**
 	 * When a particular student registers and data is to saved in the database
 	 * 
-	 * @param s
+	 * @param s - {@link Students}
 	 * @param model
 	 * @return registrationStatus
 	 */
@@ -68,7 +68,7 @@ public class StudentsService {
 	/**
 	 * When a student logs in and the Scheduler has to be set
 	 * 
-	 * @param l1
+	 * @param l1 - {@link LoggedUser}
 	 * @param model
 	 * @return loginStatus
 	 */
@@ -111,7 +111,7 @@ public class StudentsService {
 	/**
 	 * To get the student list with the username
 	 * 
-	 * @param userName
+	 * @param userName - {@link Students}
 	 * @return {@link Students}
 	 */
 	public Students findStudentByUsername(String userName) {
@@ -121,7 +121,8 @@ public class StudentsService {
 	/**
 	 * To find a student with particular username
 	 * 
-	 * @param userName
+	 * @param userName - {@link Students}
+	 * @param email - {@link Students}
 	 * @return {@link Students}
 	 */
 	public boolean findOneStudent(String userName, String email) {
@@ -130,13 +131,21 @@ public class StudentsService {
 			return false;
 		} else {// checking if student exist
 			if (dtoOperation.getStudentsComponents().findOneStudent(userName).getEmail().equals(email)) {
-				
+
 				return true;
 			}
 			return false;
 		}
 	}
 
+	/**
+	 * When student changes the password
+	 * 
+	 * @param userName
+	 * @param oldPassword
+	 * @param newPassword
+	 * @return ChangePassword Status
+	 */
 	public boolean changeTheStudentPassword(String userName, String oldPassword, String newPassword) {
 
 		// checking is student exist
@@ -159,7 +168,7 @@ public class StudentsService {
 	/**
 	 * To save the student with the courses in join table
 	 * 
-	 * @param s
+	 * @param s - {@link StudentsHasExperts}
 	 */
 	public void saveStudentsAndMinorCourse(StudentsHasCourses s) {
 		dtoOperation.getStudentsComponents().saveStudentsHasCourses(s);
@@ -168,7 +177,7 @@ public class StudentsService {
 	/**
 	 * To save the student that has experts in join table
 	 * 
-	 * @param se
+	 * @param se- {@link StudentsHasExperts}s
 	 */
 	public void saveStudentsHasExperts(StudentsHasExperts se) {
 		dtoOperation.getStudentsComponents().saveStudentsHasExperts(se);

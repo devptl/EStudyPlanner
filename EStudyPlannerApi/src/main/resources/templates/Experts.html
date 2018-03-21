@@ -13,8 +13,12 @@
 
 
     <title>E - Study Planner</title>
+    <head>
+    
+    <script src="js/expertsjs.js" ></script>
+    </head>
 
-    <body>
+    <body th:onload="${onLoadFun}" >
 
         <div class="container">
 
@@ -32,11 +36,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/Experts">Experts</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Scheduler</a>
-                        </li>
-                        
-                        
+                       
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
@@ -75,7 +75,7 @@
                                     <form class="needs-validation" th:object="${Courses}" action="/ExpertsByMainId" method="post">
                                            <div class="form-group">
                                             <label for="validationServer02">Select the Major Course</label>
-                                            <select class="custom-select" id="validationServer02" th:field="*{idCourse}" required="required">
+                                            <select class="custom-select" id="maincourseselector" th:field="*{idCourse}" required="required">
                                                 <option th:each="mainCourse :${mainCourses.toArray()}"  
                                                 th:value="${mainCourse.getIdCourse()}" th:text="${mainCourse.getCourseName()}">One</option>
                                                 
@@ -225,7 +225,7 @@
                                     			<div class="input-group-prepend">
                                           			<span class="input-group-text" id="inputGroupPrepend2">Title</span>
                                         		</div>
-                                        		<input type="text" class="form-control" id="validationServerPassword" placeholder="Title" 
+                                        		<input type="text" class="form-control" id="vediotitle" placeholder="Title" 
                                         		 name="title" aria-describedby="inputGroupPrepend2" required="required"/>
                                         		<div class="invalid-feedback"> Enter the title !</div>
                                       			<div class="valid-feedback"> Looks good! </div> 
@@ -256,7 +256,7 @@
                 		<h3>Study Materials</h3>
                 		
                 		<div class="input-group">
-                    		<select class="custom-select" id="validationServer02" name="studyMaterialsLink" required="required">
+                    		<select class="custom-select" id="vedioselector" name="studyMaterialsLink" required="required">
                     			<option th:each="studymaterial :${studymaterials.toArray()}"  
                         		th:value="${studymaterial.getStudyMaterialLink()}" th:text="${studymaterial.getTitle()}">One</option>
                                                 
@@ -289,7 +289,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="js/expertsjs.js" ></script>
+    
 
     </body>
 </html>
