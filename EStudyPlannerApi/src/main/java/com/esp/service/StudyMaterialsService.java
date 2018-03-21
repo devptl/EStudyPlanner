@@ -140,6 +140,11 @@ public class StudyMaterialsService {
 		}
 	}
 
+	/**
+	 * To get the study material list with the experts name
+	 * @param expertsHasStudyMaterials
+	 * @return
+	 */
 	public ArrayList<StudyMaterials> getStudyMaterials(ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials) {
 		ArrayList<StudyMaterials> s1=new ArrayList<StudyMaterials>();
 		
@@ -148,7 +153,11 @@ public class StudyMaterialsService {
 		return s1;
 	}
 	
-	
+	/** 
+	 * To get the study material list with student name
+	 * @param studentCompletedMaterials
+	 * @return
+	 */
 	public ArrayList<StudyMaterials> getStudyMaterialsForStudent(ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials) {
 		ArrayList<StudyMaterials> s1=new ArrayList<StudyMaterials>();
 		

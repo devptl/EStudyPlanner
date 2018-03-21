@@ -107,17 +107,61 @@ public class CoursesService {
 	}
 
 	public Courses findCourseByName(String name) {
-		
-		Courses c=null;
-		
-		String queryString = "select * from courses where course_name =\""+name+"\"";
+
+		Courses c = null;
+
+		String queryString = "select * from courses where course_name =\"" + name + "\"";
 		// Generate Query
 		Query query = entityManager.createNativeQuery(queryString, Courses.class);
 		// Map result set to list of Objects
 		c = (Courses) query.getSingleResult();
-		
+
 		return c;
-				
+
 	}
-	
+
+	/**
+	 * Get the Courses list with particular student has registered
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Courses> getCoursesForStudent(String userName) {
+		ArrayList<Courses> c = null;
+
+		String queryString = "select c.id_course,c.course_name,c.course_duration,c.parent_course_id from"
+				+ " courses c inner join students_has_courses sh" + " on c.id_course=sh.courses_id_course "
+				+ "and sh.students_user_name=\"" + userName + "\"";
+		// Generate Query
+		Query query = entityManager.createNativeQuery(queryString, Courses.class);
+		// Map result set to list of Objects
+		c = (ArrayList<Courses>) query.getResultList();
+
+		return c;
+
+	}
+
+	/**
+	 * Get the Courses list with particular expert has registered
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Courses> getCoursesForExpert(String userName) {
+		ArrayList<Courses> c = null;
+
+		String queryString = "select c.id_course,c.course_name,c.course_duration,c.parent_course_id from"
+				+ " courses c inner join experts_has_courses eh" + " on c.id_course=eh.courses_id_course "
+				+ "and eh.experts_user_name=\"" + userName + "\"";
+		// Generate Query
+		Query query = entityManager.createNativeQuery(queryString, Courses.class);
+		// Map result set to list of Objects
+		c = (ArrayList<Courses>) query.getResultList();
+
+		return c;
+
+	}
+
 }

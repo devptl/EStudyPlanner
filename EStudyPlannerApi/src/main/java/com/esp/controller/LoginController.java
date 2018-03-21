@@ -1,5 +1,7 @@
 package com.esp.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.esp.model.AdminForExperts;
+import com.esp.model.AdminForStudents;
 import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
 import com.esp.model.Schedule;
 import com.esp.model.Students;
 import com.esp.model.StudentsHasCourses;
+import com.esp.service.AdminService;
 import com.esp.service.ExpertsService;
 import com.esp.service.Initialiser;
 import com.esp.service.SMTPMailSender;
@@ -24,7 +29,7 @@ import com.esp.service.StudentsService;
 @SessionAttributes({ "username", "fieldCourses", "mainCourses", "courseforstudymaterial", "minorCourses",
 		"studymaterials", "expertGivenStudyMaterials", "addStudyMaterialMessage", "schedule", "message", "allExperts",
 		"button1", "button2", "button3", "button4", "div1", "div2", "div3", "div4", "msg", "shbutton1", "shbutton2",
-		"shbutton3", "shbutton4", "shdiv1", "shdiv2", "shdiv3", "shdiv4" })
+		"adminForStudentsList","adminForExpertsList","shbutton3", "shbutton4", "shdiv1", "shdiv2", "shdiv3", "shdiv4" })
 public class LoginController {
 
 	@Autowired
@@ -35,6 +40,9 @@ public class LoginController {
 
 	@Autowired
 	private SMTPMailSender sMTPMailSender;
+	
+	@Autowired
+	private AdminService adminService; 
 
 	@Autowired
 	private Initialiser initialiser;
@@ -80,7 +88,18 @@ public class LoginController {
 			// on successfull login sending to experts page
 			return "Experts";
 
-		} else {
+		} 
+		else if(adminService.adminLogin(loggedUser)) {
+			
+			ArrayList<AdminForStudents> adminForStudentsList = adminService.getAdminForStudent();
+			model.addAttribute("adminForStudentsList", adminForStudentsList);
+			
+			ArrayList<AdminForExperts> adminForExpertsList = adminService.getAdminForExperts();
+			model.addAttribute("adminForExpertsList", adminForExpertsList);
+			
+			return "Admin";
+		}
+		else {
 
 			// on invalid login redirecting back to front page
 			model.addAttribute("msg", "invalid username or password");

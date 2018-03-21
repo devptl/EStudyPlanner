@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/Layout.css" />
+    <title>E - Study Planner</title>
+
+    <body>
+
+        <div class="container">
+
+
+            <!--navigation menu-->
+            <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary" id="navbar">
+                <a class="navbar-brand" href="/">E-Study and Planner</a>
+                <br/>
+                <hr class="my-4"/>
+                
+                
+                
+                
+                
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                         
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin">Students</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/adminForExpert">Experts</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                        <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
+                         <a href="/" class="btn btn-dark my-2 my-sm-0" id="loginButton"  >
+               			LogOut
+           				</a>
+                    </form>
+                </div>
+            </nav>
+
+
+            <div class="jumbotron" id="main">
+                <h2 class="display-4">Students Statistics</h2>
+                
+                <!--main content-->
+                <div id="maincontent">
+                
+                <table>
+  							<tr>
+    						<th>Student Username</th>
+   							<th>Student Email</th>
+    						<th>Courses Opted</th>
+    						<th>Expert selected</th>
+    						<th>Study Material Completed</th>
+  							</tr>
+  								<tr th:each="adminForStudentsListElement :${adminForStudentsList.toArray()}">
+    								<td th:text="${adminForStudentsListElement.getStudents().getUserName()}">Alfreds Futterkiste</td>
+    								<td th:text="${adminForStudentsListElement.getStudents().getEmail()}">Alfreds Futterkiste</td>
+    								<td>
+    								   <table>
+    								   <tr th:each="courseListElement :${adminForStudentsListElement.getCoursesList().toArray()}" >
+    								   <td th:text="${courseListElement.getCourseName()}">
+    								   </td>
+    								   </tr>
+    								   </table>
+    								</td>
+    								<td>
+    								   <table>
+    								   <tr th:each="expertListElement :${adminForStudentsListElement.getExpertslist().toArray()}" >
+    								   <td th:text="${expertListElement.getExpertsUserName()}">
+    								   </td>
+    								   </tr>
+    								   </table>
+    								</td>
+    								<td>
+    								   <table>
+    								   <tr th:each="studyMaterialListElement :${adminForStudentsListElement.getStudyMaterialsList().toArray()}" >
+    								   <td th:text="${studyMaterialListElement.getTitle()}">
+    								   </td>
+    								   </tr>
+    								   </table>
+    								</td>
+  								</tr>
+  
+								</table>
+                
+                
+             
+            
+                   
+                                  
+                 </div>
+            </div>
+       </div>
+                
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <script src="js/coursesjs.js" ></script>
+</body>
+</html>

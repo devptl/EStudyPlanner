@@ -3,6 +3,7 @@ package com.esp.dto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esp.Component.AdminComponents;
 import com.esp.Component.CoursesComponents;
 import com.esp.Component.ExpertsComponents;
 import com.esp.Component.ScheduleComponents;
@@ -26,6 +27,9 @@ public class DtoOperation {
 	
 	@Autowired
 	private ScheduleComponents scheduleComponents;
+	
+	@Autowired
+	private AdminComponents adminComponents; 
 
 	public CoursesComponents getCoursesComponents() {
 		return coursesComponents;
@@ -46,6 +50,12 @@ public class DtoOperation {
 	public ScheduleComponents getScheduleComponents() {
 		return scheduleComponents;
 	}
+
+	public AdminComponents getAdminComponents() {
+		return adminComponents;
+	}
+	
+	
 	
 	
 	

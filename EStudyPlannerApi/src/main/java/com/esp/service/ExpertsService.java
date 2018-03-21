@@ -14,6 +14,7 @@ import com.esp.model.Experts;
 import com.esp.model.ExpertsHasCourses;
 import com.esp.model.ExpertsHasStudyMaterials;
 import com.esp.model.LoggedUser;
+import com.esp.model.StudentsHasExperts;
 
 @Service
 public class ExpertsService {
@@ -179,6 +180,12 @@ public class ExpertsService {
 		return s1;
 	}
 
+	/**
+	 * To find and expert with his username
+	 * 
+	 * @param userName
+	 * @return
+	 */
 	public Experts findExpertByUsername(String userName) {
 		return dtoOperation.getExpertsComponents().findOneExpert(userName);
 	}
@@ -232,4 +239,45 @@ public class ExpertsService {
 		}
 
 	}
+
+	/**
+	 * To get the list of experts student has applied for
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<StudentsHasExperts> getExpertForStudent(String userName) {
+		ArrayList<StudentsHasExperts> c = null;
+
+		String queryString = "select * from students_has_experts where students_user_name=\"" + userName + "\"";
+		// Generate Query
+		Query query = entityManager.createNativeQuery(queryString, StudentsHasExperts.class);
+		// Map result set to list of Objects
+		c = (ArrayList<StudentsHasExperts>) query.getResultList();
+
+		return c;
+
+	}
+
+	/**
+	 * To get the list of student following particular expert
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<StudentsHasExperts> getStudentsForExpert(String userName) {
+		ArrayList<StudentsHasExperts> c = null;
+
+		String queryString = "select * from students_has_experts where experts_user_name=\"" + userName + "\"";
+		// Generate Query
+		Query query = entityManager.createNativeQuery(queryString, StudentsHasExperts.class);
+		// Map result set to list of Objects
+		c = (ArrayList<StudentsHasExperts>) query.getResultList();
+
+		return c;
+
+	}
+
 }
