@@ -39,7 +39,7 @@ public class CourseController {
 	@ResponseBody
 	public ArrayList<Courses> fieldCourse() {
 		ArrayList<Courses> s1;
-		s1 = coursesService.fieldCourses();
+		s1 = coursesService.getfieldCourses(0);
 		return s1;
 	}
 

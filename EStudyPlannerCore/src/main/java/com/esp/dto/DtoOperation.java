@@ -53,13 +53,6 @@ public class DtoOperation {
 
 	public AdminComponents getAdminComponents() {
 		return adminComponents;
-	}
-	
-	
-	
-	
-	
-	
-	
+	}	
 	
 }

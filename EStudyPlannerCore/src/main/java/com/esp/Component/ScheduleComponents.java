@@ -3,12 +3,12 @@ package com.esp.Component;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.esp.model.Schedule;
 import com.esp.repository.ScheduleRepository;
 
-@Service
+@Component
 public class ScheduleComponents {
 	
 	@Autowired

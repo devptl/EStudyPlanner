@@ -33,7 +33,7 @@ public class Initialiser {
 
 		// initalise the field courses
 		ArrayList<Courses> fieldCourses = null;
-		fieldCourses = coursesService.fieldCourses();
+		fieldCourses = coursesService.getfieldCourses(0);
 		model.addAttribute("fieldCourses", fieldCourses);
 
 		String msg = "";
@@ -53,12 +53,15 @@ public class Initialiser {
 
 		// intial list of fields
 		ArrayList<Courses> fieldCourses = null;
-		fieldCourses = coursesService.fieldCourses();
+		fieldCourses = coursesService.getfieldCourses(0);
 		model.addAttribute("fieldCourses", fieldCourses);
 
 		// initalise the couseForStudyMaterial
 		String courseForStudyMaterial = "";
 		model.addAttribute("courseforstudymaterial", courseForStudyMaterial);
+		
+		//initialise the msg
+		model.addAttribute("msg", "");
 
 		// initalise study materials
 		ArrayList<StudyMaterials> studyMaterials = null;
@@ -159,6 +162,22 @@ public class Initialiser {
 		ArrayList<Experts> allExperts = null;
 		allExperts = expertsService.getAllExperts();
 		model.addAttribute("allExperts", allExperts);
+
+		// initialise onload function
+		model.addAttribute("onLoadSchedule", "scheduleSetting('slotOneIn')");
+
+		// initialise the togglers
+		model.addAttribute("shbutton1", "btn btn-link");
+		model.addAttribute("shdiv1", "collapse show");
+
+		model.addAttribute("shbutton2", "btn btn-link collapsed");
+		model.addAttribute("shdiv2", "collapse");
+
+		model.addAttribute("shbutton3", "btn btn-link collapsed");
+		model.addAttribute("shdiv3", "collapse");
+
+		model.addAttribute("shbutton4", "btn btn-link collapsed");
+		model.addAttribute("shdiv4", "collapse");
 
 	}
 

@@ -2,8 +2,6 @@ package com.esp.controller;
 
 import java.util.ArrayList;
 
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,22 +16,22 @@ import com.esp.model.Experts;
 import com.esp.model.ExpertsHasCourses;
 import com.esp.model.ExpertsHasStudyMaterials;
 import com.esp.model.LoggedUser;
-import com.esp.model.Students;
+import com.esp.model.Schedule;
+import com.esp.model.StudentsHasCourses;
 import com.esp.model.StudyMaterials;
 import com.esp.service.CoursesService;
 import com.esp.service.ExpertsService;
 import com.esp.service.Initialiser;
-import com.esp.service.SMTPMailSender;
+import com.esp.service.ScheduleService;
 import com.esp.service.StudyMaterialsService;
 
 @Controller
+@RequestMapping("/Experts")
 @SessionAttributes({ "onLoadFun", "vediolink", "username", "fieldCourses", "mainCourses", "minorCourses",
 		"studymaterials", "expertGivenStudyMaterials", "addStudyMaterialMessage", "button1", "button2", "button3",
-		"button4", "div1", "courseforstudymaterial", "div2", "div3", "div4" })
+		"button4", "div1", "courseforstudymaterial", "div2", "div3", "div4", "schedule", "message", "allExperts",
+		"shbutton1", "shbutton2", "shbutton3", "shbutton4", "shdiv1", "shdiv2", "shdiv3", "shdiv4" })
 public class ExpertsController {
-
-	@Autowired
-	private SMTPMailSender sMTPMailSender;
 
 	@Autowired
 	private CoursesService coursesService;
@@ -47,6 +45,9 @@ public class ExpertsController {
 	@Autowired
 	private StudyMaterialsService studyMaterialsService;
 
+	@Autowired
+	private ScheduleService scheduleService;
+
 	/**
 	 * To set the inital display of experts so that the can select field and major
 	 * courses
@@ -55,7 +56,7 @@ public class ExpertsController {
 	 * @param model
 	 * @return {@link Experts.html}
 	 */
-	@RequestMapping(value = "/Experts", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String expertDisplay(@ModelAttribute("Courses") Courses mainCourse, ModelMap model) {
 
 		initialiser.expertInitialiser("sanket", model);
@@ -70,7 +71,7 @@ public class ExpertsController {
 	 * @param model
 	 * @return {@link Experts.html}
 	 */
-	@RequestMapping(value = "/ExpertsByMainId", method = RequestMethod.POST)
+	@RequestMapping(value = "/MainId", method = RequestMethod.POST)
 	public String expertDisplayByMainCourseId(@ModelAttribute("Courses") Courses mainCourse, ModelMap model) {
 
 		// get the main course id to display minor courses
@@ -114,7 +115,7 @@ public class ExpertsController {
 	 * @param model
 	 * @return {@link Experts.html}
 	 */
-	@RequestMapping(value = "/ExpertsHasMinorCourses", method = RequestMethod.POST)
+	@RequestMapping(value = "/MinorCourses", method = RequestMethod.POST)
 	public String expertsHasMinorCourses(@ModelAttribute("Courses") Courses mainCourse,
 			@ModelAttribute("ExpertsHasCourses") ExpertsHasCourses expertsHasCourses, ModelMap model) {
 
@@ -160,51 +161,6 @@ public class ExpertsController {
 	}
 
 	/**
-	 * This controller is for the Expert registration
-	 * 
-	 * @param expert
-	 * @param student
-	 * @param loggedUser
-	 * @param model
-	 * @return {@link Experts.html}
-	 * @throws MessagingException
-	 */
-	@RequestMapping(value = "/expertsRegistration", method = RequestMethod.POST)
-	public String expertRegistrationController(@ModelAttribute("Courses") Courses mainCourse,
-			@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
-			@ModelAttribute("LoggedUser") LoggedUser loggedUser, ModelMap model) {
-
-		if (expertsService.expertsRegistration(expert)) {
-
-			String userName = loggedUser.getUserName();
-			// initalise the username
-			initialiser.expertInitialiser(userName, model);
-
-			// sending the mail on registration
-			String emailId = expert.getEmail();
-			String subject = "Thanku Expert " + expert.getFirstName() + " for registration";
-			String messege = "We are very thankfull for your support your"
-					+ " can now set the study material and provide your valuable feeds to us ";
-
-			try {
-				sMTPMailSender.send(emailId, subject, messege);
-			} catch (Exception e) {
-				System.out.println("network problem");
-			}
-
-			model.addAttribute("username", userName);
-			return "Experts";
-		} else {
-
-			// on invalid registration when expert already exist with username
-			model.addAttribute("msg", "expert with same username alredy exist");
-			initialiser.frontInitialiser(model);
-			return "front";
-		}
-
-	}
-
-	/**
 	 * When experts create an list of study material
 	 * 
 	 * @param expert
@@ -214,9 +170,8 @@ public class ExpertsController {
 	 * @param model
 	 * @return {@link Experts.html}
 	 */
-	@RequestMapping(value = "/ExpertsSuggestedMaterials", method = RequestMethod.POST)
+	@RequestMapping(value = "/SuggestedMaterials", method = RequestMethod.POST)
 	public String expertsSuggestedMaterials(@ModelAttribute("Courses") Courses mainCourse,
-			@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
 			@ModelAttribute("LoggedUser") LoggedUser loggedUser, @RequestParam String studyMaterialsList,
 			@RequestParam String userName, @RequestParam String courseforstudymaterial, ModelMap model) {
 
@@ -268,6 +223,10 @@ public class ExpertsController {
 
 		studyMaterialsService.saveStudyMaterial(courseId, title, link);
 
+		ArrayList<StudyMaterials> studyMaterials = studyMaterialsService
+				.showStudyMaterialsByCourseName(courseforstudymaterial);
+		initialiser.expertInitialiserWithParameters(studyMaterials, model);
+
 		// initialise onload function
 		model.addAttribute("onLoadFun", "expertsSetting('vediotitle')");
 
@@ -300,6 +259,54 @@ public class ExpertsController {
 		model.addAttribute("vediolink", studyMaterialsLink);
 
 		return "Experts";
+	}
+
+	@RequestMapping(value = "/asStudent", method = RequestMethod.POST)
+	public String expertsAsStudent(@ModelAttribute("Schedule") Schedule schedule,
+			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, @RequestParam String userName,
+			ModelMap model) {
+
+		try {
+			Schedule sch;
+
+			// checking if the student exist with same username and email
+			if (expertsService.expertAsStudent(userName)) {
+
+				initialiser.schedulerInitialiserWithoutParameter(model);
+
+				model.addAttribute("username", userName);
+
+			} else {
+				//getting the experts now as student data 
+				if (expertsService.expertAsStudentExist(userName)) {
+					initialiser.schedulerInitialiserWithoutParameter(model);
+
+					if (scheduleService.findSchedule(userName) == null) {
+						sch = new Schedule();
+					} else {
+						sch = scheduleService.findSchedule(userName);
+
+					}
+					
+					model.addAttribute("schedule", sch);
+					model.addAttribute("username", userName);
+					
+				} else {
+					
+					//setting the messege if same mail id existed
+					model.addAttribute("msg", "student with same email id existed");
+					return "Experts";
+				}
+
+				
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("something went wrong");
+		}
+
+		return "Scheduler";
 	}
 
 }

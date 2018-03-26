@@ -1,33 +1,16 @@
 
-$(document).ready( function ()
+function expertsSetting(focusId)
 {
-    
-    $("#addminorcourse").click(function ()
-    {
-     var v=$("#inputminorcourse").val();
-        
-        
-             $("#minorlist").append(" <li class=\"list-group-item\">"+v+"</li>");
-        
-    
-    });
-    
-    $("#removeminorcourse").click(function ()
-    {
-     var v=$("#inputminorcourse").val();
-        
-        
-             $("#minorlist li:contains("+v+")").remove();
-        
-    
-    });
-    
+	
+	document.getElementById(focusId).focus();
+	
     $("#addstudymaterial").click(function ()
     {
      var v=$("#inputstudymaterial").val();
+     var x=$("#inputstudymaterial option[value='"+v+"']").text()
         
         
-             $("#studymaterial").append(" <li class=\"list-group-item\">"+v+"</li>");
+             $("#studyMaterialsList").append("<option value=\""+v+"\" selected=\"selected\" >"+x+"</option>");
         
     
     });
@@ -35,13 +18,14 @@ $(document).ready( function ()
     $("#removestudymaterial").click(function ()
     {
      var v=$("#inputstudymaterial").val();
+     var x=$("#inputstudymaterial option[value='"+v+"']").text()
         
         
-             $("#studymaterial li:contains("+v+")").remove();
+             $("#studyMaterialsList option:contains("+x+")").remove();
         
     
     });
     
     
     
-});
+}

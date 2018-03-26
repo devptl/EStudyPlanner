@@ -10,6 +10,7 @@ import com.esp.dto.DtoOperation;
 import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
+import com.esp.model.RegisteredUser;
 import com.esp.model.Schedule;
 import com.esp.model.Students;
 import com.esp.model.StudentsHasCourses;
@@ -37,11 +38,23 @@ public class StudentsService {
 	 * @param model
 	 * @return registrationStatus
 	 */
-	public boolean studentRegistration(Students s, ModelMap model) {
-		String id = s.getUserName();
-		if (dtoOperation.getStudentsComponents().findOneStudent(id) == null) {
+	public boolean studentRegistration(RegisteredUser registeredUser, ModelMap model) {
+		
+		String userName = registeredUser.getUserName();
+		String email = registeredUser.getEmail();
+		if (dtoOperation.getStudentsComponents().findOneStudent(userName) == null &&
+				dtoOperation.getStudentsComponents().findByEmail(email) == null ) {
+			
+			Students s = new Students();
+			
+			s.setFirstName(registeredUser.getFirstName());
+			s.setLastName(registeredUser.getLastName());
+			s.setUserName(registeredUser.getUserName());
 			s.setGuardiansIdGuardians(1);
-			String username = s.getUserName();
+			s.setPassword(registeredUser.getPassword());
+			s.setEmail(registeredUser.getEmail());
+			s.setField(registeredUser.getField());
+			
 
 			// getting the main course list according to registered field
 			ArrayList<Courses> mainCourses = coursesService.mainCoursesById(s.getField());
@@ -56,7 +69,7 @@ public class StudentsService {
 			String msg = "Enter the schedule";
 
 			// initialising values for schedule page
-			initialiser.schedulerInitialiser(mainCourses, allExperts, schedule, username, model, msg);
+			initialiser.schedulerInitialiser(mainCourses, allExperts, schedule, userName, model, msg);
 
 			dtoOperation.getStudentsComponents().saveStudent(s);
 

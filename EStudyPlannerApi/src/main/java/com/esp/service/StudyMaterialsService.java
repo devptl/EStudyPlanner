@@ -2,10 +2,6 @@ package com.esp.service;
 
 import java.util.ArrayList;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,28 +19,15 @@ public class StudyMaterialsService {
 	@Autowired
 	private ExpertsService expertsService;
 
-	@PersistenceContext
-	EntityManager entityManager;
-
 	/**
 	 * To get the list of study material by Course ID
 	 * 
 	 * @param minorCourseId
 	 * @return {@link StudyMaterials}
 	 */
-	@SuppressWarnings("unchecked")
 	public ArrayList<StudyMaterials> showStudyMaterialsByCourseid(int minorCourseId) {
-		ArrayList<StudyMaterials> s1 = null;
 
-		// To get the study material with the particular course id
-		// Native SQL Query
-		String queryString = "select * from study_materials" + " where courses_id_course = " + minorCourseId;
-		// Generate Query
-		Query query = entityManager.createNativeQuery(queryString, StudyMaterials.class);
-		// Map result set to list of Objects
-		s1 = (ArrayList<StudyMaterials>) query.getResultList();
-
-		return s1;
+		return dtoOperation.getStudyMaterialsComponents().showStudyMaterialsByCourseid(minorCourseId);
 	}
 
 	/**
@@ -53,21 +36,9 @@ public class StudyMaterialsService {
 	 * @param minorCourseName
 	 * @return {@link StudyMaterials}
 	 */
-	@SuppressWarnings("unchecked")
 	public ArrayList<StudyMaterials> showStudyMaterialsByCourseName(String minorCourseName) {
-		ArrayList<StudyMaterials> s1 = null;
 
-		// To get the study material with particular course name
-		// Native SQL Query
-		String queryString = "select s.id_study_materials,s.study_material_link,s.courses_id_course,s.title"
-				+ " from study_materials s inner join courses c " + "on s.courses_id_course=c.id_course "
-				+ "and c.course_name =\"" + minorCourseName + "\"";
-		// Generate Query
-		Query query = entityManager.createNativeQuery(queryString, StudyMaterials.class);
-		// Map result set to list of Objects
-		s1 = (ArrayList<StudyMaterials>) query.getResultList();
-
-		return s1;
+		return dtoOperation.getStudyMaterialsComponents().showStudyMaterialsByCourseName(minorCourseName);
 	}
 
 	/**
@@ -124,20 +95,9 @@ public class StudyMaterialsService {
 	 * @param studentsUserName
 	 * @return {@link StudentsHasStudyMaterials}
 	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<StudentsHasStudyMaterials> getCompletedList(String studentsUserName) {
-		ArrayList<StudentsHasStudyMaterials> s1 = null;
+	public ArrayList<StudentsHasStudyMaterials> getCompletedList(String studentsUserName,String courseforstudymaterial) {
 
-		// To get the study material with particular Student username
-		// Native SQL Query
-		String queryString = "select * from students_has_study_materials where students_user_name = \""
-				+ studentsUserName + "\"";
-		// Generate Query
-		Query query = entityManager.createNativeQuery(queryString, StudentsHasStudyMaterials.class);
-		// Map result set to list of Objects
-		s1 = (ArrayList<StudentsHasStudyMaterials>) query.getResultList();
-
-		return s1;
+		return dtoOperation.getStudyMaterialsComponents().getCompletedList(studentsUserName, courseforstudymaterial);
 
 	}
 
@@ -147,8 +107,8 @@ public class StudyMaterialsService {
 	 * @param studyMaterialId
 	 * @param studentsUserName
 	 */
-	public void saveStudentHasStudyMaterials(String[] studyMaterialId, String studentsUserName) {
-		ArrayList<StudentsHasStudyMaterials> s1 = getCompletedList(studentsUserName);
+	public void saveStudentHasStudyMaterials(String[] studyMaterialId, String studentsUserName,String courseforstudymaterial) {
+		ArrayList<StudentsHasStudyMaterials> s1 = getCompletedList(studentsUserName,courseforstudymaterial);
 
 		s1.forEach(x -> dtoOperation.getStudentsComponents().deleteStudentsHasStudyMaterials(x));
 
@@ -198,7 +158,8 @@ public class StudyMaterialsService {
 	/**
 	 * To track how much course he has completed
 	 * 
-	 * @param s1 - {@link StudyMaterials}
+	 * @param s1
+	 *            - {@link StudyMaterials}
 	 * @param studentCompletedMaterials
 	 * @return {@link Float}
 	 */

@@ -16,12 +16,23 @@ import com.esp.model.StudyMaterials;
 import com.esp.service.StudyMaterialsService;
 
 @Controller
+@RequestMapping("/StudyMaterials")
 @SessionAttributes({ "onLoadCourses", "username", "minorCourse", "studyMaterials", "vediolink",
 		"studentCompletedMaterials", "perCompleted", "noOfVedios", "shbutton1", "shdiv1" })
 public class StudyMaterialsController {
 
 	@Autowired
 	private StudyMaterialsService studyMaterialsService;
+	
+	/**
+	 * To get to Study Materials
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String studyMaterials(ModelMap model) {
+		return "Courses";
+	}
 
 	/**
 	 * To show the vedios in the courses page
@@ -54,15 +65,16 @@ public class StudyMaterialsController {
 	 */
 	@RequestMapping(value = "/StudentCompletedMaterials", method = RequestMethod.POST)
 	public String studentCompletedMaterials(@RequestParam String studentsUserName, @RequestParam int noOfVedios,
-			@RequestParam String studyMaterialsList, ModelMap model) {
+			@RequestParam String studyMaterialsList,
+			 @RequestParam String courseforstudymaterial, ModelMap model) {
 
 		String[] studyMaterialId = studyMaterialsList.split(",");
 
 		// saving the list to the student has study materials
-		studyMaterialsService.saveStudentHasStudyMaterials(studyMaterialId, studentsUserName);
+		studyMaterialsService.saveStudentHasStudyMaterials(studyMaterialId, studentsUserName,courseforstudymaterial);
 
 		ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials = studyMaterialsService
-				.getCompletedList(studentsUserName);
+				.getCompletedList(studentsUserName,courseforstudymaterial);
 
 		// getting the new list of completed study materials
 		ArrayList<StudyMaterials> studylist = studyMaterialsService

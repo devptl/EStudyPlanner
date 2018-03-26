@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@RequestMapping("/admin")
 @SessionAttributes({ "adminForStudentsList", "adminForExpertsList" })
 public class AdminController {
 
@@ -15,7 +16,7 @@ public class AdminController {
 	 * 
 	 * @return {@link Admin.html}
 	 */
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String adminPage(ModelMap model) {
 
 		return "Admin";
@@ -27,10 +28,22 @@ public class AdminController {
 	 * @param model
 	 * @return {@link AdminForExpert.html}
 	 */
-	@RequestMapping(value = "/adminForExpert", method = RequestMethod.GET)
+	@RequestMapping(value = "/Expert", method = RequestMethod.GET)
 	public String adminExpertPage(ModelMap model) {
 
 		return "AdminForExpert";
+	}
+	
+	/**
+	 * To return to admin page for student
+	 * 
+	 * @param model
+	 * @return {@link AdminForExpert.html}
+	 */
+	@RequestMapping(value = "/Student", method = RequestMethod.GET)
+	public String adminStudentPage(ModelMap model) {
+
+		return "Admin";
 	}
 
 }

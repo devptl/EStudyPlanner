@@ -7,5 +7,7 @@ import com.esp.model.Experts;
 
 @Repository
 public interface ExpertsRepository extends JpaRepository<Experts,String>{
+	
+	public Experts findByEmail(String email);
 
 }

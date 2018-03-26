@@ -2,9 +2,6 @@ package com.esp.service;
 
 import java.util.ArrayList;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +9,7 @@ import com.esp.controller.AdminController;
 import com.esp.dto.DtoOperation;
 import com.esp.model.AdminForExperts;
 import com.esp.model.AdminForStudents;
+import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.ExpertsHasStudyMaterials;
 import com.esp.model.LoggedUser;
@@ -25,9 +23,6 @@ public class AdminService {
 	@Autowired
 	private DtoOperation dtoOperation;
 
-	@PersistenceContext
-	EntityManager entityManager;
-
 	@Autowired
 	private ExpertsService expertsService;
 
@@ -40,7 +35,8 @@ public class AdminService {
 	/**
 	 * For login as an admin
 	 * 
-	 * @param l1 - {@link LoggedUser}
+	 * @param l1
+	 *            - {@link LoggedUser}
 	 * @return {@link AdminController}
 	 */
 	public boolean adminLogin(LoggedUser l1) {
@@ -77,16 +73,20 @@ public class AdminService {
 			AdminForStudents obj = new AdminForStudents();
 
 			obj.setStudents(students.get(i));
+			String username = students.get(i).getUserName();
+
+			ArrayList<Courses> c = coursesService.getCoursesForStudent(students.get(i).getUserName());
 
 			// to set the student has courses list
-			obj.setCoursesList(coursesService.getCoursesForStudent(students.get(i).getUserName()));
+			obj.setCoursesList(c);
 
 			// to set the expert list for student
 			obj.setExpertslist(expertsService.getExpertForStudent(students.get(i).getUserName()));
 
+			ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials = new ArrayList<>();
 			// to add the student has study materials
-			ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials = studyMaterialsService
-					.getCompletedList(students.get(i).getUserName());
+			c.forEach(x -> studentCompletedMaterials
+					.addAll(studyMaterialsService.getCompletedList(username, x.getCourseName())));
 
 			ArrayList<StudyMaterials> studylist = studyMaterialsService
 					.getStudyMaterialsForStudent(studentCompletedMaterials);

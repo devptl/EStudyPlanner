@@ -22,6 +22,7 @@ import com.esp.service.StudentsService;
 import com.esp.service.StudyMaterialsService;
 
 @Controller
+@RequestMapping("/Scheduler")
 @SessionAttributes({ "onLoadSchedule","username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
 		"courseforstudymaterial", "minorCourse", "studyMaterials", "vediolink", "shbutton1", "shbutton2", "shbutton3",
 		"shbutton4", "studentCompletedMaterials", "noOfVedios", "perCompleted", "shdiv1", "shdiv2", "shdiv3",
@@ -37,22 +38,13 @@ public class ScheduleController {
 	@Autowired
 	private StudentsService studentsService;
 
-	/**
-	 * To set the intial display of Courses page
-	 * 
-	 * @return {@link Courses.html}
-	 */
-	@RequestMapping(value = "/StudyMaterials", method = RequestMethod.GET)
-	public String coursesDisplay() {
-		return "Courses";
-	}
-
+	
 	/**
 	 * To set the initial display of scheduler page
 	 * 
 	 * @return {@link Scheduler.html}
 	 */
-	@RequestMapping(value = "/Scheduler", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String schedulerDisplay(@ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
 
@@ -123,7 +115,7 @@ public class ScheduleController {
 		studentsService.saveStudentsHasExperts(se);
 
 		ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials = studyMaterialsService
-				.getCompletedList(studentsUserName);
+				.getCompletedList(studentsUserName,courseforstudymaterial);
 
 		ArrayList<StudyMaterials> studylist = studyMaterialsService
 				.getStudyMaterialsForStudent(studentCompletedMaterials);

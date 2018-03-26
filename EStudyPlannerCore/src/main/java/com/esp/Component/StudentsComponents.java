@@ -3,18 +3,18 @@ package com.esp.Component;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import com.esp.model.StudentsHasStudyMaterials;
 import com.esp.model.Students;
 import com.esp.model.StudentsHasCourses;
 import com.esp.model.StudentsHasExperts;
+import com.esp.model.StudentsHasStudyMaterials;
 import com.esp.repository.StudentsHasCoursesRepository;
 import com.esp.repository.StudentsHasExpertsRepository;
 import com.esp.repository.StudentsHasStudyMaterialsRepository;
 import com.esp.repository.StudentsRepository;
 
-@Service
+@Component
 public class StudentsComponents {
 
 	@Autowired
@@ -22,10 +22,10 @@ public class StudentsComponents {
 
 	@Autowired
 	private StudentsHasCoursesRepository studentHasCoursesRepository;
-	
+
 	@Autowired
 	private StudentsHasExpertsRepository studentsHasExpertsRepository;
-	
+
 	@Autowired
 	private StudentsHasStudyMaterialsRepository studentsHasStudyMaterialsRepository;
 
@@ -36,6 +36,16 @@ public class StudentsComponents {
 	 */
 	public ArrayList<Students> allStudents() {
 		return (ArrayList<Students>) studentsRepository.findAll();
+	}
+
+	/**
+	 * To find the stuudent by email
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public Students findByEmail(String email) {
+		return studentsRepository.findByEmail(email);
 	}
 
 	/**
@@ -59,36 +69,38 @@ public class StudentsComponents {
 
 	/**
 	 * To save in student has Courses tables
+	 * 
 	 * @param sh
 	 */
 	public void saveStudentsHasCourses(StudentsHasCourses sh) {
 		studentHasCoursesRepository.save(sh);
 	}
-	
+
 	/**
 	 * To save in student has Experts tables
+	 * 
 	 * @param sh
 	 */
 	public void saveStudentsHasExperts(StudentsHasExperts sh) {
 		studentsHasExpertsRepository.save(sh);
 	}
-	
+
 	/**
 	 * To save the student has Study Material
+	 * 
 	 * @param sh
 	 */
 	public void saveStudentsHasStudyMaterials(StudentsHasStudyMaterials sh) {
 		studentsHasStudyMaterialsRepository.save(sh);
 	}
-	
+
 	/**
 	 * To delete row from student has study material
+	 * 
 	 * @param sh
 	 */
 	public void deleteStudentsHasStudyMaterials(StudentsHasStudyMaterials sh) {
 		studentsHasStudyMaterialsRepository.delete(sh);
 	}
-	
-
 
 }

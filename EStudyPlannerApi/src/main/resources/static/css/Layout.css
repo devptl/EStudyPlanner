@@ -1,22 +1,37 @@
-#main{
+#main {
 	background-image: url("../images/bodybackground.png");
 }
 
-#divlogin{
-	float:left;
+#mainForm {
+	float: left;
 }
 
-#divforgotpassword{
-	float:left;
+#divlogin {
+	float: left;
 }
 
-#navbar{
+#divforgotpassword {
+	float: left;
+}
+
+#navbar {
 	opacity: 0.85 !important;
 	background-image: url("../images/navbackground.jpg");
 }
 
-#navbar a{
-	color:white;
+#navusername {
+	background: grey;
+    height: 36px;
+    border: black;
+    color: white;
+    font-weight: bolder;
+    text-align: center;
+    width: 150px;
+    border-radius: 13px;
+}
+
+#navbar a {
+	color: white;
 }
 
 #searchbutton {
@@ -26,42 +41,65 @@
 }
 
 #loginButton {
-	margin-left: 2px;
+	margin-left: 4px;
 }
 
-#modalcontent{
-	opacity: 0.8 !important;
+#modalcontent1 {
+	opacity: 0.9 !important;
 	background-image: url("../images/loginbackground.jpg");
 }
 
-#modalcontent1{
+#modalcontent2 {
+	opacity: 0.9 !important;
 	background-image: url("../images/loginbackground.jpg");
 }
 
-#warningtext{
+#modalcontent4 {
+	opacity: 0.9 !important;
+	background-image: url("../images/loginbackground.jpg");
+}
+
+
+#warningtext {
 	color: red;
-    font-weight: bolder;
+	font-weight: bolder;
+}
+
+#maincontent1 {
+	height: -webkit-fill-available;
 }
 
 #maincontent {
-	height: 2000px;
+	height: auto;
 }
 
-#maincard{
+#maincard {
 	background-image: url("../images/mainbackground.jpg");
 }
 
-#sidecard{
+#sidecard {
 	background-image: url("../images/sidebackground.jpg");
 }
 
 #accordion {
+	width:100% !important;
 	float: left !important;
-	
 }
 
 #accordion2 {
 	float: left !important;
+}
+
+#RegisterMainButton{
+	font-size: 21px;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+	border-radius: 20px;
+	background: lightgrey;
+	text-shadow: grey 1px 1px 2px;
+	color: darkslateblue;
 }
 
 #alreadHaveAccountButton {
@@ -69,6 +107,30 @@
 	color: blue;
 	border: none;
 }
+
+#forgotAccountButton {
+	background: transparent;
+	color: blue;
+	border: none;
+}
+
+#changeAccountButton {
+	background: transparent;
+	color: blue;
+	border: none;
+}
+
+#fullWidthButton {
+	color: black;
+    width: 100%;
+    font-weight: bolder;
+    font-variant-caps: titling-caps;
+}
+
+#hiddenObject{
+	display:none;
+}
+
 
 #formid {
 	float: left !important;
@@ -82,48 +144,48 @@
 	margin-top: 2%;
 }
 
-#studyMaterialsList{
+#studyMaterialsList {
 	background: #e2dbdb;
-	
 }
 
 #setstudymaterial {
 	margin-top: 2%;
 }
 
-#schedulermessage{
-	color: red!important;
-    font-weight: bolder!important;
+#schedulermessage {
+	color: red !important;
+	font-weight: bolder !important;
 }
 
-#vedioframe{
+#vedioframe {
 	margin-left: 4%;
-    height: 550px;
-    width: 92%;
-    border-width: 4px;
-    border-color: black;
+	height: 550px;
+	width: 92%;
+	border-width: 4px;
+	border-color: black;
+}
+
+#footer {
+	opacity: 0.85 !important;
+	background-image: url("../images/navbackground.jpg");
 }
 
 table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
 }
 
 td, th {
-    border: 1px solid #A69F9F;
-    text-align: left;
-    padding: 8px;
+	border: 1px solid #A69F9F;
+	text-align: left;
+	padding: 8px;
 }
 
 tr:nth-child(even) {
-    background-color: #CAC0C0;
+	background-color: #CAC0C0;
 }
 
 tr:nth-child(odd) {
-    background-color: #E4CFCF;
+	background-color: #E4CFCF;
 }
-	
-	
-	
-	

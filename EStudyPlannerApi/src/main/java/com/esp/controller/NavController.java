@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
-import com.esp.model.Students;
+import com.esp.model.RegisteredUser;
 import com.esp.service.Initialiser;
 import com.esp.service.SetTimer;
 
@@ -32,7 +31,7 @@ public class NavController {
 	 * @return {@link front.html}
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String homeDisplay(@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
+	public String homeDisplay(@ModelAttribute("RegisteredUser") RegisteredUser registeredUser,
 			@ModelAttribute("LoggedUser") LoggedUser loggedUser, ModelMap model) {
 
 		// setting the initial display for front page
@@ -49,14 +48,13 @@ public class NavController {
 	@ResponseBody
 	public String startTimer() {
 		try {
-			//starting the timer 
-		    setTimer.runScheduler();
+			// starting the timer
+			setTimer.runScheduler();
 		} catch (Exception e) {
 			System.out.println("the thread exception");
 		}
 
 		return "timer has started";
 	}
-	
 
 }

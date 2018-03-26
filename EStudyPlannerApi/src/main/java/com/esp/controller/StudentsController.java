@@ -2,8 +2,6 @@ package com.esp.controller;
 
 import java.util.ArrayList;
 
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,17 +12,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.esp.model.Courses;
 import com.esp.model.Experts;
-import com.esp.model.LoggedUser;
 import com.esp.model.Schedule;
-import com.esp.model.Students;
 import com.esp.model.StudentsHasCourses;
 import com.esp.service.CoursesService;
 import com.esp.service.ExpertsService;
-import com.esp.service.Initialiser;
-import com.esp.service.SMTPMailSender;
 import com.esp.service.StudentsService;
 
 @Controller
+@RequestMapping("/Scheduler")
 @SessionAttributes({ "onLoadSchedule", "username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
 		"courseforstudymaterial", "shbutton1", "shbutton2", "shbutton3", "shbutton4", "shdiv1", "shdiv2", "shdiv3",
 		"shdiv4" })
@@ -39,53 +34,6 @@ public class StudentsController {
 	@Autowired
 	private CoursesService coursesService;
 
-	@Autowired
-	private SMTPMailSender sMTPMailSender;
-
-	@Autowired
-	private Initialiser initialiser;
-
-	/**
-	 * For the student registration
-	 * 
-	 * @param expert
-	 * @param student
-	 * @param loggedUser
-	 * @param model
-	 * @return {@link Scheduler.html}
-	 * @throws MessagingException
-	 */
-	@RequestMapping(value = "/studentsRegistration", method = RequestMethod.POST)
-	public String studentRegistrationController(@ModelAttribute("Experts") Experts expert,
-			@ModelAttribute("Students") Students student, @ModelAttribute("LoggedUser") LoggedUser loggedUser,
-			@ModelAttribute("Schedule") Schedule schedule,
-			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
-
-		if (studentsService.studentRegistration(student, model)) {
-
-			// sending the mail to student on registration
-			String emailId = student.getEmail();
-			String subject = "Thanku " + student.getFirstName() + " for registration";
-			String messege = "We are very thankfull for your support your"
-					+ " can now set your schedule and proceed with your studies ";
-			try {
-
-				sMTPMailSender.send(emailId, subject, messege);
-			} catch (Exception e) {
-				System.out.println("network error");
-			}
-
-			// on succesfull registration sending to the scheduler page
-			return "Scheduler";
-		} else {
-
-			// if the registration fails sending back to the front page
-			model.addAttribute("msg", "student with same username exist");
-			initialiser.frontInitialiser(model);
-			return "front";
-		}
-
-	}
 
 	/**
 	 * To show the courses in the particualar main course
