@@ -37,6 +37,7 @@ public class StudyMaterialsComponents {
 	 * return a particular StudyMaterial
 	 * 
 	 * @param id
+	 *            - StudyMaterialID
 	 * @return {@link StudyMaterials}
 	 */
 	public StudyMaterials findOneStudyMaterial(int id) {

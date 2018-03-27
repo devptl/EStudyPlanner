@@ -64,15 +64,15 @@
 					<tr
 						th:each="adminForStudentsListElement :${adminForStudentsList.toArray()}">
 						<td
-							th:text="${adminForStudentsListElement.getStudents().getUserName()}">Alfreds
+							th:text="${adminForStudentsListElement.getUserName()}">Alfreds
 							Futterkiste</td>
 						<td
-							th:text="${adminForStudentsListElement.getStudents().getEmail()}">Alfreds
+							th:text="${adminForStudentsListElement.getEmail()}">Alfreds
 							Futterkiste</td>
 						<td>
 							<table>
 								<tr
-									th:each="courseListElement :${adminForStudentsListElement.getCoursesList().toArray()}">
+									th:each="courseListElement :${adminForStudentsListElement.getCourses().toArray()}">
 									<td th:text="${courseListElement.getCourseName()}"></td>
 								</tr>
 							</table>
@@ -80,15 +80,15 @@
 						<td>
 							<table>
 								<tr
-									th:each="expertListElement :${adminForStudentsListElement.getExpertslist().toArray()}">
-									<td th:text="${expertListElement.getExpertsUserName()}"></td>
+									th:each="expertListElement :${adminForStudentsListElement.getExperts().toArray()}">
+									<td th:text="${expertListElement.getUserName()}"></td>
 								</tr>
 							</table>
 						</td>
 						<td>
 							<table>
 								<tr
-									th:each="studyMaterialListElement :${adminForStudentsListElement.getStudyMaterialsList().toArray()}">
+									th:each="studyMaterialListElement :${adminForStudentsListElement.getStudyMaterials().toArray()}">
 									<td th:text="${studyMaterialListElement.getTitle()}"></td>
 								</tr>
 							</table>

@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esp.model.Courses;
-import com.esp.model.Experts;
 import com.esp.model.ExpertsHasCourses;
-import com.esp.model.Students;
 import com.esp.model.StudentsHasCourses;
 import com.esp.repository.CoursesRepository;
 import com.esp.repository.ExpertsHasCoursesRepository;
@@ -19,13 +17,12 @@ public class CoursesComponents {
 
 	@Autowired
 	private CoursesRepository coursesRepository;
-	
+
 	@Autowired
 	private StudentsHasCoursesRepository studentHasCoursesRepository;
-	
+
 	@Autowired
 	private ExpertsHasCoursesRepository expertsHasCoursesRepository;
-
 
 	/**
 	 * return list of all Courses
@@ -40,6 +37,7 @@ public class CoursesComponents {
 	 * return a particular Course
 	 * 
 	 * @param id
+	 *            - CourseId
 	 * @return {@link Courses}
 	 */
 	public Courses findOneCourse(int id) {
@@ -59,10 +57,10 @@ public class CoursesComponents {
 	 * List of all filed courses
 	 * 
 	 * @param parentCourseId
-	 * @return
+	 * @return {@link Courses}
 	 */
 	public ArrayList<Courses> getfieldCourses(int parentCourseId) {
-		
+
 		return coursesRepository.findByParentCourseId(parentCourseId);
 	}
 
@@ -74,8 +72,7 @@ public class CoursesComponents {
 	public ArrayList<Courses> mainCourses() {
 		ArrayList<Courses> s1 = new ArrayList<>();
 
-		for (int i=1;i<10;i++)
-		{
+		for (int i = 1; i < 10; i++) {
 			s1.addAll(coursesRepository.findByParentCourseId(i));
 		}
 
@@ -86,6 +83,7 @@ public class CoursesComponents {
 	 * List of course according to given parent id
 	 * 
 	 * @param id
+	 *            - CourseId
 	 * @return {@link Courses}
 	 */
 	public ArrayList<Courses> mainCoursesById(int id) {
@@ -110,20 +108,19 @@ public class CoursesComponents {
 	 * Get the Courses list with particular student has registered
 	 * 
 	 * @param userName
-	 *            - {@link Students}
+	 *            - Students UserName
 	 * @return {@link Courses}
 	 */
 	public ArrayList<Courses> getCoursesForStudent(String userName) {
 		ArrayList<Courses> myList = new ArrayList<>();
 
-		ArrayList<StudentsHasCourses> mainList =  studentHasCoursesRepository.findByStudentsUserName(userName);
-		
-		for(int i=0;i<mainList.size();i++)
-		{
+		ArrayList<StudentsHasCourses> mainList = studentHasCoursesRepository.findByStudentsUserName(userName);
+
+		for (int i = 0; i < mainList.size(); i++) {
 			Courses c = coursesRepository.findOne(mainList.get(i).getCoursesIdCourse());
 			myList.add(c);
 		}
-		
+
 		return myList;
 
 	}
@@ -132,22 +129,20 @@ public class CoursesComponents {
 	 * Get the Courses list with particular expert has registered
 	 * 
 	 * @param userName
-	 *            - {@link Experts}
+	 *            - Experts UserName
 	 * @return {@link Courses}
 	 */
 	public ArrayList<Courses> getCoursesForExpert(String userName) {
 		ArrayList<Courses> myList = new ArrayList<>();
 
-		ArrayList<ExpertsHasCourses> mainList =  expertsHasCoursesRepository.findByExpertsUserName(userName);
-		
-		for(int i=0;i<mainList.size();i++)
-		{
+		ArrayList<ExpertsHasCourses> mainList = expertsHasCoursesRepository.findByExpertsUserName(userName);
+
+		for (int i = 0; i < mainList.size(); i++) {
 			Courses c = coursesRepository.findOne(mainList.get(i).getCoursesIdCourse());
 			myList.add(c);
 		}
-		
-		return myList;
 
+		return myList;
 
 	}
 

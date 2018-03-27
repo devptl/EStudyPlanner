@@ -16,7 +16,6 @@ public class CoursesService {
 	@Autowired
 	private DtoOperation dtoOperation;
 
-
 	/**
 	 * List of all the Courses
 	 * 
@@ -27,17 +26,16 @@ public class CoursesService {
 		s1 = dtoOperation.getCoursesComponents().allCourses();
 		return s1;
 	}
-	
+
 	/**
 	 * To get the field courses
+	 * 
 	 * @param parentCourseId
-	 * @return
+	 * @return {@link Courses}
 	 */
-	public ArrayList<Courses> getfieldCourses(int parentCourseId)
-	{
+	public ArrayList<Courses> getfieldCourses(int parentCourseId) {
 		return dtoOperation.getCoursesComponents().getfieldCourses(parentCourseId);
 	}
-
 
 	/**
 	 * List of all the major courses
@@ -53,6 +51,7 @@ public class CoursesService {
 	 * List of course according to given parent id
 	 * 
 	 * @param id
+	 *            - ParentID
 	 * @return {@link Courses}
 	 */
 	public ArrayList<Courses> mainCoursesById(int id) {
@@ -75,7 +74,7 @@ public class CoursesService {
 	 * To find the courses by name
 	 * 
 	 * @param name
-	 * @return
+	 * @return {@link Courses}
 	 */
 	public Courses findCourseByName(String name) {
 

@@ -119,12 +119,12 @@ public class ExpertsController {
 	public String expertsHasMinorCourses(@ModelAttribute("Courses") Courses mainCourse,
 			@ModelAttribute("ExpertsHasCourses") ExpertsHasCourses expertsHasCourses, ModelMap model) {
 
-		expertsService.expertHasCourses(expertsHasCourses);
-		int id = expertsHasCourses.getCoursesIdCourse();
+		
+		int courseId = expertsHasCourses.getCoursesIdCourse();
 		String userName = expertsHasCourses.getExpertsUserName();
 
 		// initalise the couseForStudyMaterial
-		String courseForStudyMaterial = coursesService.getCourseWithId(id).getCourseName();
+		String courseForStudyMaterial = coursesService.getCourseWithId(courseId).getCourseName();
 		model.addAttribute("courseforstudymaterial", courseForStudyMaterial);
 
 		// initialise the suggested list if already present
@@ -137,7 +137,7 @@ public class ExpertsController {
 		// initialse the suggested list
 		model.addAttribute("expertGivenStudyMaterials", expertGivenStudyMaterials);
 
-		ArrayList<StudyMaterials> studyMaterials = studyMaterialsService.showStudyMaterialsByCourseid(id);
+		ArrayList<StudyMaterials> studyMaterials = studyMaterialsService.showStudyMaterialsByCourseid(courseId);
 
 		initialiser.expertInitialiserWithParameters(studyMaterials, model);
 
@@ -179,6 +179,13 @@ public class ExpertsController {
 
 		// to save the list of study material suggested by expert
 		expertsService.expertsHasStudyMAterials(courseforstudymaterial, studyMaterialId, userName);
+		
+		ExpertsHasCourses expertsHasCourses = new ExpertsHasCourses();
+		int coursesIdCourse = coursesService.findCourseByName(courseforstudymaterial).getIdCourse();
+		expertsHasCourses.setCoursesIdCourse(coursesIdCourse);
+		expertsHasCourses.setExpertsUserName(userName);
+		
+		expertsService.expertHasCourses(expertsHasCourses);
 
 		// to get the list of studyy material for display
 		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials = expertsService
@@ -218,8 +225,8 @@ public class ExpertsController {
 			@RequestParam String courseforstudymaterial, @RequestParam String title, @RequestParam String link,
 			ModelMap model) {
 
-		Courses c = coursesService.findCourseByName(courseforstudymaterial);
-		int courseId = c.getIdCourse();
+		Courses courses = coursesService.findCourseByName(courseforstudymaterial);
+		int courseId = courses.getIdCourse();
 
 		studyMaterialsService.saveStudyMaterial(courseId, title, link);
 
@@ -267,7 +274,7 @@ public class ExpertsController {
 			ModelMap model) {
 
 		try {
-			Schedule sch;
+			Schedule schedule2;
 
 			// checking if the student exist with same username and email
 			if (expertsService.expertAsStudent(userName)) {
@@ -277,32 +284,30 @@ public class ExpertsController {
 				model.addAttribute("username", userName);
 
 			} else {
-				//getting the experts now as student data 
+				// getting the experts now as student data
 				if (expertsService.expertAsStudentExist(userName)) {
 					initialiser.schedulerInitialiserWithoutParameter(model);
 
 					if (scheduleService.findSchedule(userName) == null) {
-						sch = new Schedule();
+						schedule2 = new Schedule();
 					} else {
-						sch = scheduleService.findSchedule(userName);
+						schedule2 = scheduleService.findSchedule(userName);
 
 					}
-					
-					model.addAttribute("schedule", sch);
+
+					model.addAttribute("schedule", schedule2);
 					model.addAttribute("username", userName);
-					
+
 				} else {
-					
-					//setting the messege if same mail id existed
+
+					// setting the messege if same mail id existed
 					model.addAttribute("msg", "student with same email id existed");
 					return "Experts";
 				}
 
-				
-
 			}
 
-		} catch (Exception e) {
+		} catch (Exception exception) {
 			System.out.println("something went wrong");
 		}
 

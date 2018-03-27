@@ -25,9 +25,9 @@ public class CourseController {
 	@RequestMapping(value = "allCourses", method = RequestMethod.GET)
 	@ResponseBody
 	public ArrayList<Courses> allCourse() {
-		ArrayList<Courses> s1;
-		s1 = coursesService.showCourses();
-		return s1;
+		ArrayList<Courses> courses;
+		courses = coursesService.showCourses();
+		return courses;
 	}
 
 	/**
@@ -38,9 +38,9 @@ public class CourseController {
 	@RequestMapping(value = "fieldCourses", method = RequestMethod.GET)
 	@ResponseBody
 	public ArrayList<Courses> fieldCourse() {
-		ArrayList<Courses> s1;
-		s1 = coursesService.getfieldCourses(0);
-		return s1;
+		ArrayList<Courses> courses;
+		courses = coursesService.getfieldCourses(0);
+		return courses;
 	}
 
 	/**
@@ -51,9 +51,9 @@ public class CourseController {
 	@RequestMapping(value = "mainCourses", method = RequestMethod.GET)
 	@ResponseBody
 	public ArrayList<Courses> mainCourse() {
-		ArrayList<Courses> s1;
-		s1 = coursesService.mainCourses();
-		return s1;
+		ArrayList<Courses> courses;
+		courses = coursesService.mainCourses();
+		return courses;
 	}
 
 }

@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.esp.model.AdminForExperts;
-import com.esp.model.AdminForStudents;
+import com.esp.model.Admin;
 import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
@@ -21,6 +20,7 @@ import com.esp.model.Schedule;
 import com.esp.model.Students;
 import com.esp.model.StudentsHasCourses;
 import com.esp.service.AdminService;
+import com.esp.service.Decoder;
 import com.esp.service.ExpertsService;
 import com.esp.service.Initialiser;
 import com.esp.service.SMTPMailSender;
@@ -45,6 +45,9 @@ public class LoginController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private Decoder decoder;
 
 	@Autowired
 	private Initialiser initialiser;
@@ -63,7 +66,7 @@ public class LoginController {
 	 * @return {@link Experts.html} or {@link Scheduler.html} or {@link Admin.html}
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
+	public String login(@ModelAttribute("RegisteredUser") RegisteredUser registeredUser,
 			@ModelAttribute("LoggedUser") LoggedUser loggedUser, @ModelAttribute("Courses") Courses mainCourse,
 			@ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
@@ -77,8 +80,7 @@ public class LoginController {
 			// on successfull login sending to experts page
 			return "Experts";
 
-		} 
-		else if (studentsService.studentsLogin(loggedUser, model)) {
+		} else if (studentsService.studentsLogin(loggedUser, model)) {
 
 			// initialise onload function
 			model.addAttribute("onLoadSchedule", "scheduleSetting('maincourseselector')");
@@ -92,16 +94,15 @@ public class LoginController {
 
 			// on successfull login sending to scheduler page
 			return "Scheduler";
-		}
-		else if (adminService.adminLogin(loggedUser)) {
+		} else if (adminService.adminLogin(loggedUser)) {
 
 			// login as admin
 			// initialising the admin for students
-			ArrayList<AdminForStudents> adminForStudentsList = adminService.getAdminForStudent();
+			ArrayList<Students> adminForStudentsList = adminService.getAdminForStudent();
 			model.addAttribute("adminForStudentsList", adminForStudentsList);
 
 			// initialising the admin for experts
-			ArrayList<AdminForExperts> adminForExpertsList = adminService.getAdminForExperts();
+			ArrayList<Experts> adminForExpertsList = adminService.getAdminForExperts();
 			model.addAttribute("adminForExpertsList", adminForExpertsList);
 
 			return "Admin";
@@ -116,6 +117,7 @@ public class LoginController {
 
 	/**
 	 * To register for both the users
+	 * 
 	 * @param loggedUser
 	 * @param registeredUser
 	 * @param mainCourse
@@ -201,33 +203,37 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/forgotThePassword", method = RequestMethod.POST)
 	public String forgotThePassword(@ModelAttribute("LoggedUser") LoggedUser loggedUser,
-			@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
-			@RequestParam String userName, @RequestParam String email, ModelMap model) {
+			@ModelAttribute("RegisteredUser") RegisteredUser registeredUser, @RequestParam String userName,
+			@RequestParam String email, ModelMap model) {
 		String msg = new String();
 		try {
 
 			// checking if student exist with username and that email
 
-			if (expertsService.findOneExpert(userName, email)) {
+			if (expertsService.checkForExpert(userName, email)) {
 				// checking if experts exist the username and email
 
 				// sending the mail to expert with password
-				Experts e1 = expertsService.findExpertByUsername(userName);
-				msg = "Sending mail to : " + e1.getEmail() + " for the Username : " + e1.getUserName();
+				Experts expert = expertsService.findExpertByUsername(userName);
+				String decodedPassword = decoder.decodePassword(expert.getPassword());
+				
+				msg = "Sending mail to : " + expert.getEmail() + " for the Username : " + expert.getUserName();
 
-				String text = "The Expert " + e1.getFirstName()
-						+ " we think that you forgot the password your password is " + e1.getPassword();
+				String text = "The Expert " + expert.getFirstName()
+						+ " we think that you forgot the password your password is " + decodedPassword;
 
-				sMTPMailSender.send(e1.getEmail(), "Forgot the password alert", text);
+				sMTPMailSender.send(expert.getEmail(), "Forgot the password alert", text);
 
-			} else if (studentsService.findOneStudent(userName, email)) {
+			} else if (studentsService.checkForStudent(userName, email)) {
 
 				// sending the mail to student with password
-				Students s1 = studentsService.findStudentByUsername(userName);
-				msg = "Sending mail to : " + s1.getEmail() + " for the Username : " + s1.getUserName();
-				String text = "The user we think that you forgot the password your password is " + s1.getPassword();
+				Students student = studentsService.findStudentByUsername(userName);
+				String decodedPassword = decoder.decodePassword(student.getPassword());
+				
+				msg = "Sending mail to : " + student.getEmail() + " for the Username : " + student.getUserName();
+				String text = "The user we think that you forgot the password your password is " + decodedPassword;
 
-				sMTPMailSender.send(s1.getEmail(), "Forgot the password alert", text);
+				sMTPMailSender.send(student.getEmail(), "Forgot the password alert", text);
 			} else {
 				msg = "invalid attempt to get user";
 				System.out.println("invalid attempt to get user");
@@ -260,9 +266,8 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/changeThePassword", method = RequestMethod.POST)
 	public String changeThePassword(@ModelAttribute("LoggedUser") LoggedUser loggedUser,
-			@ModelAttribute("Experts") Experts expert, @ModelAttribute("Students") Students student,
-			@RequestParam String userName, @RequestParam String oldPassword, @RequestParam String newPassword,
-			ModelMap model) {
+			@ModelAttribute("RegisteredUser") RegisteredUser registeredUser, @RequestParam String userName,
+			@RequestParam String oldPassword, @RequestParam String newPassword, ModelMap model) {
 
 		String msg = new String();
 
@@ -279,8 +284,7 @@ public class LoginController {
 
 				sMTPMailSender.send(e1.getEmail(), "Forgot the password alert", text);
 
-			} 
-			else if (studentsService.changeTheStudentPassword(userName, oldPassword, newPassword)) {
+			} else if (studentsService.changeTheStudentPassword(userName, oldPassword, newPassword)) {
 
 				// sending the mail to student with new password after the change
 				Students s1 = studentsService.findStudentByUsername(userName);

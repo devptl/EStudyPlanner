@@ -9,7 +9,6 @@ import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.ExpertsHasCourses;
 import com.esp.model.ExpertsHasStudyMaterials;
-import com.esp.model.Students;
 import com.esp.model.StudentsHasExperts;
 import com.esp.model.StudyMaterials;
 import com.esp.repository.CoursesRepository;
@@ -24,13 +23,13 @@ public class ExpertsComponents {
 
 	@Autowired
 	private ExpertsRepository expertsRepository;
-	
+
 	@Autowired
 	private CoursesRepository coursesRepository;
-	
+
 	@Autowired
 	private StudyMaterialsRepository studyMaterialsRepository;
-	
+
 	@Autowired
 	private StudentsHasExpertsRepository studentsHasExpertsRepository;
 
@@ -40,14 +39,13 @@ public class ExpertsComponents {
 	@Autowired
 	private ExpertsHasStudyMaterialsRepository expertsHasStudyMaterialsRepository;
 
-	
 	/**
 	 * To find the experts by email Id
+	 * 
 	 * @param email
 	 * @return
 	 */
-	public Experts findByEmail(String email)
-	{
+	public Experts findByEmail(String email) {
 		return expertsRepository.findByEmail(email);
 	}
 
@@ -63,11 +61,12 @@ public class ExpertsComponents {
 	/**
 	 * return a particular Expert
 	 * 
-	 * @param id
+	 * @param userName
+	 *            - Experts UserName
 	 * @return {@link Experts}
 	 */
-	public Experts findOneExpert(String id) {
-		return expertsRepository.findOne(id);
+	public Experts findOneExpert(String userName) {
+		return expertsRepository.findOne(userName);
 	}
 
 	/**
@@ -75,23 +74,24 @@ public class ExpertsComponents {
 	 * 
 	 * @param Experts
 	 */
-	public void saveExpert(Experts e) {
-		expertsRepository.save(e);
+	public void saveExpert(Experts expert) {
+		expertsRepository.save(expert);
 	}
 
 	/**
 	 * To save in experts has Courses tables
 	 * 
-	 * @param sh
+	 * @param ExpertsHasCourses
 	 */
-	public void saveExpertsHasCourses(ExpertsHasCourses ex) {
-		expertsHasCoursesRepository.save(ex);
+	public void saveExpertsHasCourses(ExpertsHasCourses expertsHasCourses) {
+		expertsHasCoursesRepository.save(expertsHasCourses);
 	}
 
 	/**
 	 * To save in experts has StudyMaterial tables
 	 * 
 	 * @param sh
+	 *            - {@link ExpertsHasStudyMaterials}
 	 */
 	public void saveExpertsHasStudyMaterials(ExpertsHasStudyMaterials ex) {
 		expertsHasStudyMaterialsRepository.save(ex);
@@ -101,6 +101,7 @@ public class ExpertsComponents {
 	 * To delete from experts has StudyMaterial tables
 	 * 
 	 * @param ex
+	 *            - {@link ExpertsHasStudyMaterials}
 	 */
 	public void deleteExpertsHasStudyMaterials(ExpertsHasStudyMaterials ex) {
 		expertsHasStudyMaterialsRepository.delete(ex);
@@ -110,7 +111,7 @@ public class ExpertsComponents {
 	 * list all the study material with a particular expert username
 	 * 
 	 * @param userName
-	 *            - {@link Experts}
+	 *            - Experts UserName
 	 * @return {@link ExpertsHasStudyMaterials}
 	 */
 	public ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMAterialWithUsername(String userName) {
@@ -125,7 +126,7 @@ public class ExpertsComponents {
 	 * @param id
 	 *            - CourseID
 	 * @param userName
-	 *            - {@link Experts}
+	 *            - Experts UserName
 	 * @return {@link ExpertsHasStudyMaterials}
 	 */
 	public ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMAterialWithUsernameAndCouseId(String id,
@@ -135,18 +136,15 @@ public class ExpertsComponents {
 		ArrayList<ExpertsHasStudyMaterials> mainList = expertsHasStudyMaterialsRepository
 				.findByExpertsUserName(userName);
 
-		
-		for(int i=0;i<mainList.size();i++)
-		{
+		for (int i = 0; i < mainList.size(); i++) {
 			ExpertsHasStudyMaterials e = mainList.get(i);
-			StudyMaterials s = studyMaterialsRepository.findOne(e.getStudyMaterialsIdStudyMaterials()); 
+			StudyMaterials s = studyMaterialsRepository.findOne(e.getStudyMaterialsIdStudyMaterials());
 			Courses c = coursesRepository.findOne(s.getCoursesIdCourse());
-			if(c.getCourseName().equals(id))
-			{
+			if (c.getCourseName().equals(id)) {
 				myList.add(e);
 			}
 		}
-		
+
 		return myList;
 	}
 
@@ -162,9 +160,8 @@ public class ExpertsComponents {
 		ArrayList<Experts> myList = new ArrayList<>();
 
 		ArrayList<ExpertsHasCourses> mainList = expertsHasCoursesRepository.findByCoursesIdCourse(id);
-		
-		for(int i=0;i<mainList.size();i++)
-		{
+
+		for (int i = 0; i < mainList.size(); i++) {
 			Experts e = expertsRepository.findOne(mainList.get(i).getExpertsUserName());
 			myList.add(e);
 		}
@@ -175,11 +172,11 @@ public class ExpertsComponents {
 	 * To get the list of Experts student has applied for
 	 * 
 	 * @param userName
-	 *            - {@link Students}
+	 *            - Students UserName
 	 * @return {@link StudentsHasExperts}
 	 */
 	public ArrayList<StudentsHasExperts> getExpertForStudent(String userName) {
-		
+
 		return studentsHasExpertsRepository.findByStudentsUserName(userName);
 
 	}
@@ -188,11 +185,11 @@ public class ExpertsComponents {
 	 * To get the list of student following particular expert
 	 * 
 	 * @param userName
-	 *            - {@link Experts}
+	 *            - Experts UserName
 	 * @return {@link StudentsHasExperts}
 	 */
 	public ArrayList<StudentsHasExperts> getStudentsForExpert(String userName) {
-		
+
 		return studentsHasExpertsRepository.findByExpertsUserName(userName);
 
 	}

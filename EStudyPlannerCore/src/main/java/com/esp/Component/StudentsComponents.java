@@ -42,7 +42,7 @@ public class StudentsComponents {
 	 * To find the stuudent by email
 	 * 
 	 * @param email
-	 * @return
+	 * @return {@link Students}
 	 */
 	public Students findByEmail(String email) {
 		return studentsRepository.findByEmail(email);
@@ -51,11 +51,11 @@ public class StudentsComponents {
 	/**
 	 * return a particular Student
 	 * 
-	 * @param id
+	 * @param userName
 	 * @return {@link Students}
 	 */
-	public Students findOneStudent(String id) {
-		return studentsRepository.findOne(id);
+	public Students findOneStudent(String userName) {
+		return studentsRepository.findOne(userName);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class StudentsComponents {
 	/**
 	 * To save in student has Courses tables
 	 * 
-	 * @param sh
+	 * @param StudentsHasCourses
 	 */
 	public void saveStudentsHasCourses(StudentsHasCourses sh) {
 		studentHasCoursesRepository.save(sh);
@@ -79,7 +79,7 @@ public class StudentsComponents {
 	/**
 	 * To save in student has Experts tables
 	 * 
-	 * @param sh
+	 * @param StudentsHasExperts
 	 */
 	public void saveStudentsHasExperts(StudentsHasExperts sh) {
 		studentsHasExpertsRepository.save(sh);
@@ -88,7 +88,7 @@ public class StudentsComponents {
 	/**
 	 * To save the student has Study Material
 	 * 
-	 * @param sh
+	 * @param StudentsHasStudyMaterials
 	 */
 	public void saveStudentsHasStudyMaterials(StudentsHasStudyMaterials sh) {
 		studentsHasStudyMaterialsRepository.save(sh);
@@ -97,7 +97,7 @@ public class StudentsComponents {
 	/**
 	 * To delete row from student has study material
 	 * 
-	 * @param sh
+	 * @param StudentsHasStudyMaterials
 	 */
 	public void deleteStudentsHasStudyMaterials(StudentsHasStudyMaterials sh) {
 		studentsHasStudyMaterialsRepository.delete(sh);

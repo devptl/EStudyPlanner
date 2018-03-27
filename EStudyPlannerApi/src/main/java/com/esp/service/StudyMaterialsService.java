@@ -50,17 +50,17 @@ public class StudyMaterialsService {
 	 */
 	public ArrayList<StudyMaterials> showStudyMaterialsByUserNameAndCourseId(String courseforstudymaterial,
 			String expertsUserName) {
-		ArrayList<StudyMaterials> s1 = new ArrayList<StudyMaterials>();
+		ArrayList<StudyMaterials> studyMaterials = new ArrayList<StudyMaterials>();
 
 		// getting the list
 		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials = expertsService
 				.expertsHasStudyMAterialWithUsernameAndCouseId(courseforstudymaterial, expertsUserName);
 
 		// setting the list to return to controller
-		expertsHasStudyMaterials.forEach(x -> s1.add(dtoOperation.getStudyMaterialsComponents()
+		expertsHasStudyMaterials.forEach(x -> studyMaterials.add(dtoOperation.getStudyMaterialsComponents()
 				.findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
 
-		return s1;
+		return studyMaterials;
 	}
 
 	/**
@@ -80,13 +80,13 @@ public class StudyMaterialsService {
 	 * @param link
 	 */
 	public void saveStudyMaterial(int coursId, String title, String link) {
-		StudyMaterials s = new StudyMaterials();
+		StudyMaterials studyMaterials = new StudyMaterials();
 
 		// setting the Id title link
-		s.setCoursesIdCourse(coursId);
-		s.setTitle(title);
-		s.setStudyMaterialLink(link);
-		dtoOperation.getStudyMaterialsComponents().saveStudyMaterial(s);
+		studyMaterials.setCoursesIdCourse(coursId);
+		studyMaterials.setTitle(title);
+		studyMaterials.setStudyMaterialLink(link);
+		dtoOperation.getStudyMaterialsComponents().saveStudyMaterial(studyMaterials);
 	}
 
 	/**
@@ -95,7 +95,8 @@ public class StudyMaterialsService {
 	 * @param studentsUserName
 	 * @return {@link StudentsHasStudyMaterials}
 	 */
-	public ArrayList<StudentsHasStudyMaterials> getCompletedList(String studentsUserName,String courseforstudymaterial) {
+	public ArrayList<StudentsHasStudyMaterials> getCompletedList(String studentsUserName,
+			String courseforstudymaterial) {
 
 		return dtoOperation.getStudyMaterialsComponents().getCompletedList(studentsUserName, courseforstudymaterial);
 
@@ -107,10 +108,12 @@ public class StudyMaterialsService {
 	 * @param studyMaterialId
 	 * @param studentsUserName
 	 */
-	public void saveStudentHasStudyMaterials(String[] studyMaterialId, String studentsUserName,String courseforstudymaterial) {
-		ArrayList<StudentsHasStudyMaterials> s1 = getCompletedList(studentsUserName,courseforstudymaterial);
+	public void saveStudentHasStudyMaterials(String[] studyMaterialId, String studentsUserName,
+			String courseforstudymaterial) {
+		ArrayList<StudentsHasStudyMaterials> studentsHasStudyMaterials = getCompletedList(studentsUserName,
+				courseforstudymaterial);
 
-		s1.forEach(x -> dtoOperation.getStudentsComponents().deleteStudentsHasStudyMaterials(x));
+		studentsHasStudyMaterials.forEach(x -> dtoOperation.getStudentsComponents().deleteStudentsHasStudyMaterials(x));
 
 		int i, id;
 		for (i = 0; i < studyMaterialId.length; i++) {
@@ -130,12 +133,12 @@ public class StudyMaterialsService {
 	 * @return {@link StudyMaterials}
 	 */
 	public ArrayList<StudyMaterials> getStudyMaterials(ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials) {
-		ArrayList<StudyMaterials> s1 = new ArrayList<StudyMaterials>();
+		ArrayList<StudyMaterials> studyMaterials = new ArrayList<StudyMaterials>();
 
-		expertsHasStudyMaterials.forEach(x -> s1.add(dtoOperation.getStudyMaterialsComponents()
+		expertsHasStudyMaterials.forEach(x -> studyMaterials.add(dtoOperation.getStudyMaterialsComponents()
 				.findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
 
-		return s1;
+		return studyMaterials;
 	}
 
 	/**
@@ -146,13 +149,13 @@ public class StudyMaterialsService {
 	 */
 	public ArrayList<StudyMaterials> getStudyMaterialsForStudent(
 			ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials) {
-		ArrayList<StudyMaterials> s1 = new ArrayList<StudyMaterials>();
+		ArrayList<StudyMaterials> studyMaterials = new ArrayList<StudyMaterials>();
 
 		// getting the list
-		studentCompletedMaterials.forEach(x -> s1.add(dtoOperation.getStudyMaterialsComponents()
+		studentCompletedMaterials.forEach(x -> studyMaterials.add(dtoOperation.getStudyMaterialsComponents()
 				.findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
 
-		return s1;
+		return studyMaterials;
 	}
 
 	/**

@@ -10,32 +10,35 @@ import com.esp.repository.ScheduleRepository;
 
 @Component
 public class ScheduleComponents {
-	
+
 	@Autowired
-	private ScheduleRepository scheduleRepository; 
-	
+	private ScheduleRepository scheduleRepository;
 
 	/**
 	 * To get a particular schedule
+	 * 
 	 * @param id
+	 *            - ScheduleID
 	 * @return {@link Schedule}
 	 */
 	public Schedule findOneSchedule(String id) {
-		return scheduleRepository.findOne(id); 
+		return scheduleRepository.findOne(id);
 	}
-	
+
 	/**
-	 * To get the all the schedules 
+	 * To get the all the schedules
+	 * 
 	 * @return {@link Schedule}
 	 */
-	public ArrayList<Schedule> allSchedule()
-	{
+	public ArrayList<Schedule> allSchedule() {
 		return (ArrayList<Schedule>) scheduleRepository.findAll();
 	}
-	
+
 	/**
 	 * To save a schedule in database
+	 * 
 	 * @param s
+	 *            - {@link Schedule}
 	 */
 	public void saveSchedule(Schedule s) {
 		scheduleRepository.save(s);

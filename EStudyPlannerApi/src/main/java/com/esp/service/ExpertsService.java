@@ -20,12 +20,15 @@ public class ExpertsService {
 
 	@Autowired
 	private DtoOperation dtoOperation;
+	
+	@Autowired
+	private Encoder encoder;
 
 	/**
 	 * For registration of particular expert in database
 	 * 
-	 * @param e
-	 *            - {@link Experts}
+	 * @param registeredUser
+	 * @param model
 	 * @return registrationStatus
 	 */
 	public boolean expertsRegistration(RegisteredUser registeredUser, ModelMap model) {
@@ -36,17 +39,21 @@ public class ExpertsService {
 		if (dtoOperation.getExpertsComponents().findOneExpert(userName) == null
 				&& dtoOperation.getExpertsComponents().findByEmail(email) == null) {
 
-			Experts e = new Experts();
+			Experts experts = new Experts();
 
-			e.setFirstName(registeredUser.getFirstName());
-			e.setLastName(registeredUser.getLastName());
-			e.setUserName(registeredUser.getUserName());
-			e.setPassword(registeredUser.getPassword());
-			e.setEmail(registeredUser.getEmail());
-			e.setQualification(registeredUser.getQualification());
-			e.setYearOfExperience(registeredUser.getYearOfExperience());
+			experts.setFirstName(registeredUser.getFirstName());
+			experts.setLastName(registeredUser.getLastName());
+			experts.setUserName(registeredUser.getUserName());
+			
+			//encode the password
+            String encodedPassword = encoder.encodePassword(registeredUser.getPassword());
+			
+			experts.setPassword(encodedPassword);
+			experts.setEmail(registeredUser.getEmail());
+			experts.setQualification(registeredUser.getQualification());
+			experts.setYearOfExperience(registeredUser.getYearOfExperience());
 
-			dtoOperation.getExpertsComponents().saveExpert(e);
+			dtoOperation.getExpertsComponents().saveExpert(experts);
 
 			return true;
 		} else
@@ -63,13 +70,16 @@ public class ExpertsService {
 	public boolean expertsLogin(LoggedUser l1) {
 
 		String loginId = l1.getUserName();
+		Experts expert = dtoOperation.getExpertsComponents().findOneExpert(loginId);
 
 		// checking if expert exist with username and password
-		if (dtoOperation.getExpertsComponents().findOneExpert(loginId) == null) {
+		if ( expert == null) {
 			return false;
 		} else {
-			if (dtoOperation.getExpertsComponents().findOneExpert(loginId).getPassword().equals(l1.getPassword())) {
-
+			String encodedPassword = encoder.encodePassword(l1.getPassword());
+			
+			if (expert.getPassword().equals(encodedPassword)) {
+				
 				return true;
 			}
 
@@ -188,13 +198,15 @@ public class ExpertsService {
 	 *            - {@link Experts}
 	 * @return loginStatus
 	 */
-	public boolean findOneExpert(String userName, String email) {
+	public boolean checkForExpert(String userName, String email) {
 
-		if (dtoOperation.getExpertsComponents().findOneExpert(userName) == null) {
+		Experts experts = dtoOperation.getExpertsComponents().findOneExpert(userName);
+		
+		if (experts == null) {
 			return false;
 		} else {
 			// to find the experts with particualr username and email
-			if (dtoOperation.getExpertsComponents().findOneExpert(userName).getEmail().equals(email)) {
+			if (experts.getEmail().equals(email)) {
 				return true;
 			}
 
@@ -214,16 +226,22 @@ public class ExpertsService {
 	 */
 	public boolean changeTheExpertPassword(String userName, String oldPassword, String newPassword) {
 
-		if (dtoOperation.getExpertsComponents().findOneExpert(userName) == null) {
+		Experts experts = dtoOperation.getExpertsComponents().findOneExpert(userName);
+		
+		if ( experts == null) {
 			return false;
 		} else {
+			
+			String encodedPassword = encoder.encodePassword(oldPassword);
 			// checking that the expert exist
-			if (dtoOperation.getExpertsComponents().findOneExpert(userName).getPassword().equals(oldPassword)) {
-				Experts e1 = dtoOperation.getExpertsComponents().findOneExpert(userName);
-
+			if (experts.getPassword().equals(encodedPassword)) {
+				
+				//encode the new password
+				String newEncodedPassword = encoder.encodePassword(newPassword);
+				
 				// saving the new password
-				e1.setPassword(newPassword);
-				dtoOperation.getExpertsComponents().saveExpert(e1);
+				experts.setPassword(newEncodedPassword);
+				dtoOperation.getExpertsComponents().saveExpert(experts);
 
 				return true;
 			}
@@ -243,6 +261,8 @@ public class ExpertsService {
 
 		if (dtoOperation.getStudentsComponents().findOneStudent(userName) == null
 				&& dtoOperation.getStudentsComponents().findByEmail(e.getEmail()) == null) {
+			
+			//setting the data for experts as student
 			Students s = new Students();
 			s.setFirstName(e.getFirstName());
 			s.setLastName(e.getLastName());
@@ -250,6 +270,8 @@ public class ExpertsService {
 			s.setGuardiansIdGuardians(1);
 			s.setPassword(e.getPassword());
 			s.setEmail(e.getEmail());
+			
+			//saving the new student
 			dtoOperation.getStudentsComponents().saveStudent(s);
 			return true;
 		} else {

@@ -57,34 +57,23 @@
 						<th>Expert's Username</th>
 						<th>Expert Email</th>
 						<th>Feeds on Courses</th>
-						<th>Student Following</th>
 						<th>Study Material advised</th>
 					</tr>
 					<tr
 						th:each="adminForExpertsListElement :${adminForExpertsList.toArray()}">
-						<td
-							th:text="${adminForExpertsListElement.getExperts().getUserName()}">Alfreds
+						<td th:text="${adminForExpertsListElement.getUserName()}">Alfreds
 							Futterkiste</td>
-						<td
-							th:text="${adminForExpertsListElement.getExperts().getEmail()}">Alfreds
+						<td th:text="${adminForExpertsListElement.getEmail()}">Alfreds
 							Futterkiste</td>
 						<td>
 							<table>
 								<tr
-									th:each="courseListElement :${adminForExpertsListElement.getCoursesList().toArray()}">
+									th:each="courseListElement :${adminForExpertsListElement.getCourses().toArray()}">
 									<td th:text="${courseListElement.getCourseName()}"></td>
 								</tr>
 							</table>
 						</td>
-						<td>
-							<table>
-								<tr
-									th:each="studentListElement :${adminForExpertsListElement.getStudentsHasExpertsList().toArray()}">
-									<td th:text="${studentListElement.getStudentsUserName()}">
-									</td>
-								</tr>
-							</table>
-						</td>
+
 						<td>
 							<table>
 								<tr

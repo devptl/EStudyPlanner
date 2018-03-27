@@ -99,10 +99,10 @@ public class ScheduleService {
 	 */
 	public void manageSchedule(Schedule schedule, ModelMap model, String message) {
 
-		Students s1 = dtoOperation.getStudentsComponents().findOneStudent(schedule.getStudentsUserName());
+		Students student = dtoOperation.getStudentsComponents().findOneStudent(schedule.getStudentsUserName());
 
 		// getting the list of courses according to the fields
-		ArrayList<Courses> mainCourses = coursesService.mainCoursesById(s1.getField());
+		ArrayList<Courses> mainCourses = coursesService.mainCoursesById(student.getField());
 
 		ArrayList<Experts> allExperts = dtoOperation.getExpertsComponents().allExperts();
 
