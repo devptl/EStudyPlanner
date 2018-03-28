@@ -19,12 +19,14 @@ import com.esp.model.RegisteredUser;
 import com.esp.model.Schedule;
 import com.esp.model.Students;
 import com.esp.model.StudentsHasCourses;
+import com.esp.model.Users;
 import com.esp.service.AdminService;
 import com.esp.service.Decoder;
 import com.esp.service.ExpertsService;
 import com.esp.service.Initialiser;
 import com.esp.service.SMTPMailSender;
 import com.esp.service.StudentsService;
+import com.esp.service.UsersService;
 
 @Controller
 @SessionAttributes({ "onLoadFun", "onLoadSchedule", "username", "fieldCourses", "mainCourses", "courseforstudymaterial",
@@ -41,11 +43,14 @@ public class LoginController {
 	private ExpertsService expertsService;
 
 	@Autowired
+	private UsersService usersService;
+
+	@Autowired
 	private SMTPMailSender sMTPMailSender;
 
 	@Autowired
 	private AdminService adminService;
-	
+
 	@Autowired
 	private Decoder decoder;
 
@@ -71,41 +76,50 @@ public class LoginController {
 			@ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
 
-		if (expertsService.expertsLogin(loggedUser)) {
+		if (usersService.usersLogin(loggedUser)) {
 
-			// initialsing the username for expert
-			String userName = loggedUser.getUserName();
-			initialiser.expertInitialiser(userName, model);
+			Users user = usersService.findUser(loggedUser.getUserName());
+			if (user.getRole().equals("Expert")) {
+				// initialsing the username for expert
+				String userName = loggedUser.getUserName();
+				initialiser.expertInitialiser(userName, model);
 
-			// on successfull login sending to experts page
-			return "Experts";
+				// on successfull login sending to experts page
+				return "Experts";
 
-		} else if (studentsService.studentsLogin(loggedUser, model)) {
+			} else if (user.getRole().equals("Student")) {
 
-			// initialise onload function
-			model.addAttribute("onLoadSchedule", "scheduleSetting('maincourseselector')");
+				studentsService.studentsLogin(loggedUser, model);
+				// initialise onload function
+				model.addAttribute("onLoadSchedule", "scheduleSetting('maincourseselector')");
 
-			// set the toggle as schedule already set
-			model.addAttribute("shbutton1", "btn btn-link collapsed");
-			model.addAttribute("shdiv1", "collapse");
+				// set the toggle as schedule already set
+				model.addAttribute("shbutton1", "btn btn-link collapsed");
+				model.addAttribute("shdiv1", "collapse");
 
-			model.addAttribute("shbutton2", "btn btn-link ");
-			model.addAttribute("shdiv2", "collapse show");
+				model.addAttribute("shbutton2", "btn btn-link ");
+				model.addAttribute("shdiv2", "collapse show");
 
-			// on successfull login sending to scheduler page
-			return "Scheduler";
-		} else if (adminService.adminLogin(loggedUser)) {
+				// on successfull login sending to scheduler page
+				return "Scheduler";
 
-			// login as admin
-			// initialising the admin for students
-			ArrayList<Students> adminForStudentsList = adminService.getAdminForStudent();
-			model.addAttribute("adminForStudentsList", adminForStudentsList);
+			} else if (user.getRole().equals("Admin")) {
 
-			// initialising the admin for experts
-			ArrayList<Experts> adminForExpertsList = adminService.getAdminForExperts();
-			model.addAttribute("adminForExpertsList", adminForExpertsList);
+				// login as admin
+				// initialising the admin for students
+				ArrayList<Students> adminForStudentsList = adminService.getAdminForStudent();
+				model.addAttribute("adminForStudentsList", adminForStudentsList);
 
-			return "Admin";
+				// initialising the admin for experts
+				ArrayList<Experts> adminForExpertsList = adminService.getAdminForExperts();
+				model.addAttribute("adminForExpertsList", adminForExpertsList);
+				
+				return "Admin";
+			} else {
+				// on invalid login redirecting back to front page
+				model.addAttribute("msg", "invalid role");
+				return "front";
+			}
 		} else {
 
 			// on invalid login redirecting back to front page
@@ -210,30 +224,20 @@ public class LoginController {
 
 			// checking if student exist with username and that email
 
-			if (expertsService.checkForExpert(userName, email)) {
+			if (usersService.checkForUser(userName, email)) {
 				// checking if experts exist the username and email
 
 				// sending the mail to expert with password
-				Experts expert = expertsService.findExpertByUsername(userName);
-				String decodedPassword = decoder.decodePassword(expert.getPassword());
-				
-				msg = "Sending mail to : " + expert.getEmail() + " for the Username : " + expert.getUserName();
+				Users user = usersService.findUser(userName);
+				String decodedPassword = decoder.decodePassword(user.getPassword());
 
-				String text = "The Expert " + expert.getFirstName()
+				msg = "Sending mail to : " + user.getEmail() + " for the Username : " + user.getUserName();
+
+				String text = "The Expert " + user.getFirstName()
 						+ " we think that you forgot the password your password is " + decodedPassword;
 
-				sMTPMailSender.send(expert.getEmail(), "Forgot the password alert", text);
+				sMTPMailSender.send(user.getEmail(), "Forgot the password alert", text);
 
-			} else if (studentsService.checkForStudent(userName, email)) {
-
-				// sending the mail to student with password
-				Students student = studentsService.findStudentByUsername(userName);
-				String decodedPassword = decoder.decodePassword(student.getPassword());
-				
-				msg = "Sending mail to : " + student.getEmail() + " for the Username : " + student.getUserName();
-				String text = "The user we think that you forgot the password your password is " + decodedPassword;
-
-				sMTPMailSender.send(student.getEmail(), "Forgot the password alert", text);
 			} else {
 				msg = "invalid attempt to get user";
 				System.out.println("invalid attempt to get user");
@@ -274,26 +278,15 @@ public class LoginController {
 		try {
 
 			// checking if student exist with username and that email
-			if (expertsService.changeTheExpertPassword(userName, oldPassword, newPassword)) {
+			if (usersService.changeTheUserPassword(userName, oldPassword, newPassword)) {
 
 				// sending the mail to expert with new password after the change
-				Experts e1 = expertsService.findExpertByUsername(userName);
+				Users user = usersService.findUser(userName);
 				msg = "experts password is changed";
-				String text = "The Expert " + e1.getFirstName() + " your password is changed make sure your do not "
-						+ "disclose the password .The new password is " + e1.getPassword();
+				String text = "The Expert " + user.getFirstName() + " your password is changed make sure your do not "
+						+ "disclose the password .The new password is " + user.getPassword();
 
-				sMTPMailSender.send(e1.getEmail(), "Forgot the password alert", text);
-
-			} else if (studentsService.changeTheStudentPassword(userName, oldPassword, newPassword)) {
-
-				// sending the mail to student with new password after the change
-				Students s1 = studentsService.findStudentByUsername(userName);
-				msg = "student the password changed";
-
-				String text = "The user your password is changed make sure your do not "
-						+ "disclose the password .The new password is " + s1.getPassword();
-
-				sMTPMailSender.send(s1.getEmail(), "Forgot the password alert", text);
+				sMTPMailSender.send(user.getEmail(), "Forgot the password alert", text);
 
 			} else {
 				msg = "invalid attempt to change password";

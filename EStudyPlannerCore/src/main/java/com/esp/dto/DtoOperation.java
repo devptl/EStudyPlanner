@@ -9,6 +9,7 @@ import com.esp.Component.ExpertsComponents;
 import com.esp.Component.ScheduleComponents;
 import com.esp.Component.StudentsComponents;
 import com.esp.Component.StudyMaterialsComponents;
+import com.esp.Component.UserComponent;
 
 @Service
 public class DtoOperation {
@@ -30,6 +31,9 @@ public class DtoOperation {
 	
 	@Autowired
 	private AdminComponents adminComponents; 
+	
+	@Autowired
+	private UserComponent userComponent;
 
 	public CoursesComponents getCoursesComponents() {
 		return coursesComponents;
@@ -53,6 +57,12 @@ public class DtoOperation {
 
 	public AdminComponents getAdminComponents() {
 		return adminComponents;
+	}
+
+	public UserComponent getUserComponent() {
+		return userComponent;
 	}	
+	
+	
 	
 }

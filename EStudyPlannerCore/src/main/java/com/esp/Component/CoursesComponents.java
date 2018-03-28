@@ -11,12 +11,16 @@ import com.esp.model.StudentsHasCourses;
 import com.esp.repository.CoursesRepository;
 import com.esp.repository.ExpertsHasCoursesRepository;
 import com.esp.repository.StudentsHasCoursesRepository;
+import com.esp.repository.StudyMaterialsRepository;
 
 @Component
 public class CoursesComponents {
 
 	@Autowired
 	private CoursesRepository coursesRepository;
+	
+	@Autowired
+	private StudyMaterialsRepository studyMaterialsRepository;
 
 	@Autowired
 	private StudentsHasCoursesRepository studentHasCoursesRepository;
@@ -78,6 +82,12 @@ public class CoursesComponents {
 
 		return s1;
 	}
+	
+	
+	public ArrayList<Courses> minorCoursesById(int id)
+	{
+		return coursesRepository.findByParentCourseId(id);
+	}
 
 	/**
 	 * List of course according to given parent id
@@ -86,9 +96,18 @@ public class CoursesComponents {
 	 *            - CourseId
 	 * @return {@link Courses}
 	 */
-	public ArrayList<Courses> mainCoursesById(int id) {
-		ArrayList<Courses> s1 = coursesRepository.findByParentCourseId(id);
-		return s1;
+	public ArrayList<Courses> mainCoursesById(int id) {		
+		ArrayList<Courses> mainList = coursesRepository.findByParentCourseId(id);
+		ArrayList<Courses> myList = new ArrayList<>();
+		for(int i=0;i<mainList.size();i++)
+		{
+			int couseId=mainList.get(i).getIdCourse();
+			if(studyMaterialsRepository.findByCoursesIdCourse(couseId).size()!=0) {
+				myList.add(mainList.get(i));
+			}
+			
+		}
+		return myList;
 	}
 
 	/**

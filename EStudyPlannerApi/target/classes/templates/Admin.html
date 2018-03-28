@@ -19,11 +19,11 @@
 
 	<div class="container">
 
-		<!--navigation menu-->
+		<!--______________________________________ Navigation Menu _____________________________________________-->
 		<nav
 			class="navbar sticky-top navbar-expand-lg navbar-light bg-primary"
 			id="navbar">
-			<a class="navbar-brand" href="/">E-Study and Planner</a> <br />
+			<a class="navbar-brand" id="mainTitle" href="/">E-Study and Planner</a> <br />
 			<hr class="my-4" />
 
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -41,7 +41,7 @@
 					</li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
-					<a href="/" class="btn btn-dark my-2 my-sm-0" id="loginButton">
+					<a href="/" class="btn btn-dark my-2 my-sm-0 topButton" id="loginButton">
 						LogOut </a>
 				</form>
 			</div>
@@ -50,13 +50,12 @@
 		<div class="jumbotron" id="main">
 			<h2 class="display-4">Students Statistics</h2>
 
-			<!--main content-->
+			<!--_________________________________________ Main Content _________________________________________-->
 			<div id="maincontent">
 
 				<table>
 					<tr>
 						<th>Student Username</th>
-						<th>Student Email</th>
 						<th>Courses Opted</th>
 						<th>Expert selected</th>
 						<th>Study Material Completed</th>
@@ -66,9 +65,7 @@
 						<td
 							th:text="${adminForStudentsListElement.getUserName()}">Alfreds
 							Futterkiste</td>
-						<td
-							th:text="${adminForStudentsListElement.getEmail()}">Alfreds
-							Futterkiste</td>
+						
 						<td>
 							<table>
 								<tr
@@ -100,7 +97,7 @@
 		</div>
 	</div>
 
-	<!-- Optional JavaScript -->
+	<!--________________________________________ Optional JavaScript ___________________________________________-->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

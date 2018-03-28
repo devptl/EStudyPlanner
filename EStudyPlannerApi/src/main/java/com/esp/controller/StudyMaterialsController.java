@@ -82,7 +82,14 @@ public class StudyMaterialsController {
 
 		// setting the percent
 		float comp = studentCompletedMaterials.size();
-		float perCompleted = (comp * 100) / noOfVedios;
+		float perCompleted=0 ;
+		
+		try {
+		perCompleted= (comp * 100) / noOfVedios;
+		}catch(Exception exception)
+		{
+			perCompleted=0;
+		}
 
 		// completed percent initialisation
 		model.addAttribute("perCompleted", perCompleted);

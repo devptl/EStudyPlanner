@@ -1,3 +1,4 @@
+/*--------------------------------- Body Styling ------------------------------*/
 #main {
 	background-image: url("../images/bodybackground.png");
 }
@@ -6,46 +7,21 @@
 	float: left;
 }
 
-#divlogin {
-	float: left;
-}
-
-#divforgotpassword {
-	float: left;
-}
-
+/*--------------------------------- Nav Styling --------------------------------*/
 #navbar {
-	opacity: 0.85 !important;
+	opacity: 0.9 !important;
 	background-image: url("../images/navbackground.jpg");
 }
 
+#navbar li a {
+	color: white;
+}
+
 #navusername {
-	background: grey;
-    height: 36px;
-    border: black;
-    color: white;
-    font-weight: bolder;
-    text-align: center;
-    width: 150px;
-    border-radius: 13px;
+	height: 36px;
 }
 
-#slidetext{
-	text-align: center;
-    font-size: 23px;
-    padding-left: 3%;
-    padding-right: 3%;
-    padding-top: 1%;
-    padding-bottom: 2%;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    background: lightgrey;
-    text-shadow: grey 1px 1px 2px;
-    color: darkslateblue;
-}
-
-
-#navbar a {
+#mainTitle{
 	color: white;
 }
 
@@ -55,10 +31,34 @@
 	background: white;
 }
 
-#loginButton {
+.topButton {
+	background: lightgrey;
+	text-shadow: grey 1px 1px 2px;
+	color: darkslateblue;
+	border: black;
 	margin-left: 4px;
+	font-weight: bolder;
+	text-align: center;
+	width: 160px;
+	border-radius: 13px;
 }
 
+/*--------------------------------- Slider Styling ------------------------------*/
+#slidetext {
+	text-align: center;
+	font-size: 23px;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 1%;
+	padding-bottom: 2%;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	background: lightgrey;
+	text-shadow: grey 1px 1px 2px;
+	color: darkslateblue;
+}
+
+/*--------------------------------- Modal Styling --------------------------------*/
 #modalcontent1 {
 	opacity: 0.9 !important;
 	background-image: url("../images/loginbackground.jpg");
@@ -74,47 +74,12 @@
 	background-image: url("../images/loginbackground.jpg");
 }
 
-
-#warningtext {
-	color: red;
-	font-weight: bolder;
+#divlogin {
+	float: left;
 }
 
-#maincontent1 {
-	height: -webkit-fill-available;
-}
-
-#maincontent {
-	height: auto;
-}
-
-#maincard {
-	background-image: url("../images/mainbackground.jpg");
-}
-
-#sidecard {
-	background-image: url("../images/sidebackground.jpg");
-}
-
-#accordion {
-	width:100% !important;
-	float: left !important;
-}
-
-#accordion2 {
-	float: left !important;
-}
-
-#RegisterMainButton{
-	font-size: 21px;
-    padding-left: 3%;
-    padding-right: 3%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-	border-radius: 20px;
-	background: lightgrey;
-	text-shadow: grey 1px 1px 2px;
-	color: darkslateblue;
+#divforgotpassword {
+	float: left;
 }
 
 #alreadHaveAccountButton {
@@ -135,17 +100,55 @@
 	border: none;
 }
 
+/*--------------------------------- Main Content Styling --------------------------*/
+#maincontent1 {
+	height: -webkit-fill-available;
+}
+
+#maincontent {
+	height: auto;
+}
+
+#maincard {
+	background-image: url("../images/mainbackground.jpg");
+}
+
+#sidecard {
+	background-image: url("../images/sidebackground.jpg");
+}
+
+#accordion {
+	width: 100% !important;
+	float: left !important;
+}
+
+#accordion2 {
+	float: left !important;
+}
+
+#RegisterMainButton {
+	font-size: 21px;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	border-radius: 20px;
+	background: lightgrey;
+	text-shadow: grey 1px 1px 2px;
+	color: darkslateblue;
+}
+
+/*--------------------------------- Form Content Styling ---------------------------*/
 #fullWidthButton {
 	color: black;
-    width: 100%;
-    font-weight: bolder;
-    font-variant-caps: titling-caps;
+	width: 100%;
+	font-weight: bolder;
+	font-variant-caps: titling-caps;
 }
 
-#hiddenObject{
-	display:none;
+#hiddenObject {
+	display: none;
 }
-
 
 #formid {
 	float: left !important;
@@ -172,6 +175,11 @@
 	font-weight: bolder !important;
 }
 
+#warningtext {
+	color: red;
+	font-weight: bolder;
+}
+
 #vedioframe {
 	margin-left: 4%;
 	height: 550px;
@@ -180,11 +188,7 @@
 	border-color: black;
 }
 
-#footer {
-	opacity: 0.85 !important;
-	background-image: url("../images/navbackground.jpg");
-}
-
+/*-------------------------------------- Table Styling --------------------------------*/
 table {
 	font-family: arial, sans-serif;
 	border-collapse: collapse;

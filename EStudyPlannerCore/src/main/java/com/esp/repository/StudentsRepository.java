@@ -8,6 +8,4 @@ import com.esp.model.Students;
 @Repository
 public interface StudentsRepository extends JpaRepository<Students,String>{
 	
-	public Students findByEmail(String email); 
-
 }

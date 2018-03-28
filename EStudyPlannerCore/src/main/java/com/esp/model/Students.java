@@ -18,16 +18,12 @@ public class Students {
 
 	@Id
 	private String userName;
-	private String firstName;
-	private String lastName;
-	private String email;
 	private int field;
 	private int guardiansIdGuardians;
-	private String password;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "studentsHasCourses", joinColumns = {
-	@JoinColumn(name = "studentsUserName") }, inverseJoinColumns = { @JoinColumn(name = "coursesIdCourse") })
+			@JoinColumn(name = "studentsUserName") }, inverseJoinColumns = { @JoinColumn(name = "coursesIdCourse") })
 	private Set<Courses> courses = new HashSet<>();
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -69,18 +65,6 @@ public class Students {
 		return userName;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
 	public int getField() {
 		return field;
 	}
@@ -89,24 +73,8 @@ public class Students {
 		return guardiansIdGuardians;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public void setField(int field) {
@@ -117,24 +85,15 @@ public class Students {
 		this.guardiansIdGuardians = guardiansIdGuardians;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public Students() {
 
 	}
 
-	public Students(String userName, String firstName, String lastName, String email, int field,
-			int guardiansIdGuardians, String password) {
+	public Students(String userName, int field, int guardiansIdGuardians) {
 
 		this.userName = userName;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
 		this.field = field;
 		this.guardiansIdGuardians = guardiansIdGuardians;
-		this.password = password;
 	}
 
 }

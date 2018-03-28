@@ -35,11 +35,11 @@ public class CourseController {
 	 * 
 	 * @return {@link Courses}
 	 */
-	@RequestMapping(value = "fieldCourses", method = RequestMethod.GET)
+	@RequestMapping(value = "fCourses", method = RequestMethod.GET)
 	@ResponseBody
 	public ArrayList<Courses> fieldCourse() {
 		ArrayList<Courses> courses;
-		courses = coursesService.getfieldCourses(0);
+		courses = coursesService.mainCoursesById(101);
 		return courses;
 	}
 

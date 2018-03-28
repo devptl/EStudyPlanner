@@ -83,7 +83,7 @@ public class ExpertsController {
 
 		// minor courses according to major courses
 		ArrayList<Courses> minorCourses = null;
-		minorCourses = coursesService.mainCoursesById(id);
+		minorCourses = coursesService.minorCoursesById(id);
 		ArrayList<StudyMaterials> studyMaterials = studyMaterialsService.showStudyMaterialsByCourseid(id);
 
 		initialiser.expertInitialiserWithParameters(studyMaterials, model);

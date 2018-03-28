@@ -49,6 +49,7 @@ public class CoursesService {
 
 	/**
 	 * List of course according to given parent id
+	 * and if study material available
 	 * 
 	 * @param id
 	 *            - ParentID
@@ -57,6 +58,15 @@ public class CoursesService {
 	public ArrayList<Courses> mainCoursesById(int id) {
 
 		return dtoOperation.getCoursesComponents().mainCoursesById(id);
+	}
+	/**
+	 * List of course by parent Id
+	 * @param id
+	 * @return
+	 */
+	public ArrayList<Courses> minorCoursesById(int id) {
+
+		return dtoOperation.getCoursesComponents().minorCoursesById(id);
 	}
 
 	/**
@@ -69,6 +79,8 @@ public class CoursesService {
 	public Courses getCourseWithId(int id) {
 		return dtoOperation.getCoursesComponents().findOneCourse(id);
 	}
+	
+	
 
 	/**
 	 * To find the courses by name

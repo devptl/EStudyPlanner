@@ -39,15 +39,7 @@ public class ExpertsComponents {
 	@Autowired
 	private ExpertsHasStudyMaterialsRepository expertsHasStudyMaterialsRepository;
 
-	/**
-	 * To find the experts by email Id
-	 * 
-	 * @param email
-	 * @return
-	 */
-	public Experts findByEmail(String email) {
-		return expertsRepository.findByEmail(email);
-	}
+	
 
 	/**
 	 * return list of all Experts

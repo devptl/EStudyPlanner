@@ -24,11 +24,11 @@
 	<div class="container">
 
 
-		<!--navigation menu-->
+		<!--____________________________________ Navigation Menu ______________________________________________-->
 		<nav
 			class="navbar sticky-top navbar-expand-lg navbar-light bg-primary"
 			id="navbar">
-			<a class="navbar-brand" href="/">E-Study and Planner</a> <br />
+			<a class="navbar-brand" id="mainTitle" href="/">E-Study and Planner</a> <br />
 			<hr class="my-4" />
 
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -44,17 +44,17 @@
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
 					<button type="button" id="RegisterButton"
-						class="btn btn-dark my-2 my-sm-0" data-toggle="modal"
+						class="btn btn-dark my-2 my-sm-0 topButton" data-toggle="modal"
 						data-target="#exampleModalCenter4">Sign Up</button>
 					<button type="button" id="loginButton"
-						class="btn btn-dark my-2 my-sm-0" data-toggle="modal"
+						class="btn btn-dark my-2 my-sm-0 topButton" data-toggle="modal"
 						data-target="#exampleModalCenter1">LogIn</button>
 				</form>
 			</div>
 		</nav>
 
 
-		<!--slider-->
+		<!--____________________________________________ Slider ________________________________________________-->
 		<div id="carouselExampleIndicators" class="carousel slide"
 			data-ride="carousel">
 			<ol class="carousel-indicators">
@@ -65,20 +65,20 @@
 			</ol>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-				    
+
 					<img class="d-block w-100" src="../images/image1.jpg"
 						alt="First slide" />
 					<p id="slidetext">Select Your Experts</p>
 				</div>
 				<div class="carousel-item">
-					
+
 					<img class="d-block w-100" src="../images/image2.jpg"
 						alt="Second slide" />
 					<p id="slidetext">Set Your Schedule</p>
-						
+
 				</div>
 				<div class="carousel-item">
-					
+
 					<img class="d-block w-100" src="../images/image3.jpg"
 						alt="Third slide" />
 					<p id="slidetext">Track Your Progress</p>
@@ -114,11 +114,11 @@
 			<p id="schedulermessage" th:text="${msg}"></p>
 			<hr class="my-4" />
 
-			<!--main content-->
+			<!--__________________________________________ Main Content _______________________________________-->
 			<div id="maincontent1">
 
 
-				<!--collapsive top display-->
+				<!--__________________________________ Collapsive Top Display _________________________________-->
 				<div id="accordion">
 					<div class="card" id="sidecard">
 						<div class="card-header" id="headingOne">
@@ -203,7 +203,8 @@
 			<!-- end jumbo class -->
 		</div>
 
-		<!-- Modal for Registration -->
+
+		<!--_______________________________________ Modal For Registration _____________________________________-->
 		<div class="modal fade" id="exampleModalCenter4" tabindex="-1"
 			role="dialog" aria-labelledby="exampleModalCenterTitle"
 			aria-hidden="true">
@@ -392,7 +393,8 @@
 			</div>
 		</div>
 
-		<!-- Modal for Login -->
+
+		<!--_______________________________________ Modal For Login ___________________________________________-->
 		<div class="modal fade" id="exampleModalCenter1" tabindex="-1"
 			role="dialog" aria-labelledby="exampleModalCenterTitle"
 			aria-hidden="true">
@@ -460,7 +462,8 @@
 		</div>
 
 
-		<!-- Forgot the password modal -->
+		
+		<!--_______________________________________ Forgot The Password Modal __________________________________-->
 		<div class="modal fade" id="exampleModalCenter2" tabindex="-1"
 			role="dialog" aria-labelledby="exampleModalCenterTitle"
 			aria-hidden="true">
@@ -524,7 +527,7 @@
 		</div>
 
 
-		<!-- Change the password modal -->
+		<!--_______________________________________ Change The Password Modal __________________________________-->
 		<div class="modal fade" id="exampleModalCenter3" tabindex="-1"
 			role="dialog" aria-labelledby="exampleModalCenterTitle"
 			aria-hidden="true">
@@ -597,7 +600,7 @@
 		<!-- end container -->
 	</div>
 
-	<!-- Optional JavaScript -->
+	<!--__________________________________________ Optional JavaScript _________________________________________-->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

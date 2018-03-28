@@ -23,11 +23,11 @@
 
 	<div class="container">
 
-		<!--navigation menu-->
+		<!--_______________________________________ Navigation Menu ____________________________________________-->
 		<nav
 			class="navbar sticky-top navbar-expand-lg navbar-light bg-primary"
 			id="navbar">
-			<a class="navbar-brand" href="/">E-Study and Planner</a>
+			<a class="navbar-brand" id="mainTitle" href="/">E-Study and Planner</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -43,10 +43,11 @@
 				<form class="form-inline my-2 my-lg-0">
 					<div id="divusername">
 						<input type="text" th:value="${username}" placeholder="username"
-							id="navusername" name="userName" required="required"></input>
+							class="topButton" readonly="readonly" id="navusername"
+							name="userName" required="required"></input>
 					</div>
-					<a href="/" class="btn btn-dark my-2 my-sm-0" id="loginButton">
-						LogOut </a>
+					<a href="/" class="btn btn-dark my-2 my-sm-0 topButton"
+						id="loginButton"> LogOut </a>
 				</form>
 			</div>
 		</nav>
@@ -61,7 +62,7 @@
 				understanding on the study materials</p>
 			<hr class="my-4" />
 
-			<!--main content-->
+			<!--__________________________________________ Main Content ________________________________________-->
 			<div id="maincontent">
 
 				<div id="accordion1">
@@ -78,6 +79,7 @@
 						<div id="collapseOne" th:class="${shdiv1}"
 							aria-labelledby="headingOne" data-parent="#accordion1">
 							<div class="card-body">
+								<!--________________________ Form To Select Free Slots _________________________-->
 								<form class="needs-validation" th:object="${Schedule}"
 									action="/Scheduler/enterSchedule" method="post">
 									<div class="form-group" id="hiddenObject">
@@ -171,6 +173,7 @@
 							aria-labelledby="headingTwo" data-parent="#accordion1">
 							<div class="card-body">
 
+								<!--________________________ Form To Select Major Course _______________________-->
 								<form class="needs-validation" novalidate="novalidate"
 									th:object="${StudentsHasCourses}"
 									action="/Scheduler/entryUserAndMainCourse" method="post">
@@ -222,6 +225,7 @@
 							aria-labelledby="headingThree" data-parent="#accordion1">
 							<div class="card-body">
 
+								<!--________________________ Form To Select Minor Course _______________________-->
 								<form class="needs-validation" novalidate="novalidate"
 									th:object="${StudentsHasCourses}"
 									action="/Scheduler/entryUserAndMinorCourse" method="post">
@@ -272,6 +276,7 @@
 							aria-labelledby="headingFour" data-parent="#accordion1">
 							<div class="card-body">
 
+								<!--____________________________ Form To Select Expert _________________________-->
 								<form class="needs-validation" novalidate="novalidate"
 									action="/Scheduler/showStudyMaterials" method="post">
 									<div class="form-group" id="hiddenObject">
@@ -311,7 +316,7 @@
 											<option value="default">I am my expert</option>
 											<option th:each="allExpert :${allExperts.toArray()}"
 												th:value="${allExpert.getUserName()}"
-												th:text="${allExpert.getFirstName()}">One</option>
+												th:text="${allExpert.getUserName()}">One</option>
 
 										</select>
 										<div class="invalid-feedback">Not a valid Field !</div>
@@ -329,7 +334,7 @@
 		</div>
 
 	</div>
-	<!-- Optional JavaScript -->
+	<!--_________________________________________ Optional JavaScript __________________________________________-->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

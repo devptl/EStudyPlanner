@@ -41,7 +41,7 @@ public class SetTimer {
 			int slot3inh = Integer.parseInt(s1.getSlotThreeIn().substring(0, 2));
 
 			// getting the mail id
-			String mailId = dtoOperation.getStudentsComponents().findOneStudent(s1.getStudentsUserName()).getEmail();
+			String mailId = dtoOperation.getUserComponent().findOne(s1.getStudentsUserName()).getEmail();
 
 			try {
 

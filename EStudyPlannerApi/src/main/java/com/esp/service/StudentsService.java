@@ -15,6 +15,7 @@ import com.esp.model.Schedule;
 import com.esp.model.Students;
 import com.esp.model.StudentsHasCourses;
 import com.esp.model.StudentsHasExperts;
+import com.esp.model.Users;
 
 @Service
 public class StudentsService {
@@ -46,21 +47,27 @@ public class StudentsService {
 
 		String userName = registeredUser.getUserName();
 		String email = registeredUser.getEmail();
-		if (dtoOperation.getStudentsComponents().findOneStudent(userName) == null
-				&& dtoOperation.getStudentsComponents().findByEmail(email) == null) {
+		if (dtoOperation.getUserComponent().findOne(userName) == null
+				&& dtoOperation.getUserComponent().findByEmail(email) == null) {
 
 			Students student = new Students();
+			Users user = new Users();
 
-			student.setFirstName(registeredUser.getFirstName());
-			student.setLastName(registeredUser.getLastName());
-			student.setUserName(registeredUser.getUserName());
+			user.setUserName(userName);
+			student.setUserName(userName);
+
+			user.setFirstName(registeredUser.getFirstName());
+			user.setLastName(registeredUser.getLastName());
+			user.setEmail(registeredUser.getEmail());
+			user.setRole(registeredUser.getRole());
+
 			student.setGuardiansIdGuardians(1);
 
 			// encode the password
 			String encodedPassword = encoder.encodePassword(registeredUser.getPassword());
 
-			student.setPassword(encodedPassword);
-			student.setEmail(registeredUser.getEmail());
+			user.setPassword(encodedPassword);
+			user.setEmail(registeredUser.getEmail());
 			student.setField(registeredUser.getField());
 
 			// getting the main course list according to registered field
@@ -78,6 +85,7 @@ public class StudentsService {
 			// initialising values for schedule page
 			initialiser.schedulerInitialiser(mainCourses, allExperts, schedule, userName, model, msg);
 
+			dtoOperation.getUserComponent().saveUser(user);
 			dtoOperation.getStudentsComponents().saveStudent(student);
 
 			return true;
@@ -93,42 +101,30 @@ public class StudentsService {
 	 * @param model
 	 * @return loginStatus
 	 */
-	public boolean studentsLogin(LoggedUser l1, ModelMap model) {
+	public void studentsLogin(LoggedUser l1, ModelMap model) {
 
 		String loginId = l1.getUserName();
 		Students student = dtoOperation.getStudentsComponents().findOneStudent(loginId);
-		if (student == null) {
-			return false;
+
+		String username = student.getUserName();
+		Schedule schedule;
+
+		// set the main course according to the fiels
+		ArrayList<Courses> mainCourses = coursesService.minorCoursesById(student.getField());
+
+		// check if schedule already exist
+		if (scheduleService.findSchedule(username) == null) {
+			schedule = new Schedule();
 		} else {
-			String encodedPassword = encoder.encodePassword(l1.getPassword());
-
-			if (student.getPassword().equals(encodedPassword)) {
-
-				String username = student.getUserName();
-				Schedule schedule;
-
-				// set the main course according to the fiels
-				ArrayList<Courses> mainCourses = coursesService.mainCoursesById(student.getField());
-
-				// check if schedule already exist
-				if (scheduleService.findSchedule(username) == null) {
-					schedule = new Schedule();
-				} else {
-					schedule = scheduleService.findSchedule(username);
-				}
-
-				// setting the expert list
-				ArrayList<Experts> allExperts = dtoOperation.getExpertsComponents().allExperts();
-				String msg = "Want to make changes in schedule";
-
-				// initialising values for schedule page
-				initialiser.schedulerInitialiser(mainCourses, allExperts, schedule, username, model, msg);
-
-				return true;
-			}
-
-			return false;
+			schedule = scheduleService.findSchedule(username);
 		}
+
+		// setting the expert list
+		ArrayList<Experts> allExperts = dtoOperation.getExpertsComponents().allExperts();
+		String msg = "Want to make changes in schedule";
+
+		// initialising values for schedule page
+		initialiser.schedulerInitialiser(mainCourses, allExperts, schedule, username, model, msg);
 
 	}
 
@@ -141,54 +137,6 @@ public class StudentsService {
 	 */
 	public Students findStudentByUsername(String userName) {
 		return dtoOperation.getStudentsComponents().findOneStudent(userName);
-	}
-
-	/**
-	 * To find a student with particular username
-	 * 
-	 * @param userName
-	 *            - Students UserName
-	 * @param email
-	 * @return studentExistStatus
-	 */
-	public boolean checkForStudent(String userName, String email) {
-
-		Students student = dtoOperation.getStudentsComponents().findOneStudent(userName);
-
-		// checking if student exist
-		return student == null ? false : student.getEmail().equals(email);
-	}
-
-	/**
-	 * When student changes the password
-	 * 
-	 * @param userName
-	 * @param oldPassword
-	 * @param newPassword
-	 * @return ChangePassword Status
-	 */
-	public boolean changeTheStudentPassword(String userName, String oldPassword, String newPassword) {
-
-		// checking is student exist
-		Students student = dtoOperation.getStudentsComponents().findOneStudent(userName);
-		if (student == null) {
-			return false;
-		} else {
-			String encodedPassword = encoder.encodePassword(oldPassword);
-
-			if (student.getPassword().equals(encodedPassword)) {
-
-				// setting the new password
-				// encode new password
-				String newEncodedPassword = encoder.encodePassword(newPassword);
-
-				student.setPassword(newEncodedPassword);
-				dtoOperation.getStudentsComponents().saveStudent(student);
-				return true;
-			}
-			return false;
-		}
-
 	}
 
 	/**

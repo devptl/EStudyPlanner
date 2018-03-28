@@ -38,7 +38,10 @@ public class StudyMaterialsService {
 	 */
 	public ArrayList<StudyMaterials> showStudyMaterialsByCourseName(String minorCourseName) {
 
-		return dtoOperation.getStudyMaterialsComponents().showStudyMaterialsByCourseName(minorCourseName);
+		ArrayList<StudyMaterials> studyMaterial = dtoOperation.getStudyMaterialsComponents().showStudyMaterialsByCourseName(minorCourseName);
+        
+        return studyMaterial;
+	
 	}
 
 	/**
@@ -168,9 +171,17 @@ public class StudyMaterialsService {
 	 */
 	public float trackCourseCompletion(ArrayList<StudyMaterials> s1,
 			ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials) {
+		
+		float perCompleted=0;
+		try {
 		float total = s1.size();
 		float completed = studentCompletedMaterials.size();
-		float perCompleted = ((completed * 100) / total);
+		perCompleted = ((completed * 100) / total);
+		
+		}catch(Exception e)
+		{
+			perCompleted=0;
+		}
 
 		return perCompleted;
 	}

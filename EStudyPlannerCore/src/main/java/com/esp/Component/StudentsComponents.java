@@ -38,15 +38,6 @@ public class StudentsComponents {
 		return (ArrayList<Students>) studentsRepository.findAll();
 	}
 
-	/**
-	 * To find the stuudent by email
-	 * 
-	 * @param email
-	 * @return {@link Students}
-	 */
-	public Students findByEmail(String email) {
-		return studentsRepository.findByEmail(email);
-	}
 
 	/**
 	 * return a particular Student
