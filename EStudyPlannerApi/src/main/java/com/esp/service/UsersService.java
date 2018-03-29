@@ -3,7 +3,7 @@ package com.esp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esp.dto.DtoOperation;
+import com.esp.Component.UserComponent;
 import com.esp.model.LoggedUser;
 import com.esp.model.Users;
 
@@ -11,7 +11,7 @@ import com.esp.model.Users;
 public class UsersService {
 	
 	@Autowired
-	private DtoOperation dtoOperation;
+	private UserComponent userComponent;
 	
 	@Autowired
 	private Encoder encoder;
@@ -25,7 +25,7 @@ public class UsersService {
 	 */
 	public boolean checkForUser(String userName, String email) {
 
-		Users user = dtoOperation.getUserComponent().findOne(userName);
+		Users user = userComponent.findOne(userName);
 		
 		if (user == null) {
 			return false;
@@ -42,7 +42,7 @@ public class UsersService {
 	public boolean usersLogin(LoggedUser l1) {
 
 		String userName = l1.getUserName();
-		Users user = dtoOperation.getUserComponent().findOne(userName);
+		Users user = userComponent.findOne(userName);
 		
 		// checking if expert exist with username and password
 		if ( user == null) {
@@ -63,7 +63,7 @@ public class UsersService {
 	
 	public boolean changeTheUserPassword(String userName, String oldPassword, String newPassword) {
 
-		Users user = dtoOperation.getUserComponent().findOne(userName);
+		Users user = userComponent.findOne(userName);
 		
 		if ( user == null) {
 			return false;
@@ -78,7 +78,7 @@ public class UsersService {
 				
 				// saving the new password
 				user.setPassword(newEncodedPassword);
-				dtoOperation.getUserComponent().saveUser(user);
+				userComponent.saveUser(user);
 
 				return true;
 			}
@@ -94,7 +94,7 @@ public class UsersService {
 	 * @return
 	 */
 	public Users findUser(String userName) {
-		return dtoOperation.getUserComponent().findOne(userName);
+		return userComponent.findOne(userName);
 	}
 
 }

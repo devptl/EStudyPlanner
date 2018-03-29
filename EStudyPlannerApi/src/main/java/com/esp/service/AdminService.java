@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esp.dto.DtoOperation;
+import com.esp.Component.AdminComponents;
+import com.esp.Component.ExpertsComponents;
+import com.esp.Component.StudentsComponents;
 import com.esp.model.Admin;
 import com.esp.model.AdminForExperts;
 import com.esp.model.AdminForStudents;
@@ -17,7 +19,13 @@ import com.esp.model.Students;
 public class AdminService {
 
 	@Autowired
-	private DtoOperation dtoOperation;
+	private AdminComponents adminComponents;
+	
+	@Autowired
+	private StudentsComponents studentsComponents;
+	
+	@Autowired
+	private ExpertsComponents expertsComponents; 
 	
 	@Autowired
 	private Encoder encoder;
@@ -31,7 +39,7 @@ public class AdminService {
 	 */
 	public boolean adminLogin(LoggedUser l1) {
 		String loginId = l1.getUserName();
-		Admin admin = dtoOperation.getAdminComponents().findOneAdmin(loginId);
+		Admin admin = adminComponents.findOneAdmin(loginId);
 
 		// checking if expert exist with username and password
 		if (admin == null) {
@@ -54,7 +62,7 @@ public class AdminService {
 	public ArrayList<Students> getAdminForStudent() {
 
 		// getting list of all the students
-		ArrayList<Students> students = dtoOperation.getStudentsComponents().allStudents();
+		ArrayList<Students> students = studentsComponents.allStudents();
 
 		return students;
 	}
@@ -67,7 +75,7 @@ public class AdminService {
 	public ArrayList<Experts> getAdminForExperts() {
 
 		// getting the list of all the experts
-		ArrayList<Experts> experts = dtoOperation.getExpertsComponents().allExperts();
+		ArrayList<Experts> experts = expertsComponents.allExperts();
 
 		return experts;
 	}

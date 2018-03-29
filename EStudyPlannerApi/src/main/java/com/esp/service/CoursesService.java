@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esp.dto.DtoOperation;
+import com.esp.Component.CoursesComponents;
 import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.Students;
@@ -14,7 +14,7 @@ import com.esp.model.Students;
 public class CoursesService {
 
 	@Autowired
-	private DtoOperation dtoOperation;
+	private CoursesComponents coursesComponents;
 
 	/**
 	 * List of all the Courses
@@ -23,7 +23,7 @@ public class CoursesService {
 	 */
 	public ArrayList<Courses> showCourses() {
 		ArrayList<Courses> s1;
-		s1 = dtoOperation.getCoursesComponents().allCourses();
+		s1 = coursesComponents.allCourses();
 		return s1;
 	}
 
@@ -34,7 +34,7 @@ public class CoursesService {
 	 * @return {@link Courses}
 	 */
 	public ArrayList<Courses> getfieldCourses(int parentCourseId) {
-		return dtoOperation.getCoursesComponents().getfieldCourses(parentCourseId);
+		return coursesComponents.getfieldCourses(parentCourseId);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class CoursesService {
 	 */
 	public ArrayList<Courses> mainCourses() {
 
-		return dtoOperation.getCoursesComponents().mainCourses();
+		return coursesComponents.mainCourses();
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class CoursesService {
 	 */
 	public ArrayList<Courses> mainCoursesById(int id) {
 
-		return dtoOperation.getCoursesComponents().mainCoursesById(id);
+		return coursesComponents.mainCoursesById(id);
 	}
 	/**
 	 * List of course by parent Id
@@ -66,7 +66,7 @@ public class CoursesService {
 	 */
 	public ArrayList<Courses> minorCoursesById(int id) {
 
-		return dtoOperation.getCoursesComponents().minorCoursesById(id);
+		return coursesComponents.minorCoursesById(id);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class CoursesService {
 	 * @return {@link Courses}
 	 */
 	public Courses getCourseWithId(int id) {
-		return dtoOperation.getCoursesComponents().findOneCourse(id);
+		return coursesComponents.findOneCourse(id);
 	}
 	
 	
@@ -90,7 +90,7 @@ public class CoursesService {
 	 */
 	public Courses findCourseByName(String name) {
 
-		return dtoOperation.getCoursesComponents().findCourseByName(name);
+		return coursesComponents.findCourseByName(name);
 
 	}
 
@@ -103,7 +103,7 @@ public class CoursesService {
 	 */
 	public ArrayList<Courses> getCoursesForStudent(String userName) {
 
-		return dtoOperation.getCoursesComponents().getCoursesForStudent(userName);
+		return coursesComponents.getCoursesForStudent(userName);
 
 	}
 
@@ -116,7 +116,7 @@ public class CoursesService {
 	 */
 	public ArrayList<Courses> getCoursesForExpert(String userName) {
 
-		return dtoOperation.getCoursesComponents().getCoursesForExpert(userName);
+		return coursesComponents.getCoursesForExpert(userName);
 
 	}
 

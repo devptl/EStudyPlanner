@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
-import com.esp.dto.DtoOperation;
+import com.esp.Component.ExpertsComponents;
+import com.esp.Component.ScheduleComponents;
+import com.esp.Component.StudentsComponents;
 import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.Schedule;
@@ -16,7 +18,13 @@ import com.esp.model.Students;
 public class ScheduleService {
 
 	@Autowired
-	private DtoOperation dtoOperation;
+	private ScheduleComponents scheduleComponents;
+	
+	@Autowired
+	private ExpertsComponents expertsComponents;
+	
+	@Autowired
+	private StudentsComponents studentsComponents;
 
 	@Autowired
 	private CoursesService coursesService;
@@ -84,7 +92,7 @@ public class ScheduleService {
 	public void saveSchedule(Schedule schedule, ModelMap model) {
 
 		// saving the schedule
-		dtoOperation.getScheduleComponents().saveSchedule(schedule);
+		scheduleComponents.saveSchedule(schedule);
 		String msg = "Time difference is correct";
 		manageSchedule(schedule, model, msg);
 
@@ -99,12 +107,12 @@ public class ScheduleService {
 	 */
 	public void manageSchedule(Schedule schedule, ModelMap model, String message) {
 
-		Students student = dtoOperation.getStudentsComponents().findOneStudent(schedule.getStudentsUserName());
+		Students student = studentsComponents.findOneStudent(schedule.getStudentsUserName());
 
 		// getting the list of courses according to the fields
 		ArrayList<Courses> mainCourses = coursesService.mainCoursesById(student.getField());
 
-		ArrayList<Experts> allExperts = dtoOperation.getExpertsComponents().allExperts();
+		ArrayList<Experts> allExperts = expertsComponents.allExperts();
 
 		initialiser.schedulerInitialiser(mainCourses, allExperts, schedule, schedule.getStudentsUserName(), model,
 				message);
@@ -118,7 +126,7 @@ public class ScheduleService {
 	 * @return {@link Schedule}
 	 */
 	public Schedule findSchedule(String username) {
-		return dtoOperation.getScheduleComponents().findOneSchedule(username);
+		return scheduleComponents.findOneSchedule(username);
 	}
 
 }

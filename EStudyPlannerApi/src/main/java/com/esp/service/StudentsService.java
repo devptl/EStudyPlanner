@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
-import com.esp.dto.DtoOperation;
+import com.esp.Component.ExpertsComponents;
+import com.esp.Component.StudentsComponents;
+import com.esp.Component.UserComponent;
 import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
@@ -21,8 +23,14 @@ import com.esp.model.Users;
 public class StudentsService {
 
 	@Autowired
-	private DtoOperation dtoOperation;
-
+	private UserComponent userComponent;
+	
+	@Autowired
+	private ExpertsComponents expertsComponents;
+	
+	@Autowired
+	private StudentsComponents studentsComponents;
+	
 	@Autowired
 	private CoursesService coursesService;
 
@@ -47,8 +55,8 @@ public class StudentsService {
 
 		String userName = registeredUser.getUserName();
 		String email = registeredUser.getEmail();
-		if (dtoOperation.getUserComponent().findOne(userName) == null
-				&& dtoOperation.getUserComponent().findByEmail(email) == null) {
+		if (userComponent.findOne(userName) == null
+				&& userComponent.findByEmail(email) == null) {
 
 			Students student = new Students();
 			Users user = new Users();
@@ -74,7 +82,7 @@ public class StudentsService {
 			ArrayList<Courses> mainCourses = coursesService.mainCoursesById(student.getField());
 
 			// default list of experts
-			ArrayList<Experts> allExperts = dtoOperation.getExpertsComponents().allExperts();
+			ArrayList<Experts> allExperts = expertsComponents.allExperts();
 
 			// assign a new schedule
 			Schedule schedule = new Schedule();
@@ -85,8 +93,8 @@ public class StudentsService {
 			// initialising values for schedule page
 			initialiser.schedulerInitialiser(mainCourses, allExperts, schedule, userName, model, msg);
 
-			dtoOperation.getUserComponent().saveUser(user);
-			dtoOperation.getStudentsComponents().saveStudent(student);
+			userComponent.saveUser(user);
+			studentsComponents.saveStudent(student);
 
 			return true;
 		} else
@@ -104,7 +112,7 @@ public class StudentsService {
 	public void studentsLogin(LoggedUser l1, ModelMap model) {
 
 		String loginId = l1.getUserName();
-		Students student = dtoOperation.getStudentsComponents().findOneStudent(loginId);
+		Students student = studentsComponents.findOneStudent(loginId);
 
 		String username = student.getUserName();
 		Schedule schedule;
@@ -120,7 +128,7 @@ public class StudentsService {
 		}
 
 		// setting the expert list
-		ArrayList<Experts> allExperts = dtoOperation.getExpertsComponents().allExperts();
+		ArrayList<Experts> allExperts = expertsComponents.allExperts();
 		String msg = "Want to make changes in schedule";
 
 		// initialising values for schedule page
@@ -136,7 +144,7 @@ public class StudentsService {
 	 * @return {@link Students}
 	 */
 	public Students findStudentByUsername(String userName) {
-		return dtoOperation.getStudentsComponents().findOneStudent(userName);
+		return studentsComponents.findOneStudent(userName);
 	}
 
 	/**
@@ -145,7 +153,7 @@ public class StudentsService {
 	 * @return
 	 */
 	public ArrayList<Students> getAllStudents() {
-		return dtoOperation.getStudentsComponents().allStudents();
+		return studentsComponents.allStudents();
 	}
 
 	/**
@@ -155,7 +163,7 @@ public class StudentsService {
 	 *            - {@link StudentsHasExperts}
 	 */
 	public void saveStudentsAndMinorCourse(StudentsHasCourses s) {
-		dtoOperation.getStudentsComponents().saveStudentsHasCourses(s);
+		studentsComponents.saveStudentsHasCourses(s);
 	}
 
 	/**
@@ -165,7 +173,7 @@ public class StudentsService {
 	 *            {@link StudentsHasExperts}s
 	 */
 	public void saveStudentsHasExperts(StudentsHasExperts se) {
-		dtoOperation.getStudentsComponents().saveStudentsHasExperts(se);
+		studentsComponents.saveStudentsHasExperts(se);
 	}
 
 }

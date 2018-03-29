@@ -21,7 +21,7 @@
 	height: 36px;
 }
 
-#mainTitle{
+#mainTitle {
 	color: white;
 }
 
@@ -168,6 +168,12 @@
 
 #setstudymaterial {
 	margin-top: 2%;
+}
+
+#frontmessage {
+	color: red !important;
+	font-weight: bolder !important;
+	text-align: center;
 }
 
 #schedulermessage {

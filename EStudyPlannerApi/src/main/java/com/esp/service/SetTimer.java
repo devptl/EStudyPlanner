@@ -8,7 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.esp.dto.DtoOperation;
+import com.esp.Component.ScheduleComponents;
+import com.esp.Component.UserComponent;
 import com.esp.model.Schedule;
 
 @Service
@@ -16,7 +17,10 @@ import com.esp.model.Schedule;
 public class SetTimer {
 
 	@Autowired
-	private DtoOperation dtoOperation;
+	private ScheduleComponents scheduleComponents;
+	
+	@Autowired
+	private UserComponent userComponent;
 
 	@Autowired
 	private SMTPMailSender sMTPMailSender;
@@ -30,7 +34,7 @@ public class SetTimer {
 	 */
 	@Scheduled(cron = "0 0 * ? * *")
 	public void runScheduler() throws InterruptedException {
-		ArrayList<Schedule> allSchedule = dtoOperation.getScheduleComponents().allSchedule();
+		ArrayList<Schedule> allSchedule = scheduleComponents.allSchedule();
 
 		for (int i = 0; i < allSchedule.size(); i++) {
 			Schedule s1 = allSchedule.get(i);
@@ -41,7 +45,7 @@ public class SetTimer {
 			int slot3inh = Integer.parseInt(s1.getSlotThreeIn().substring(0, 2));
 
 			// getting the mail id
-			String mailId = dtoOperation.getUserComponent().findOne(s1.getStudentsUserName()).getEmail();
+			String mailId = userComponent.findOne(s1.getStudentsUserName()).getEmail();
 
 			try {
 

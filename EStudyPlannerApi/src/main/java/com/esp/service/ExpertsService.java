@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
-import com.esp.dto.DtoOperation;
+import com.esp.Component.ExpertsComponents;
+import com.esp.Component.StudentsComponents;
+import com.esp.Component.UserComponent;
 import com.esp.model.Experts;
 import com.esp.model.ExpertsHasCourses;
 import com.esp.model.ExpertsHasStudyMaterials;
@@ -19,7 +21,13 @@ import com.esp.model.Users;
 public class ExpertsService {
 
 	@Autowired
-	private DtoOperation dtoOperation;
+	private UserComponent userComponent;
+	
+	@Autowired
+	private ExpertsComponents expertsComponents;
+	
+	@Autowired
+	private StudentsComponents studentsComponents;
 	
 	@Autowired
 	private Encoder encoder;
@@ -36,8 +44,8 @@ public class ExpertsService {
 		String userName = registeredUser.getUserName();
 		String email = registeredUser.getEmail();
 
-		if (dtoOperation.getUserComponent().findOne(userName) == null
-				&& dtoOperation.getUserComponent().findByEmail(email) == null) {
+		if (userComponent.findOne(userName) == null
+				&& userComponent.findByEmail(email) == null) {
 
 			Users user = new Users();
 			Experts experts = new Experts();
@@ -57,8 +65,8 @@ public class ExpertsService {
 			experts.setYearOfExperience(registeredUser.getYearOfExperience());
 			
 
-			dtoOperation.getUserComponent().saveUser(user);
-			dtoOperation.getExpertsComponents().saveExpert(experts);
+			userComponent.saveUser(user);
+			expertsComponents.saveExpert(experts);
 
 			return true;
 		} else
@@ -73,7 +81,7 @@ public class ExpertsService {
 	 */
 	public void expertHasCourses(ExpertsHasCourses expertsHasCourses) {
 
-		dtoOperation.getExpertsComponents().saveExpertsHasCourses(expertsHasCourses);
+		expertsComponents.saveExpertsHasCourses(expertsHasCourses);
 
 	}
 
@@ -91,7 +99,7 @@ public class ExpertsService {
 				userName);
 
 		// delete all entry with the username of expert
-		ex.forEach(x -> dtoOperation.getExpertsComponents().deleteExpertsHasStudyMaterials(x));
+		ex.forEach(x -> expertsComponents.deleteExpertsHasStudyMaterials(x));
 
 		for (i = 0; i < studyMaterialId.length; i++) {
 
@@ -100,7 +108,7 @@ public class ExpertsService {
 			// creating object
 			ExpertsHasStudyMaterials expertsHasStudyMaterials = new ExpertsHasStudyMaterials(userName, id);
 			// saving the object to database
-			dtoOperation.getExpertsComponents().saveExpertsHasStudyMaterials(expertsHasStudyMaterials);
+			expertsComponents.saveExpertsHasStudyMaterials(expertsHasStudyMaterials);
 
 		}
 	}
@@ -111,7 +119,7 @@ public class ExpertsService {
 	 * @return {@link Experts}
 	 */
 	public ArrayList<Experts> getAllExperts() {
-		return dtoOperation.getExpertsComponents().allExperts();
+		return expertsComponents.allExperts();
 	}
 
 	/**
@@ -123,7 +131,7 @@ public class ExpertsService {
 	 */
 	public ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMAterialWithUsername(String userName) {
 
-		return dtoOperation.getExpertsComponents().expertsHasStudyMAterialWithUsername(userName);
+		return expertsComponents.expertsHasStudyMAterialWithUsername(userName);
 	}
 
 	/**
@@ -139,7 +147,7 @@ public class ExpertsService {
 	public ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMAterialWithUsernameAndCouseId(String id,
 			String userName) {
 
-		return dtoOperation.getExpertsComponents().expertsHasStudyMAterialWithUsernameAndCouseId(id, userName);
+		return expertsComponents.expertsHasStudyMAterialWithUsernameAndCouseId(id, userName);
 	}
 
 	/**
@@ -151,7 +159,7 @@ public class ExpertsService {
 	 */
 	public ArrayList<Experts> findExpertsWithCoursesId(int id) {
 
-		return dtoOperation.getExpertsComponents().findExpertsWithCoursesId(id);
+		return expertsComponents.findExpertsWithCoursesId(id);
 
 	}
 
@@ -163,7 +171,7 @@ public class ExpertsService {
 	 */
 	public Experts findExpertByUsername(String userName) {
 
-		return dtoOperation.getExpertsComponents().findOneExpert(userName);
+		return expertsComponents.findOneExpert(userName);
 
 	}
 
@@ -175,7 +183,7 @@ public class ExpertsService {
 	 */
 	public boolean expertAsStudent(String userName) {
 		
-		if ( dtoOperation.getStudentsComponents().findOneStudent(userName) == null) {
+		if ( studentsComponents.findOneStudent(userName) == null) {
 			
 			//setting the data for experts as student
 			Students student = new Students();
@@ -183,7 +191,7 @@ public class ExpertsService {
 			student.setGuardiansIdGuardians(1);
 			
 			//saving the new student
-			dtoOperation.getStudentsComponents().saveStudent(student);
+			studentsComponents.saveStudent(student);
 			return true;
 		} else {
 			return false;
@@ -198,7 +206,7 @@ public class ExpertsService {
 	 */
 	public boolean expertAsStudentExist(String userName) {
 
-		if (dtoOperation.getStudentsComponents().findOneStudent(userName) != null) {
+		if (studentsComponents.findOneStudent(userName) != null) {
 			return true;
 		} else {
 			return false;
@@ -214,7 +222,7 @@ public class ExpertsService {
 	 */
 	public ArrayList<StudentsHasExperts> getExpertForStudent(String userName) {
 
-		return dtoOperation.getExpertsComponents().getExpertForStudent(userName);
+		return expertsComponents.getExpertForStudent(userName);
 
 	}
 
@@ -227,7 +235,7 @@ public class ExpertsService {
 	 */
 	public ArrayList<StudentsHasExperts> getStudentsForExpert(String userName) {
 
-		return dtoOperation.getExpertsComponents().getStudentsForExpert(userName);
+		return expertsComponents.getStudentsForExpert(userName);
 
 	}
 
