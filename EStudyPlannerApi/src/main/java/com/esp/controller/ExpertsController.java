@@ -119,7 +119,6 @@ public class ExpertsController {
 	public String expertsHasMinorCourses(@ModelAttribute("Courses") Courses mainCourse,
 			@ModelAttribute("ExpertsHasCourses") ExpertsHasCourses expertsHasCourses, ModelMap model) {
 
-		
 		int courseId = expertsHasCourses.getCoursesIdCourse();
 		String userName = expertsHasCourses.getExpertsUserName();
 
@@ -179,12 +178,12 @@ public class ExpertsController {
 
 		// to save the list of study material suggested by expert
 		expertsService.expertsHasStudyMAterials(courseforstudymaterial, studyMaterialId, userName);
-		
+
 		ExpertsHasCourses expertsHasCourses = new ExpertsHasCourses();
 		int coursesIdCourse = coursesService.findCourseByName(courseforstudymaterial).getIdCourse();
 		expertsHasCourses.setCoursesIdCourse(coursesIdCourse);
 		expertsHasCourses.setExpertsUserName(userName);
-		
+
 		expertsService.expertHasCourses(expertsHasCourses);
 
 		// to get the list of studyy material for display
@@ -227,8 +226,11 @@ public class ExpertsController {
 
 		Courses courses = coursesService.findCourseByName(courseforstudymaterial);
 		int courseId = courses.getIdCourse();
-
-		studyMaterialsService.saveStudyMaterial(courseId, title, link);
+		
+		//converting link to embeded format
+		String myLink = studyMaterialsService.getVedioEmbeddedLink(link);
+		
+		studyMaterialsService.saveStudyMaterial(courseId, title, myLink);
 
 		ArrayList<StudyMaterials> studyMaterials = studyMaterialsService
 				.showStudyMaterialsByCourseName(courseforstudymaterial);
@@ -268,6 +270,15 @@ public class ExpertsController {
 		return "Experts";
 	}
 
+	/**
+	 * When an experts login as student
+	 * 
+	 * @param schedule
+	 * @param studentsHasCourses
+	 * @param userName
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/asStudent", method = RequestMethod.POST)
 	public String expertsAsStudent(@ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, @RequestParam String userName,
@@ -288,6 +299,7 @@ public class ExpertsController {
 				if (expertsService.expertAsStudentExist(userName)) {
 					initialiser.schedulerInitialiserWithoutParameter(model);
 
+					// if schedule already exist
 					if (scheduleService.findSchedule(userName) == null) {
 						schedule2 = new Schedule();
 					} else {

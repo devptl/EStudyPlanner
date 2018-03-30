@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.esp.model.Admin;
 import com.esp.model.Courses;
 import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
@@ -123,7 +122,7 @@ public class LoginController {
 		} else {
 
 			// on invalid login redirecting back to front page
-			model.addAttribute("msg", "invalid username or password");
+			model.addAttribute("msg", "Invalid Username or Password");
 			return "front";
 		}
 
@@ -164,7 +163,7 @@ public class LoginController {
 				return "Scheduler";
 			} else {
 				// if the registration fails sending back to the front page
-				model.addAttribute("msg", "student with same username or email exist");
+				model.addAttribute("msg", "Student with same username or email exist");
 				initialiser.frontInitialiser(model);
 				return "front";
 			}
@@ -190,7 +189,7 @@ public class LoginController {
 				return "Experts";
 			} else {
 				// on invalid registration when expert already exist with username
-				model.addAttribute("msg", "expert with same username or email alredy exist");
+				model.addAttribute("msg", "Expert with same username or email alredy exist");
 				initialiser.frontInitialiser(model);
 				return "front";
 			}
@@ -225,22 +224,22 @@ public class LoginController {
 			// checking if student exist with username and that email
 
 			if (usersService.checkForUser(userName, email)) {
-				// checking if experts exist the username and email
+				// checking if user exist the username and email
 
-				// sending the mail to expert with password
+				// sending the mail to user with password
 				Users user = usersService.findUser(userName);
 				String decodedPassword = decoder.decodePassword(user.getPassword());
 
 				msg = "Sending mail to : " + user.getEmail() + " for the Username : " + user.getUserName();
 
-				String text = "The Expert " + user.getFirstName()
-						+ " we think that you forgot the password your password is " + decodedPassword;
+				String text = "Hello " + user.getFirstName()
+						+ " we think that you forgot the password your password is : " + decodedPassword;
 
 				sMTPMailSender.send(user.getEmail(), "Forgot the password alert", text);
 
 			} else {
 				msg = "invalid attempt to get user";
-				System.out.println("invalid attempt to get user");
+				System.out.println("Invalid attempt to get User");
 			}
 
 		} catch (Exception e) {
@@ -283,14 +282,14 @@ public class LoginController {
 				// sending the mail to expert with new password after the change
 				Users user = usersService.findUser(userName);
 				msg = "experts password is changed";
-				String text = "The Expert " + user.getFirstName() + " your password is changed make sure your do not "
-						+ "disclose the password .The new password is " + user.getPassword();
+				String text = "Hello " + user.getFirstName() + " your password is changed make sure your do not "
+						+ "disclose the password .The new password is : " + user.getPassword();
 
 				sMTPMailSender.send(user.getEmail(), "Forgot the password alert", text);
 
 			} else {
 				msg = "invalid attempt to change password";
-				System.out.println("invalid attempt to change password");
+				System.out.println("Invalid attempt to change Password");
 			}
 
 		} catch (Exception e) {

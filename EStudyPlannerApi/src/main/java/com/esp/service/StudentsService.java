@@ -46,8 +46,7 @@ public class StudentsService {
 	/**
 	 * When a particular student registers and data is to saved in the database
 	 * 
-	 * @param s
-	 *            - {@link Students}
+	 * @param registeredUser
 	 * @param model
 	 * @return registrationStatus
 	 */

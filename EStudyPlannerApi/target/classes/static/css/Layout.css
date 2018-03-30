@@ -1,4 +1,8 @@
 /*--------------------------------- Body Styling ------------------------------*/
+body{
+	background-image: url("../images/navbackground.jpg");
+}
+
 #main {
 	background-image: url("../images/bodybackground.png");
 }
@@ -15,6 +19,7 @@
 
 #navbar li a {
 	color: white;
+	font-weight: bolder;
 }
 
 #navusername {
@@ -23,6 +28,7 @@
 
 #mainTitle {
 	color: white;
+	font-weight: bolder;
 }
 
 #searchbutton {
@@ -57,6 +63,12 @@
 	text-shadow: grey 1px 1px 2px;
 	color: darkslateblue;
 }
+
+#slideimage{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;	
+}
+
 
 /*--------------------------------- Modal Styling --------------------------------*/
 #modalcontent1 {

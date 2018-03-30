@@ -28,7 +28,8 @@
 		<nav
 			class="navbar sticky-top navbar-expand-lg navbar-light bg-primary"
 			id="navbar">
-			<a class="navbar-brand" id="mainTitle" href="/">E-Study and Planner</a>
+			<a class="navbar-brand" id="mainTitle" href="/">E-Study and Planner</a><br/>
+			<hr class="my-4" />
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -133,7 +134,7 @@
 									</div>
 									<div class="form-group">
 										<select class="custom-select" id="coursesIdCourse"
-											name="coursesIdCourse">
+											name="coursesIdCourse" required="required" >
 											<option th:each="minorCourse :${minorCourses.toArray()}"
 												th:value="${minorCourse.getIdCourse()}"
 												th:text="${minorCourse.getCourseName()}">One</option>
@@ -191,7 +192,7 @@
 									</div>
 
 									<div class="input-group">
-										<select class="custom-select" id="inputstudymaterial">
+										<select class="custom-select" id="inputstudymaterial" required="required">
 											<option th:each="studymaterial :${studymaterials.toArray()}"
 												th:value="${studymaterial.getIdStudyMaterials()}"
 												th:text="${studymaterial.getTitle()}">Choose...</option>
@@ -244,8 +245,7 @@
 										<p>
 											To add the study material from YOUTUBE just add the title and
 											the embedded link you can get by : <br />Click on SHARE ->
-											Click on EMBED -> Copy the content -> Select the src link ->
-											Copy it -> Paste it in Embedded Link
+											Click on EMBED -> Copy the content -> Paste it in Embedded Link
 										</p>
 									</div>
 

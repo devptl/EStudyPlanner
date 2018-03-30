@@ -22,13 +22,13 @@ public class ExpertsService {
 
 	@Autowired
 	private UserComponent userComponent;
-	
+
 	@Autowired
 	private ExpertsComponents expertsComponents;
-	
+
 	@Autowired
 	private StudentsComponents studentsComponents;
-	
+
 	@Autowired
 	private Encoder encoder;
 
@@ -44,26 +44,25 @@ public class ExpertsService {
 		String userName = registeredUser.getUserName();
 		String email = registeredUser.getEmail();
 
-		if (userComponent.findOne(userName) == null
-				&& userComponent.findByEmail(email) == null) {
+		if (userComponent.findOne(userName) == null && userComponent.findByEmail(email) == null) {
 
 			Users user = new Users();
 			Experts experts = new Experts();
 
 			user.setUserName(userName);
 			experts.setUserName(userName);
-			
+
 			user.setFirstName(registeredUser.getFirstName());
 			user.setLastName(registeredUser.getLastName());
-			
-			//encode the password
-            String encodedPassword = encoder.encodePassword(registeredUser.getPassword());
-			
+
+			// encode the password
+			String encodedPassword = encoder.encodePassword(registeredUser.getPassword());
+
+			// set the user details
 			user.setPassword(encodedPassword);
 			user.setEmail(registeredUser.getEmail());
 			experts.setQualification(registeredUser.getQualification());
 			experts.setYearOfExperience(registeredUser.getYearOfExperience());
-			
 
 			userComponent.saveUser(user);
 			expertsComponents.saveExpert(experts);
@@ -72,7 +71,6 @@ public class ExpertsService {
 		} else
 			return false;
 	}
-
 
 	/**
 	 * To save data in the expert has courses table
@@ -175,22 +173,21 @@ public class ExpertsService {
 
 	}
 
-
 	/**
 	 * When an experts want to register as student
 	 * 
 	 * @param userName
 	 */
 	public boolean expertAsStudent(String userName) {
-		
-		if ( studentsComponents.findOneStudent(userName) == null) {
-			
-			//setting the data for experts as student
+
+		if (studentsComponents.findOneStudent(userName) == null) {
+
+			// setting the data for experts as student
 			Students student = new Students();
-			
+
 			student.setGuardiansIdGuardians(1);
-			
-			//saving the new student
+
+			// saving the new student
 			studentsComponents.saveStudent(student);
 			return true;
 		} else {

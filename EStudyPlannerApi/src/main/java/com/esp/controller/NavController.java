@@ -1,7 +1,5 @@
 package com.esp.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,14 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
 import com.esp.model.RegisteredUser;
-import com.esp.model.Students;
-import com.esp.service.ExpertsService;
 import com.esp.service.Initialiser;
 import com.esp.service.SetTimer;
-import com.esp.service.StudentsService;
 
 @Controller
 @SessionAttributes({ "fieldCourses", "msg" })
@@ -26,12 +20,6 @@ public class NavController {
 
 	@Autowired
 	private Initialiser initialiser;
-	
-	@Autowired
-	private ExpertsService expertsService;
-	
-	@Autowired
-	private StudentsService studentsService;
 
 	@Autowired
 	private SetTimer setTimer;
@@ -68,21 +56,5 @@ public class NavController {
 
 		return "timer has started";
 	}
-	
-
-	@RequestMapping(value = "/allStudent", method = RequestMethod.GET)
-	@ResponseBody
-	public ArrayList<Students> allStudent()
-	{
-		return studentsService.getAllStudents();
-	}
-	
-	@RequestMapping(value = "/allexperts", method = RequestMethod.GET)
-	@ResponseBody
-	public ArrayList<Experts> allexperts()
-	{
-		return expertsService.getAllExperts();
-	}
-
 
 }

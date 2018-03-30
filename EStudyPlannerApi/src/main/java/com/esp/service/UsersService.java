@@ -39,6 +39,11 @@ public class UsersService {
 		}
 	}
 	
+	/**
+	 * For the user login
+	 * @param l1 - {@link LoggedUser}
+	 * @return loginStatus
+	 */
 	public boolean usersLogin(LoggedUser l1) {
 
 		String userName = l1.getUserName();
@@ -50,6 +55,7 @@ public class UsersService {
 		} else {
 			String encodedPassword = encoder.encodePassword(l1.getPassword());
 			
+			//checking the authentication of the user
 			if (user.getPassword().equals(encodedPassword)) {
 				
 				return true;
@@ -60,7 +66,13 @@ public class UsersService {
 
 	}
 	
-	
+	/**
+	 * When a user want to change the password
+	 * @param userName
+	 * @param oldPassword
+	 * @param newPassword
+	 * @return
+	 */
 	public boolean changeTheUserPassword(String userName, String oldPassword, String newPassword) {
 
 		Users user = userComponent.findOne(userName);

@@ -81,6 +81,24 @@ public class StudyMaterialsService {
 	}
 
 	/**
+	 * To get the enbedded link from the embedded text
+	 * @param link
+	 * @return {@link String}
+	 */
+	public String getVedioEmbeddedLink(String link) {
+		String[] mainlink=link.split("\"");
+		String mylink=new String();
+		for(int i=0;i<mainlink.length;i++)
+		{
+			if(mainlink[i].startsWith("https"))
+				mylink=mainlink[i];
+			
+		}
+		return mylink;
+	}
+	
+	
+	/**
 	 * To Save the Study material in database
 	 * 
 	 * @param coursId
@@ -143,8 +161,8 @@ public class StudyMaterialsService {
 	public ArrayList<StudyMaterials> getStudyMaterials(ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials) {
 		ArrayList<StudyMaterials> studyMaterials = new ArrayList<StudyMaterials>();
 
-		expertsHasStudyMaterials.forEach(x -> studyMaterials.add(
-				studyMaterialsComponents.findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
+		expertsHasStudyMaterials.forEach(x -> studyMaterials
+				.add(studyMaterialsComponents.findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
 
 		return studyMaterials;
 	}
@@ -160,8 +178,8 @@ public class StudyMaterialsService {
 		ArrayList<StudyMaterials> studyMaterials = new ArrayList<StudyMaterials>();
 
 		// getting the list
-		studentCompletedMaterials.forEach(x -> studyMaterials.add(
-				studyMaterialsComponents.findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
+		studentCompletedMaterials.forEach(x -> studyMaterials
+				.add(studyMaterialsComponents.findOneStudyMaterial(x.getStudyMaterialsIdStudyMaterials())));
 
 		return studyMaterials;
 	}
@@ -179,7 +197,10 @@ public class StudyMaterialsService {
 
 		float perCompleted = 0;
 		try {
+			// all Study material allted to them
 			float total = s1.size();
+
+			// completed no of materials
 			float completed = studentCompletedMaterials.size();
 			perCompleted = ((completed * 100) / total);
 

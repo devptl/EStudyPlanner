@@ -16,10 +16,9 @@ import com.esp.service.AdminService;
 @RequestMapping("/admin")
 @SessionAttributes({ "adminForStudentsList", "adminForExpertsList" })
 public class AdminController {
-	
+
 	@Autowired
 	private AdminService adminService;
-
 
 	/**
 	 * To return to admin page
@@ -40,15 +39,14 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/Expert", method = RequestMethod.GET)
 	public String adminExpertPage(ModelMap model) {
-		
+
 		// initialising the admin for experts
-	    ArrayList<Experts> adminForExpertsList = adminService.getAdminForExperts();
+		ArrayList<Experts> adminForExpertsList = adminService.getAdminForExperts();
 		model.addAttribute("adminForExpertsList", adminForExpertsList);
-					
 
 		return "AdminForExpert";
 	}
-	
+
 	/**
 	 * To return to admin page for student
 	 * 
