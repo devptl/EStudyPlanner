@@ -23,9 +23,10 @@ public class StudyMaterialsController {
 
 	@Autowired
 	private StudyMaterialsService studyMaterialsService;
-	
+
 	/**
 	 * To get to Study Materials
+	 * 
 	 * @param model
 	 * @return
 	 */
@@ -65,16 +66,15 @@ public class StudyMaterialsController {
 	 */
 	@RequestMapping(value = "/StudentCompletedMaterials", method = RequestMethod.POST)
 	public String studentCompletedMaterials(@RequestParam String studentsUserName, @RequestParam int noOfVedios,
-			@RequestParam String studyMaterialsList,
-			 @RequestParam String courseforstudymaterial, ModelMap model) {
+			@RequestParam String studyMaterialsList, @RequestParam String courseforstudymaterial, ModelMap model) {
 
 		String[] studyMaterialId = studyMaterialsList.split(",");
 
 		// saving the list to the student has study materials
-		studyMaterialsService.saveStudentHasStudyMaterials(studyMaterialId, studentsUserName,courseforstudymaterial);
+		studyMaterialsService.saveStudentHasStudyMaterials(studyMaterialId, studentsUserName, courseforstudymaterial);
 
 		ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials = studyMaterialsService
-				.getCompletedList(studentsUserName,courseforstudymaterial);
+				.getCompletedList(studentsUserName, courseforstudymaterial);
 
 		// getting the new list of completed study materials
 		ArrayList<StudyMaterials> studylist = studyMaterialsService
@@ -82,13 +82,12 @@ public class StudyMaterialsController {
 
 		// setting the percent
 		float comp = studentCompletedMaterials.size();
-		float perCompleted=0 ;
-		
+		float perCompleted = 0;
+
 		try {
-		perCompleted= (comp * 100) / noOfVedios;
-		}catch(Exception exception)
-		{
-			perCompleted=0;
+			perCompleted = (comp * 100) / noOfVedios;
+		} catch (Exception exception) {
+			perCompleted = 0;
 		}
 
 		// completed percent initialisation

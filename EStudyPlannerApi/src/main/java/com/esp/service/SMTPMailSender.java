@@ -17,8 +17,9 @@ public class SMTPMailSender {
 	/**
 	 * To send the mail using SMTP
 	 * 
-	 * @param to - Email id to send mail
-	 * @param subject 
+	 * @param to
+	 *            - Email id to send mail
+	 * @param subject
 	 * @param body
 	 * @throws MessagingException
 	 */

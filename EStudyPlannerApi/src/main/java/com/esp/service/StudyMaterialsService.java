@@ -82,22 +82,21 @@ public class StudyMaterialsService {
 
 	/**
 	 * To get the enbedded link from the embedded text
+	 * 
 	 * @param link
 	 * @return {@link String}
 	 */
 	public String getVedioEmbeddedLink(String link) {
-		String[] mainlink=link.split("\"");
-		String mylink=new String();
-		for(int i=0;i<mainlink.length;i++)
-		{
-			if(mainlink[i].startsWith("https"))
-				mylink=mainlink[i];
-			
+		String[] mainlink = link.split("\"");
+		String mylink = new String();
+		for (int i = 0; i < mainlink.length; i++) {
+			if (mainlink[i].startsWith("https"))
+				mylink = mainlink[i];
+
 		}
 		return mylink;
 	}
-	
-	
+
 	/**
 	 * To Save the Study material in database
 	 * 

@@ -48,8 +48,7 @@ public class CoursesService {
 	}
 
 	/**
-	 * List of course according to given parent id
-	 * and if study material available
+	 * List of course according to given parent id and if study material available
 	 * 
 	 * @param id
 	 *            - ParentID
@@ -59,8 +58,10 @@ public class CoursesService {
 
 		return coursesComponents.mainCoursesById(id);
 	}
+
 	/**
 	 * List of course by parent Id
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -79,8 +80,6 @@ public class CoursesService {
 	public Courses getCourseWithId(int id) {
 		return coursesComponents.findOneCourse(id);
 	}
-	
-	
 
 	/**
 	 * To find the courses by name

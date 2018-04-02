@@ -24,13 +24,13 @@ public class StudentsService {
 
 	@Autowired
 	private UserComponent userComponent;
-	
+
 	@Autowired
 	private ExpertsComponents expertsComponents;
-	
+
 	@Autowired
 	private StudentsComponents studentsComponents;
-	
+
 	@Autowired
 	private CoursesService coursesService;
 
@@ -54,8 +54,7 @@ public class StudentsService {
 
 		String userName = registeredUser.getUserName();
 		String email = registeredUser.getEmail();
-		if (userComponent.findOne(userName) == null
-				&& userComponent.findByEmail(email) == null) {
+		if (userComponent.findOne(userName) == null && userComponent.findByEmail(email) == null) {
 
 			Students student = new Students();
 			Users user = new Users();

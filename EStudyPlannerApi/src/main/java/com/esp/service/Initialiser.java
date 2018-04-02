@@ -138,8 +138,13 @@ public class Initialiser {
 		model.addAttribute("mainCourses", mainCourses);
 
 		// initialise the message
-		String msg = "";
-		model.addAttribute("message", msg);
+		model.addAttribute("message", "");
+		
+		// initialise expert schedule msg
+		model.addAttribute("expschedulemsg", "");
+				
+		// initialise expert schedule msg
+		model.addAttribute("minorschedulemsg", "");
 
 		// initalise the minor courses
 		ArrayList<Courses> minorCourses = null;
@@ -210,6 +215,12 @@ public class Initialiser {
 
 		// initialise the message
 		model.addAttribute("message", message);
+		
+		// initialise expert schedule msg
+		model.addAttribute("expschedulemsg", "");
+		
+		// initialise expert schedule msg
+		model.addAttribute("minorschedulemsg", "");
 
 		// initialise onload function
 		model.addAttribute("onLoadSchedule", "scheduleSetting('slotOneIn')");

@@ -12,13 +12,12 @@ import com.esp.model.Students;
 
 @Service
 public class AdminService {
-	
+
 	@Autowired
 	private StudentsComponents studentsComponents;
-	
+
 	@Autowired
-	private ExpertsComponents expertsComponents; 
-	
+	private ExpertsComponents expertsComponents;
 
 	/**
 	 * Return the full detail of the student

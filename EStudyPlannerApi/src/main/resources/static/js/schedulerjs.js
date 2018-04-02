@@ -2,9 +2,8 @@
  * 
  */
 
-function scheduleSetting(focusId)
-{
-	
+function scheduleSetting(focusId) {
+
 	document.getElementById(focusId).focus();
-	
+
 }

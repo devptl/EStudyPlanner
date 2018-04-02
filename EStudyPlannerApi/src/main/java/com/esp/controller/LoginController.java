@@ -29,10 +29,10 @@ import com.esp.service.UsersService;
 
 @Controller
 @SessionAttributes({ "onLoadFun", "onLoadSchedule", "username", "fieldCourses", "mainCourses", "courseforstudymaterial",
-		"minorCourses", "studymaterials", "expertGivenStudyMaterials", "addStudyMaterialMessage", "schedule", "message",
-		"allExperts", "button1", "button2", "button3", "button4", "div1", "div2", "div3", "div4", "msg", "shbutton1",
-		"shbutton2", "adminForStudentsList", "adminForExpertsList", "shbutton3", "shbutton4", "shdiv1", "shdiv2",
-		"shdiv3", "shdiv4" })
+		"expschedulemsg", "minorschedulemsg", "minorCourses", "studymaterials", "expertGivenStudyMaterials",
+		"addStudyMaterialMessage", "schedule", "message", "allExperts", "button1", "button2", "button3", "button4",
+		"div1", "div2", "div3", "div4", "msg", "shbutton1", "shbutton2", "adminForStudentsList", "adminForExpertsList",
+		"shbutton3", "shbutton4", "shdiv1", "shdiv2", "shdiv3", "shdiv4" })
 public class LoginController {
 
 	@Autowired
@@ -112,7 +112,7 @@ public class LoginController {
 				// initialising the admin for experts
 				ArrayList<Experts> adminForExpertsList = adminService.getAdminForExperts();
 				model.addAttribute("adminForExpertsList", adminForExpertsList);
-				
+
 				return "Admin";
 			} else {
 				// on invalid login redirecting back to front page
@@ -281,7 +281,7 @@ public class LoginController {
 
 				// sending the mail to expert with new password after the change
 				Users user = usersService.findUser(userName);
-				msg = "experts password is changed";
+				msg = "Password is changed";
 				String text = "Hello " + user.getFirstName() + " your password is changed make sure your do not "
 						+ "disclose the password .The new password is : " + user.getPassword();
 

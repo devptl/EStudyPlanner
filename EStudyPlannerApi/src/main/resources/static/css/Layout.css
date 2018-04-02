@@ -1,5 +1,5 @@
 /*--------------------------------- Body Styling ------------------------------*/
-body{
+body {
 	background-image: url("../images/navbackground.jpg");
 }
 
@@ -64,11 +64,10 @@ body{
 	color: darkslateblue;
 }
 
-#slideimage{
+#slideimage {
 	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;	
+	border-top-right-radius: 5px;
 }
-
 
 /*--------------------------------- Modal Styling --------------------------------*/
 #modalcontent1 {

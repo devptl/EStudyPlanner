@@ -14,6 +14,11 @@
 	crossorigin="anonymous" />
 <link rel="stylesheet" href="../css/Layout.css" />
 <title>E - Study Planner</title>
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../js/clearcookie.js"></script>
+</head>
 
 <body>
 
@@ -23,7 +28,8 @@
 		<nav
 			class="navbar sticky-top navbar-expand-lg navbar-light bg-primary"
 			id="navbar">
-			<a class="navbar-brand" id="mainTitle" href="/">E-Study and Planner</a> <br/>
+			<a class="navbar-brand" id="mainTitle" href="/">E-Study and
+				Planner</a> <br />
 			<hr class="my-4" />
 
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -41,8 +47,8 @@
 					</li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
-					<a href="/" class="btn btn-dark my-2 my-sm-0 topButton" id="loginButton">
-						LogOut </a>
+					<a href="/" class="btn btn-dark my-2 my-sm-0 topButton"
+						id="loginButton"> LogOut </a>
 				</form>
 			</div>
 		</nav>
@@ -62,10 +68,9 @@
 					</tr>
 					<tr
 						th:each="adminForStudentsListElement :${adminForStudentsList.toArray()}">
-						<td
-							th:text="${adminForStudentsListElement.getUserName()}">Alfreds
+						<td th:text="${adminForStudentsListElement.getUserName()}">Alfreds
 							Futterkiste</td>
-						
+
 						<td>
 							<table>
 								<tr
@@ -110,6 +115,8 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
-	<script src="../js/coursesjs.js"></script>
+
+
+
 </body>
 </html>

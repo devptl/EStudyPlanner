@@ -16,6 +16,9 @@
 <title>E - Study Planner</title>
 
 <head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../js/clearcookie.js"></script>
 <script src="../js/schedulerjs.js"></script>
 </head>
 
@@ -27,9 +30,10 @@
 		<nav
 			class="navbar sticky-top navbar-expand-lg navbar-light bg-primary"
 			id="navbar">
-			<a class="navbar-brand" id="mainTitle" href="/">E-Study and Planner</a><br/>
+			<a class="navbar-brand" id="mainTitle" href="/">E-Study and
+				Planner</a><br />
 			<hr class="my-4" />
-			
+
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -260,6 +264,7 @@
 									</div>
 									<button class="btn btn-primary" type="submit">Select
 										Minor Course</button>
+									<p id="schedulermessage" th:text="${minorschedulemsg}"></p>
 								</form>
 							</div>
 						</div>
@@ -326,6 +331,7 @@
 									</div>
 									<button class="btn btn-primary" type="submit">Select
 										Expert</button>
+									<p id="schedulermessage" th:text="${expschedulemsg}"></p>
 								</form>
 							</div>
 						</div>

@@ -17,6 +17,9 @@
 
 <title>E - Study Planner</title>
 <head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../js/clearcookie.js"></script>
 <script src="../js/expertsjs.js"></script>
 </head>
 
@@ -28,7 +31,8 @@
 		<nav
 			class="navbar sticky-top navbar-expand-lg navbar-light bg-primary"
 			id="navbar">
-			<a class="navbar-brand" id="mainTitle" href="/">E-Study and Planner</a><br/>
+			<a class="navbar-brand" id="mainTitle" href="/">E-Study and
+				Planner</a><br />
 			<hr class="my-4" />
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
@@ -38,7 +42,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="/Experts">Experts</a>
+					<li class="nav-item"><a class="nav-link" href="/Experts/">Experts</a>
 					</li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0" action="Experts/asStudent"
@@ -134,7 +138,7 @@
 									</div>
 									<div class="form-group">
 										<select class="custom-select" id="coursesIdCourse"
-											name="coursesIdCourse" required="required" >
+											name="coursesIdCourse" required="required">
 											<option th:each="minorCourse :${minorCourses.toArray()}"
 												th:value="${minorCourse.getIdCourse()}"
 												th:text="${minorCourse.getCourseName()}">One</option>
@@ -192,7 +196,8 @@
 									</div>
 
 									<div class="input-group">
-										<select class="custom-select" id="inputstudymaterial" required="required">
+										<select class="custom-select" id="inputstudymaterial"
+											required="required">
 											<option th:each="studymaterial :${studymaterials.toArray()}"
 												th:value="${studymaterial.getIdStudyMaterials()}"
 												th:text="${studymaterial.getTitle()}">Choose...</option>
@@ -245,7 +250,8 @@
 										<p>
 											To add the study material from YOUTUBE just add the title and
 											the embedded link you can get by : <br />Click on SHARE ->
-											Click on EMBED -> Copy the content -> Paste it in Embedded Link
+											Click on EMBED -> Copy the content -> Paste it in Embedded
+											Link
 										</p>
 									</div>
 
@@ -343,9 +349,6 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 
 </body>
 </html>

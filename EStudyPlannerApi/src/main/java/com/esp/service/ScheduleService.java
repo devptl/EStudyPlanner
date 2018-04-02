@@ -19,10 +19,10 @@ public class ScheduleService {
 
 	@Autowired
 	private ScheduleComponents scheduleComponents;
-	
+
 	@Autowired
 	private ExpertsComponents expertsComponents;
-	
+
 	@Autowired
 	private StudentsComponents studentsComponents;
 
@@ -53,8 +53,10 @@ public class ScheduleService {
 	/**
 	 * Get the diffence between time in and out
 	 * 
-	 * @param t1 - time in hours
-	 * @param t2 - time in mins
+	 * @param t1
+	 *            - time in hours
+	 * @param t2
+	 *            - time in mins
 	 * @return {@link Integer}
 	 */
 	public static int differnceOfTime(String t1, String t2) {
@@ -86,7 +88,8 @@ public class ScheduleService {
 	/**
 	 * To save the schedule in the database and set the other display
 	 * 
-	 * @param s - {@link Schedule}
+	 * @param s
+	 *            - {@link Schedule}
 	 * @param model
 	 */
 	public void saveSchedule(Schedule schedule, ModelMap model) {
@@ -110,7 +113,7 @@ public class ScheduleService {
 		Students student = studentsComponents.findOneStudent(schedule.getStudentsUserName());
 
 		// getting the list of courses according to the fields
-		ArrayList<Courses> mainCourses = coursesService.mainCoursesById(student.getField());
+		ArrayList<Courses> mainCourses = coursesService.minorCoursesById(student.getField());
 
 		ArrayList<Experts> allExperts = expertsComponents.allExperts();
 
@@ -122,7 +125,8 @@ public class ScheduleService {
 	/**
 	 * To find the schedule with the particualar username
 	 * 
-	 * @param username - {@link Students}
+	 * @param username
+	 *            - {@link Students}
 	 * @return {@link Schedule}
 	 */
 	public Schedule findSchedule(String username) {

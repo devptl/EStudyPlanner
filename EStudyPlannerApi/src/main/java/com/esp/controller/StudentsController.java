@@ -53,6 +53,11 @@ public class StudentsController {
 		// initialising minor course on selection of major course
 		ArrayList<Courses> minorCourses = null;
 		minorCourses = coursesService.mainCoursesById(id);
+		if(minorCourses.isEmpty()) {
+			// initialise expert schedule msg
+			model.addAttribute("minorschedulemsg", "No minor courses with study materials");
+		}
+		
 		model.addAttribute("minorCourses", minorCourses);
 
 		// initialise onload function

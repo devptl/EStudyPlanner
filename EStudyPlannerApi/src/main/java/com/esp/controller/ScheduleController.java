@@ -23,10 +23,10 @@ import com.esp.service.StudyMaterialsService;
 
 @Controller
 @RequestMapping("/Scheduler")
-@SessionAttributes({ "onLoadSchedule","username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
-		"courseforstudymaterial", "minorCourse", "studyMaterials", "vediolink", "shbutton1", "shbutton2", "shbutton3",
-		"shbutton4", "studentCompletedMaterials", "noOfVedios", "perCompleted", "shdiv1", "shdiv2", "shdiv3",
-		"shdiv4" })
+@SessionAttributes({ "onLoadSchedule", "username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
+		"expschedulemsg", "minorschedulemsg", "courseforstudymaterial", "minorCourse", "studyMaterials", "vediolink",
+		"shbutton1", "shbutton2", "shbutton3", "shbutton4", "studentCompletedMaterials", "noOfVedios", "perCompleted",
+		"shdiv1", "shdiv2", "shdiv3", "shdiv4" })
 public class ScheduleController {
 
 	@Autowired
@@ -38,7 +38,6 @@ public class ScheduleController {
 	@Autowired
 	private StudentsService studentsService;
 
-	
 	/**
 	 * To set the initial display of scheduler page
 	 * 
@@ -95,6 +94,7 @@ public class ScheduleController {
 	 */
 	@RequestMapping(value = "/showStudyMaterials", method = RequestMethod.POST)
 	public String showStudyMaterials(@ModelAttribute("Schedule") Schedule schedule,
+
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses,
 			@RequestParam String studentsUserName, @RequestParam String courseforstudymaterial,
 			@RequestParam String expertsUserName, ModelMap model) {
@@ -106,30 +106,34 @@ public class ScheduleController {
 		if (expertsUserName.equals("default")) {
 			// if the student select i m my expert
 			studyMaterial = studyMaterialsService.showStudyMaterialsByCourseName(courseforstudymaterial);
+			if (studyMaterial.isEmpty()) {
+				model.addAttribute("expschedulemsg", "no study material");
+				return "Scheduler";
+			}
+
 		} else {
 			// if the student select some other expert
-			studyMaterial = studyMaterialsService.showStudyMaterialsByUserNameAndCourseId(courseforstudymaterial, expertsUserName);
+			studyMaterial = studyMaterialsService.showStudyMaterialsByUserNameAndCourseId(courseforstudymaterial,
+					expertsUserName);
 		}
-		
 
 		// saving the experts with student in student has experts
 		studentsService.saveStudentsHasExperts(se);
 
 		ArrayList<StudentsHasStudyMaterials> studentCompletedMaterials = studyMaterialsService
-				.getCompletedList(studentsUserName,courseforstudymaterial);
-		
+				.getCompletedList(studentsUserName, courseforstudymaterial);
 
 		ArrayList<StudyMaterials> studylist = studyMaterialsService
 				.getStudyMaterialsForStudent(studentCompletedMaterials);
-	
+
 		float perCompleted = studyMaterialsService.trackCourseCompletion(studyMaterial, studentCompletedMaterials);
 
 		// completed percent initialisation
 		model.addAttribute("perCompleted", perCompleted);
-		
+
 		// initialise onload function
 		model.addAttribute("onLoadCourses", "courseSetting('vedioselector')");
-	
+
 		// completed percent initialisation
 		model.addAttribute("noOfVedios", studyMaterial.size());
 
@@ -138,10 +142,10 @@ public class ScheduleController {
 
 		// setting the maincourse and study material for display
 		model.addAttribute("minorCourse", courseforstudymaterial);
-		//setting the study materials
+		// setting the study materials
 		model.addAttribute("studyMaterials", studyMaterial);
-		//default vedio to be shown 
-		model.addAttribute("vediolink", "https://www.youtube-nocookie.com/embed/wlLfNls75RY?rel=0");
+		// default vedio to be shown
+		model.addAttribute("vediolink", studyMaterial.get(0).getStudyMaterialLink());
 
 		return "Courses";
 

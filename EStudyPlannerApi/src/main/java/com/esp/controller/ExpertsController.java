@@ -28,9 +28,10 @@ import com.esp.service.StudyMaterialsService;
 @Controller
 @RequestMapping("/Experts")
 @SessionAttributes({ "onLoadFun", "vediolink", "username", "fieldCourses", "mainCourses", "minorCourses",
-		"studymaterials", "expertGivenStudyMaterials", "addStudyMaterialMessage", "button1", "button2", "button3",
-		"button4", "div1", "courseforstudymaterial", "div2", "div3", "div4", "schedule", "message", "allExperts",
-		"shbutton1", "shbutton2", "shbutton3", "shbutton4", "shdiv1", "shdiv2", "shdiv3", "shdiv4" })
+		"expschedulemsg", "minorschedulemsg", "studymaterials", "expertGivenStudyMaterials", "addStudyMaterialMessage",
+		"button1", "button2", "button3", "button4", "div1", "courseforstudymaterial", "div2", "div3", "div4",
+		"schedule", "message", "allExperts", "shbutton1", "shbutton2", "shbutton3", "shbutton4", "shdiv1", "shdiv2",
+		"shdiv3", "shdiv4" })
 public class ExpertsController {
 
 	@Autowired
@@ -226,10 +227,10 @@ public class ExpertsController {
 
 		Courses courses = coursesService.findCourseByName(courseforstudymaterial);
 		int courseId = courses.getIdCourse();
-		
-		//converting link to embeded format
+
+		// converting link to embeded format
 		String myLink = studyMaterialsService.getVedioEmbeddedLink(link);
-		
+
 		studyMaterialsService.saveStudyMaterial(courseId, title, myLink);
 
 		ArrayList<StudyMaterials> studyMaterials = studyMaterialsService
@@ -296,26 +297,19 @@ public class ExpertsController {
 
 			} else {
 				// getting the experts now as student data
-				if (expertsService.expertAsStudentExist(userName)) {
-					initialiser.schedulerInitialiserWithoutParameter(model);
 
-					// if schedule already exist
-					if (scheduleService.findSchedule(userName) == null) {
-						schedule2 = new Schedule();
-					} else {
-						schedule2 = scheduleService.findSchedule(userName);
+				initialiser.schedulerInitialiserWithoutParameter(model);
 
-					}
-
-					model.addAttribute("schedule", schedule2);
-					model.addAttribute("username", userName);
-
+				// if schedule already exist
+				if (scheduleService.findSchedule(userName) == null) {
+					schedule2 = new Schedule();
 				} else {
+					schedule2 = scheduleService.findSchedule(userName);
 
-					// setting the messege if same mail id existed
-					model.addAttribute("msg", "student with same email id existed");
-					return "Experts";
 				}
+
+				model.addAttribute("schedule", schedule2);
+				model.addAttribute("username", userName);
 
 			}
 

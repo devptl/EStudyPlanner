@@ -18,7 +18,7 @@ public class SetTimer {
 
 	@Autowired
 	private ScheduleComponents scheduleComponents;
-	
+
 	@Autowired
 	private UserComponent userComponent;
 
