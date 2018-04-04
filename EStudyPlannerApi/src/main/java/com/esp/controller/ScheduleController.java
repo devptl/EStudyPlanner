@@ -43,12 +43,13 @@ public class ScheduleController {
 	 * 
 	 * @return {@link Scheduler.html}
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/**", method = RequestMethod.GET)
 	public String schedulerDisplay(@ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
 
 		return "Scheduler";
 	}
+	
 
 	/**
 	 * To save the schedule when particular save has to be their

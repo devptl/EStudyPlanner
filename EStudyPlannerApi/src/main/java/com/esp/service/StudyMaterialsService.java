@@ -54,7 +54,7 @@ public class StudyMaterialsService {
 	 * 
 	 * @param courseforstudymaterial
 	 * @param expertsUserName
-	 * @return
+	 * @return {@link StudyMaterials}
 	 */
 	public ArrayList<StudyMaterials> showStudyMaterialsByUserNameAndCourseId(String courseforstudymaterial,
 			String expertsUserName) {
@@ -81,7 +81,7 @@ public class StudyMaterialsService {
 	}
 
 	/**
-	 * To get the enbedded link from the embedded text
+	 * To get the embedded link from the embedded text
 	 * 
 	 * @param link
 	 * @return {@link String}

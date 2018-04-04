@@ -28,6 +28,10 @@ public class AdminController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String adminPage(ModelMap model) {
 
+		// initialising the admin for experts
+		ArrayList<Experts> adminForExpertsList = adminService.getAdminForExperts();
+		model.addAttribute("adminForExpertsList", adminForExpertsList);
+		
 		return "Admin";
 	}
 

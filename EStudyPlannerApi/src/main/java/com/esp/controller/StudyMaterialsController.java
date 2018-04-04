@@ -30,10 +30,11 @@ public class StudyMaterialsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/**", method = RequestMethod.GET)
 	public String studyMaterials(ModelMap model) {
 		return "Courses";
 	}
+	
 
 	/**
 	 * To show the vedios in the courses page

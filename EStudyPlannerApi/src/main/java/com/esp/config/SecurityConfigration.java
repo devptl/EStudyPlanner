@@ -24,8 +24,12 @@ public class SecurityConfigration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.httpBasic().and().authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").and().csrf()
-				.disable().headers().frameOptions().disable();
+		httpSecurity.httpBasic().and().authorizeRequests().antMatchers("/admin").hasRole("ADMIN")
+					.and()
+					.formLogin().loginPage("/")
+					.usernameParameter("userName").passwordParameter("password")
+					.and().csrf()
+					.disable().headers().frameOptions().disable();
 
 	}
 

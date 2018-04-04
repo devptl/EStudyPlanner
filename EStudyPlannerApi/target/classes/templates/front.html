@@ -8,10 +8,9 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous" />
+<link rel="stylesheet" href="../css/bootstrap.min.css" />
+
+<!-- Customised CSS and JS -->
 <link rel="stylesheet" href="../css/Layout.css" />
 <script src="../js/frontjs.js"></script>
 
@@ -106,11 +105,11 @@
 			</marquee>
 			<hr class="my-4" />
 
-			<p class="lead">Want to learn something new then register here .
-				Experts can also give their valuable time just register once and
-				then u can give your important feeds . Student can select their
-				field and can get the study material . They can see the experts
-				advice for the study material in their respective fields</p>
+			<p class="lead justified">Want to learn something new then
+				register here . Experts can also give their valuable time just
+				register once and then u can give your important feeds . Student can
+				select their field and can get the study material . They can see the
+				experts advice for the study material in their respective fields</p>
 
 
 			<hr class="my-4" />
@@ -132,7 +131,7 @@
 						</div>
 						<div id="collapseOne" class="collapse show"
 							aria-labelledby="headingOne" data-parent="#accordion">
-							<div class="card-body">
+							<div class="card-body justified">
 								<b>The MBBS</b> course starts with the basic pre and
 								para-clinical subjects such as biochemistry, physiology,
 								anatomy, microbiology, pathology and pharmacology. The students
@@ -156,7 +155,7 @@
 						</div>
 						<div id="collapseTwo" class="collapse"
 							aria-labelledby="headingTwo" data-parent="#accordion">
-							<div class="card-body">
+							<div class="card-body justified">
 								<b>The Bachelor of Technology</b> (Latin Baccalaureus
 								Technologie, commonly abbreviated as B.Tech.; with Honours as
 								B.Tech. (Hons.); or BTech) is an undergraduate academic degree
@@ -183,7 +182,7 @@
 						</div>
 						<div id="collapseThree" class="collapse"
 							aria-labelledby="headingThree" data-parent="#accordion">
-							<div class="card-body">
+							<div class="card-body justified">
 								<b>The Bachelor of Commerce</b> degree is designed to provide
 								students with a wide range of managerial skills, while building
 								competence in a particular area of business (see below). Most
@@ -441,13 +440,11 @@
 								</div>
 							</div>
 
-							<div class="form-row" id="divforgotpassword">
+							<div class="form-row col-md-12 mb-4">
 								<button type="button" id="forgotAccountButton"
 									class="btn btn-dark " data-toggle="modal"
 									data-target="#exampleModalCenter2">Forgot the Password
 									?</button>
-							</div>
-							<div class="form-row">
 								<button type="button" id="changeAccountButton"
 									class="btn btn-dark " data-toggle="modal"
 									data-target="#exampleModalCenter3">Change the password
@@ -506,8 +503,9 @@
 										id="validationServerEmail"
 										pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
 										title="match the email format ex-abc@gmail.com" maxlength="25"
-										placeholder="Email" aria-describedby="inputGroupPrepend2"
-										name="email" required="required" />
+										placeholder="Ex - xyz@gmail.com"
+										aria-describedby="inputGroupPrepend2" name="email"
+										required="required" />
 									<div class="invalid-feedback">Enter the Password !</div>
 									<div class="valid-feedback">Looks good!</div>
 								</div>
@@ -606,16 +604,12 @@
 
 	<!--__________________________________________ Optional JavaScript _________________________________________-->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
+
+	<script src="../js/jquery-3.2.1.slim.min.js"></script>
+
+	<script src="../js/popper.min.js"></script>
+
+	<script src="../js/bootstrap.min.js"></script>
+
 </body>
 </html>

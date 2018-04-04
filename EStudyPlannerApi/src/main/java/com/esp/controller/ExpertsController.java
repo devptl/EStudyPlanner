@@ -57,10 +57,9 @@ public class ExpertsController {
 	 * @param model
 	 * @return {@link Experts.html}
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/**", method = RequestMethod.GET)
 	public String expertDisplay(@ModelAttribute("Courses") Courses mainCourse, ModelMap model) {
 
-		initialiser.expertInitialiser("sanket", model);
 		return "Experts";
 	}
 
@@ -73,7 +72,7 @@ public class ExpertsController {
 	 * @return {@link Experts.html}
 	 */
 	@RequestMapping(value = "/MainId", method = RequestMethod.POST)
-	public String expertDisplayByMainCourseId(@ModelAttribute("Courses") Courses mainCourse, ModelMap model) {
+	public String expertPostDisplayByMainCourseId(@ModelAttribute("Courses") Courses mainCourse, ModelMap model) {
 
 		// get the main course id to display minor courses
 		int id = mainCourse.getIdCourse();
@@ -117,7 +116,7 @@ public class ExpertsController {
 	 * @return {@link Experts.html}
 	 */
 	@RequestMapping(value = "/MinorCourses", method = RequestMethod.POST)
-	public String expertsHasMinorCourses(@ModelAttribute("Courses") Courses mainCourse,
+	public String expertsPostHasMinorCourses(@ModelAttribute("Courses") Courses mainCourse,
 			@ModelAttribute("ExpertsHasCourses") ExpertsHasCourses expertsHasCourses, ModelMap model) {
 
 		int courseId = expertsHasCourses.getCoursesIdCourse();
@@ -171,7 +170,7 @@ public class ExpertsController {
 	 * @return {@link Experts.html}
 	 */
 	@RequestMapping(value = "/SuggestedMaterials", method = RequestMethod.POST)
-	public String expertsSuggestedMaterials(@ModelAttribute("Courses") Courses mainCourse,
+	public String expertsPostSuggestedMaterials(@ModelAttribute("Courses") Courses mainCourse,
 			@ModelAttribute("LoggedUser") LoggedUser loggedUser, @RequestParam String studyMaterialsList,
 			@RequestParam String userName, @RequestParam String courseforstudymaterial, ModelMap model) {
 
@@ -220,7 +219,7 @@ public class ExpertsController {
 	 * @return {@link Experts.html}
 	 */
 	@RequestMapping(value = "/addStudyMaterials", method = RequestMethod.POST)
-	public String addStudyMaterials(@ModelAttribute("Courses") Courses mainCourse,
+	public String addPostStudyMaterials(@ModelAttribute("Courses") Courses mainCourse,
 			@ModelAttribute("ExpertsHasCourses") ExpertsHasCourses expertsHasCourses,
 			@RequestParam String courseforstudymaterial, @RequestParam String title, @RequestParam String link,
 			ModelMap model) {
@@ -280,7 +279,7 @@ public class ExpertsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/asStudent", method = RequestMethod.POST)
+	@RequestMapping(value = "**/asStudent", method = RequestMethod.POST)
 	public String expertsAsStudent(@ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, @RequestParam String userName,
 			ModelMap model) {

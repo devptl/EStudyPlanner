@@ -5,10 +5,15 @@ body {
 
 #main {
 	background-image: url("../images/bodybackground.png");
+    padding-top: 26px;	
 }
 
 #mainForm {
 	float: left;
+}
+
+.justified{
+	text-align: justify;
 }
 
 /*--------------------------------- Nav Styling --------------------------------*/
@@ -86,10 +91,6 @@ body {
 }
 
 #divlogin {
-	float: left;
-}
-
-#divforgotpassword {
 	float: left;
 }
 
