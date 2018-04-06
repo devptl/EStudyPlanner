@@ -19,6 +19,9 @@ public class Initialiser {
 	private CoursesService coursesService;
 
 	@Autowired
+	private StudentsService studentsService;
+
+	@Autowired
 	private ExpertsService expertsService;
 
 	@Autowired
@@ -51,32 +54,36 @@ public class Initialiser {
 		// initalise the username
 		model.addAttribute("username", userName);
 
-		// intial list of fields
-		ArrayList<Courses> fieldCourses = null;
-		fieldCourses = coursesService.getfieldCourses(0);
-		model.addAttribute("fieldCourses", fieldCourses);
-
 		// initalise the couseForStudyMaterial
 		String courseForStudyMaterial = "";
 		model.addAttribute("courseforstudymaterial", courseForStudyMaterial);
-		
-		//initialise the msg
+
+		// initialise the msg
 		model.addAttribute("msg", "");
+
+		// initialise experts minor course msg
+		model.addAttribute("expminormsg", "First select the Major Course");
 
 		// initalise study materials
 		ArrayList<StudyMaterials> studyMaterials = null;
 		studyMaterials = studyMaterialsService.allStudyMaterials();
 		model.addAttribute("studymaterials", studyMaterials);
 
+		int field = studentsService.findStudentByUsername(userName).getField();
+
 		// inital list of major courses
 		ArrayList<Courses> mainCourses = null;
-		mainCourses = coursesService.mainCourses();
+		mainCourses = coursesService.minorCoursesById(field);
 		model.addAttribute("mainCourses", mainCourses);
 
 		// inital list of minor courses
-		ArrayList<Courses> minorCourses = null;
-		minorCourses = coursesService.mainCourses();
+		ArrayList<Courses> minorCourses = new ArrayList<>();
 		model.addAttribute("minorCourses", minorCourses);
+
+		// inital list of experts
+		ArrayList<Experts> allExperts = null;
+		allExperts = expertsService.getAllExperts();
+		model.addAttribute("allExperts", allExperts);
 
 		// initialse the suggested list
 		ArrayList<ExpertsHasStudyMaterials> expertsHasStudyMaterials = null;
@@ -130,25 +137,26 @@ public class Initialiser {
 	 * 
 	 * @param model
 	 */
-	public void schedulerInitialiserWithoutParameter(ModelMap model) {
+	public void schedulerInitialiserWithoutParameter(String userName, ModelMap model) {
+
+		int field = studentsService.findStudentByUsername(userName).getField();
 
 		// inital list of major courses
 		ArrayList<Courses> mainCourses = null;
-		mainCourses = coursesService.mainCourses();
+		mainCourses = coursesService.minorCoursesById(field);
 		model.addAttribute("mainCourses", mainCourses);
 
 		// initialise the message
-		model.addAttribute("message", "");
-		
+		model.addAttribute("message", "Set Your Schedule");
+
 		// initialise expert schedule msg
-		model.addAttribute("expschedulemsg", "");
-				
+		model.addAttribute("expschedulemsg", "First select the Minor Course");
+
 		// initialise expert schedule msg
-		model.addAttribute("minorschedulemsg", "");
+		model.addAttribute("minorschedulemsg", "First select the Major Course");
 
 		// initalise the minor courses
-		ArrayList<Courses> minorCourses = null;
-		minorCourses = coursesService.mainCourses();
+		ArrayList<Courses> minorCourses = new ArrayList<>();
 		model.addAttribute("minorCourses", minorCourses);
 
 		// initalise the couseForStudyMaterial
@@ -200,8 +208,7 @@ public class Initialiser {
 		model.addAttribute("mainCourses", mainCourses);
 
 		// initalise the minor courses
-		ArrayList<Courses> minorCourses = null;
-		minorCourses = coursesService.mainCourses();
+		ArrayList<Courses> minorCourses = new ArrayList<>();
 		model.addAttribute("minorCourses", minorCourses);
 
 		// initalise the username
@@ -215,12 +222,12 @@ public class Initialiser {
 
 		// initialise the message
 		model.addAttribute("message", message);
-		
+
 		// initialise expert schedule msg
-		model.addAttribute("expschedulemsg", "");
-		
+		model.addAttribute("expschedulemsg", "First select the Minor Course");
+
 		// initialise expert schedule msg
-		model.addAttribute("minorschedulemsg", "");
+		model.addAttribute("minorschedulemsg", "First select the Major Course");
 
 		// initialise onload function
 		model.addAttribute("onLoadSchedule", "scheduleSetting('slotOneIn')");

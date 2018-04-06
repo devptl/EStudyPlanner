@@ -4,27 +4,6 @@
 
 function frontDisplay() {
 
-	$("#divrole").css("display", "none");
-	$("#divfield").css("display", "none");
-	$("#divqualification").css("display", "none");
-	$("#divyearofexperience").css("display", "none");
-
-	$("#expertbutton").click(function() {
-		$("#role").val("Expert");
-		$("#divfield").css("display", "none");
-		$("#divqualification").css("display", "");
-		$("#divyearofexperience").css("display", "");
-
-	});
-
-	$("#studentbutton").click(function() {
-		$("#role").val("Student");
-		$("#divfield").css("display", "");
-		$("#divqualification").css("display", "none");
-		$("#divyearofexperience").css("display", "none");
-
-	});
-
 	$("#alreadHaveAccountButton").click(function() {
 		$("#modalcontent4").css("display", "none");
 	});

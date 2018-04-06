@@ -24,7 +24,7 @@ import com.esp.service.StudyMaterialsService;
 @Controller
 @RequestMapping("/Scheduler")
 @SessionAttributes({ "onLoadSchedule", "username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
-		"expschedulemsg", "minorschedulemsg", "courseforstudymaterial", "minorCourse", "studyMaterials", "vediolink",
+		"expschedulemsg", "minorschedulemsg","expertsUserName", "courseforstudymaterial", "minorCourse", "studyMaterials", "vediolink",
 		"shbutton1", "shbutton2", "shbutton3", "shbutton4", "studentCompletedMaterials", "noOfVedios", "perCompleted",
 		"shdiv1", "shdiv2", "shdiv3", "shdiv4" })
 public class ScheduleController {
@@ -129,6 +129,9 @@ public class ScheduleController {
 
 		float perCompleted = studyMaterialsService.trackCourseCompletion(studyMaterial, studentCompletedMaterials);
 
+		//initialise experts name
+		model.addAttribute("expertsUserName", expertsUserName);
+		
 		// completed percent initialisation
 		model.addAttribute("perCompleted", perCompleted);
 

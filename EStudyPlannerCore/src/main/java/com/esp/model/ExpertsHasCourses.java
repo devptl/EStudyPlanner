@@ -12,6 +12,7 @@ public class ExpertsHasCourses {
 	private String expertsUserName;
 	@Id
 	private int coursesIdCourse;
+	private int rating;
 
 	public String getExpertsUserName() {
 		return expertsUserName;
@@ -29,14 +30,23 @@ public class ExpertsHasCourses {
 		this.coursesIdCourse = coursesIdCourse;
 	}
 
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
 	public ExpertsHasCourses() {
 
 	}
 
-	public ExpertsHasCourses(String expertsUserName, int coursesIdCourse) {
+	public ExpertsHasCourses(String expertsUserName, int coursesIdCourse, int rating) {
 		super();
 		this.expertsUserName = expertsUserName;
 		this.coursesIdCourse = coursesIdCourse;
+		this.rating = rating;
 	}
 
 }

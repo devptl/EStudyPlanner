@@ -2,9 +2,16 @@ package com.esp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
+import com.esp.Component.ExpertsComponents;
+import com.esp.Component.StudentsComponents;
 import com.esp.Component.UserComponent;
+import com.esp.model.Experts;
 import com.esp.model.LoggedUser;
+import com.esp.model.RegisteredUser;
+import com.esp.model.Schedule;
+import com.esp.model.Students;
 import com.esp.model.Users;
 
 @Service
@@ -12,6 +19,15 @@ public class UsersService {
 
 	@Autowired
 	private UserComponent userComponent;
+
+	@Autowired
+	private ExpertsComponents expertsComponents;
+
+	@Autowired
+	private StudentsComponents studentsComponents;
+
+	@Autowired
+	private ScheduleService scheduleService;
 
 	@Autowired
 	private Encoder encoder;
@@ -83,6 +99,84 @@ public class UsersService {
 		} else
 			return false;
 
+	}
+
+	/**
+	 * For registration of particular expert in database
+	 * 
+	 * @param registeredUser
+	 * @param model
+	 * @return registrationStatus
+	 */
+	public boolean userRegistration(RegisteredUser registeredUser, ModelMap model) {
+
+		String userName = registeredUser.getUserName();
+		String email = registeredUser.getEmail();
+
+		if (userComponent.findOne(userName) == null && userComponent.findByEmail(email) == null) {
+
+			Users user = new Users();
+			Experts expert = new Experts();
+			Students student = new Students();
+
+			user.setUserName(userName);
+			expert.setUserName(userName);
+			student.setUserName(userName);
+
+			// student data
+			student.setGuardiansIdGuardians(1);
+			student.setField(registeredUser.getField());
+
+			user.setFirstName(registeredUser.getFirstName());
+			user.setLastName(registeredUser.getLastName());
+
+			// encode the password
+			String encodedPassword = encoder.encodePassword(registeredUser.getPassword());
+
+			// set the user details
+			user.setPassword(encodedPassword);
+			user.setEmail(registeredUser.getEmail());
+			user.setRole(registeredUser.getRole());
+
+			// experts data
+			expert.setQualification(registeredUser.getQualification());
+
+			userComponent.saveUser(user);
+			expertsComponents.saveExpert(expert);
+			studentsComponents.saveStudent(student);
+			
+			Schedule schedule2;
+			// if schedule already exist
+			if (scheduleService.findSchedule(userName) == null) {
+				schedule2 = new Schedule();
+			} else {
+				schedule2 = scheduleService.findSchedule(userName);
+				// initialise the message
+				model.addAttribute("message", "Want To Make Changes");
+
+			}
+
+			model.addAttribute("schedule", schedule2);
+			
+			model.addAttribute("user", user);
+			
+
+			return true;
+		} else
+			return false;
+	}
+	
+	
+	/**
+	 * To edit the detials 
+	 * @param user
+	 * @param student
+	 * @param expert
+	 */
+	public void saveUserDetails(Users user,Students student, Experts expert) {
+		userComponent.saveUser(user);
+		expertsComponents.saveExpert(expert);
+		studentsComponents.saveStudent(student);		
 	}
 
 	/**

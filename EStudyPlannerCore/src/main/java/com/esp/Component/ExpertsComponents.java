@@ -1,6 +1,8 @@
 package com.esp.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -70,6 +72,16 @@ public class ExpertsComponents {
 		expertsRepository.save(expert);
 	}
 
+	/**
+	 * To find the expert with course
+	 * @param expertsUserName
+	 * @param coursesIdCourse
+	 * @return
+	 */
+	public ExpertsHasCourses findByExpertsUserNameAndCoursesIdCourse(String expertsUserName,int coursesIdCourse) {
+		return expertsHasCoursesRepository.findByExpertsUserNameAndCoursesIdCourse(expertsUserName, coursesIdCourse);
+	}
+	
 	/**
 	 * To save in experts has Courses tables
 	 * 
@@ -152,6 +164,13 @@ public class ExpertsComponents {
 		ArrayList<Experts> myList = new ArrayList<>();
 
 		ArrayList<ExpertsHasCourses> mainList = expertsHasCoursesRepository.findByCoursesIdCourse(id);
+		
+		Collections.sort(mainList, new Comparator<ExpertsHasCourses>() {
+		    @Override
+		    public int compare(ExpertsHasCourses o1, ExpertsHasCourses o2) {
+		        return o1.getRating()-o2.getRating();
+		    }
+		});
 
 		for (int i = 0; i < mainList.size(); i++) {
 			Experts e = expertsRepository.findOne(mainList.get(i).getExpertsUserName());

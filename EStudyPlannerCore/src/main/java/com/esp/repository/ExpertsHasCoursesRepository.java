@@ -10,5 +10,6 @@ public interface ExpertsHasCoursesRepository extends JpaRepository<ExpertsHasCou
 	
 	public ArrayList<ExpertsHasCourses> findByExpertsUserName(String expertsUserName);
 	public ArrayList<ExpertsHasCourses> findByCoursesIdCourse(int coursesIdCourse);
+	public ExpertsHasCourses findByExpertsUserNameAndCoursesIdCourse(String expertsUserName,int coursesIdCourse);
 
 }

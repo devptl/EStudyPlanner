@@ -1,11 +1,18 @@
 /*--------------------------------- Body Styling ------------------------------*/
 body {
-	background-image: url("../images/navbackground.jpg");
+	background: #003f9d;
 }
 
+
 #main {
-	background-image: url("../images/bodybackground.png");
-    padding-top: 26px;	
+	background-image: url(../images/bodybackground.png);
+    padding-top: 5%;
+    padding-right: 6%;
+    padding-left: 6%;
+}
+
+#containerBody{
+	padding: 0px;
 }
 
 #mainForm {
@@ -18,6 +25,7 @@ body {
 
 /*--------------------------------- Nav Styling --------------------------------*/
 #navbar {
+	border-radius: 5px;
 	opacity: 0.9 !important;
 	background-image: url("../images/navbackground.jpg");
 }
@@ -43,7 +51,7 @@ body {
 }
 
 .topButton {
-	background: lightgrey;
+	background: #ededf0;
 	text-shadow: grey 1px 1px 2px;
 	color: darkslateblue;
 	border: black;
@@ -64,7 +72,7 @@ body {
 	padding-bottom: 2%;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
-	background: lightgrey;
+    background: #dfdfe3;
 	text-shadow: grey 1px 1px 2px;
 	color: darkslateblue;
 }
@@ -112,6 +120,12 @@ body {
 	border: none;
 }
 
+#ratingButton{
+	width: 100%;
+    height: 35px;
+	background: #e2dddc;
+}
+
 /*--------------------------------- Main Content Styling --------------------------*/
 #maincontent1 {
 	height: -webkit-fill-available;
@@ -126,7 +140,11 @@ body {
 }
 
 #sidecard {
-	background-image: url("../images/sidebackground.jpg");
+	    background: #f3f3f6;
+}
+
+#inputGroupPrepend1{
+	font-weight: bolder;
 }
 
 #accordion {
@@ -145,7 +163,7 @@ body {
 	padding-top: 1%;
 	padding-bottom: 1%;
 	border-radius: 20px;
-	background: lightgrey;
+	background: #ececef;
 	text-shadow: grey 1px 1px 2px;
 	color: darkslateblue;
 }
@@ -214,15 +232,26 @@ table {
 }
 
 td, th {
-	border: 1px solid #A69F9F;
+    border: 1px solid #a3a5ae;
 	text-align: left;
 	padding: 8px;
 }
 
 tr:nth-child(even) {
-	background-color: #CAC0C0;
+	background-color: #dbdbdf;
 }
 
 tr:nth-child(odd) {
-	background-color: #E4CFCF;
+    background-color: #f3f3f6;
 }
+
+/*-------------------------------------- Rating Styling --------------------------------*/
+
+.star-rating {
+  line-height:32px;
+  font-size:1.25em;
+}
+
+.star-rating .fa-star{color: yellow;}
+
+

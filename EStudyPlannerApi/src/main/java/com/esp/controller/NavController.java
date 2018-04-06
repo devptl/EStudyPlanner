@@ -38,7 +38,8 @@ public class NavController {
 		initialiser.frontInitialiser(model);
 		return "front";
 	}
-
+	
+	
 	/**
 	 * To set the timer
 	 * 

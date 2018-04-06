@@ -4,73 +4,23 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 
 import com.esp.Component.ExpertsComponents;
 import com.esp.Component.StudentsComponents;
-import com.esp.Component.UserComponent;
 import com.esp.model.Experts;
 import com.esp.model.ExpertsHasCourses;
 import com.esp.model.ExpertsHasStudyMaterials;
-import com.esp.model.RegisteredUser;
 import com.esp.model.Students;
 import com.esp.model.StudentsHasExperts;
-import com.esp.model.Users;
 
 @Service
 public class ExpertsService {
-
-	@Autowired
-	private UserComponent userComponent;
 
 	@Autowired
 	private ExpertsComponents expertsComponents;
 
 	@Autowired
 	private StudentsComponents studentsComponents;
-
-	@Autowired
-	private Encoder encoder;
-
-	/**
-	 * For registration of particular expert in database
-	 * 
-	 * @param registeredUser
-	 * @param model
-	 * @return registrationStatus
-	 */
-	public boolean expertsRegistration(RegisteredUser registeredUser, ModelMap model) {
-
-		String userName = registeredUser.getUserName();
-		String email = registeredUser.getEmail();
-
-		if (userComponent.findOne(userName) == null && userComponent.findByEmail(email) == null) {
-
-			Users user = new Users();
-			Experts experts = new Experts();
-
-			user.setUserName(userName);
-			experts.setUserName(userName);
-
-			user.setFirstName(registeredUser.getFirstName());
-			user.setLastName(registeredUser.getLastName());
-
-			// encode the password
-			String encodedPassword = encoder.encodePassword(registeredUser.getPassword());
-
-			// set the user details
-			user.setPassword(encodedPassword);
-			user.setEmail(registeredUser.getEmail());
-			experts.setQualification(registeredUser.getQualification());
-			experts.setYearOfExperience(registeredUser.getYearOfExperience());
-
-			userComponent.saveUser(user);
-			expertsComponents.saveExpert(experts);
-
-			return true;
-		} else
-			return false;
-	}
 
 	/**
 	 * To save data in the expert has courses table
@@ -160,6 +110,10 @@ public class ExpertsService {
 		return expertsComponents.findExpertsWithCoursesId(id);
 
 	}
+	
+	public ExpertsHasCourses findByExpertAndCourse(String expertsUserName,int coursesIdCourse) {
+		return expertsComponents.findByExpertsUserNameAndCoursesIdCourse(expertsUserName, coursesIdCourse);
+	}
 
 	/**
 	 * To find and expert with his username
@@ -185,7 +139,9 @@ public class ExpertsService {
 			// setting the data for experts as student
 			Students student = new Students();
 
+			student.setUserName(userName);
 			student.setGuardiansIdGuardians(1);
+			student.setField(0);
 
 			// saving the new student
 			studentsComponents.saveStudent(student);

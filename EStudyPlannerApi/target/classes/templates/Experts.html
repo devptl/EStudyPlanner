@@ -8,6 +8,10 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
 <!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous" />
 <link rel="stylesheet" href="../css/bootstrap.min.css" />
 
 <link rel="stylesheet" href="../css/Layout.css" />
@@ -15,6 +19,8 @@
 
 <title>E - Study Planner</title>
 <head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="../js/jquery.min.js"></script>
 
 <script src="../js/clearcookie.js"></script>
@@ -23,7 +29,7 @@
 
 <body th:onload="${onLoadFun}">
 
-	<div class="container">
+	<div class="container" id="containerBody">
 
 		<!--_______________________________________ Navigation Menu ____________________________________________-->
 		<nav
@@ -40,7 +46,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="/Experts/">Experts</a>
+					<li class="nav-item"><a class="nav-link" href="/Experts/">Contribute</a>
 					</li>
 				</ul>
 				<form class="form-inline my-2 my-lg-0" action="Experts/asStudent"
@@ -52,15 +58,18 @@
 					</div>
 					<button type="submit" class="btn btn-dark my-2 my-sm-0 topButton">Login
 						as Student</button>
+					<a href="/getProfile" class="btn btn-dark my-2 my-sm-0 topButton"
+						id="loginButton"> Profile </a>	
 					<a href="/" class="btn btn-dark my-2 my-sm-0 topButton"
 						id="loginButton"> LogOut </a>
+					
 				</form>
 			</div>
 		</nav>
 
 
 		<div class="jumbotron" id="main">
-			<h1 class="display-4">How's your day Expert!!!</h1>
+			<h1 class="display-4">Want to Contribute Something !!!</h1>
 			<p class="lead justified">Here you will be able to select the
 				particular field and the respective course you can provide your
 				valuable input and can set the order of study material as per your
@@ -79,8 +88,8 @@
 							<h5 class="mb-0">
 								<button th:class="${button1}" id="fullWidthButton"
 									data-toggle="collapse" data-target="#collapseOne"
-									aria-expanded="true" aria-controls="collapseOne">#
-									Major Course Selector</button>
+									aria-expanded="true" aria-controls="collapseOne">Major
+									Course Selector</button>
 							</h5>
 						</div>
 						<div id="collapseOne" th:class="${div1}"
@@ -90,16 +99,19 @@
 								<form class="needs-validation" th:object="${Courses}"
 									action="/Experts/MainId" method="post">
 									<div class="form-group">
-										<label for="validationServer02">Select the Major
-											Course</label> <select class="custom-select" id="maincourseselector"
-											th:field="*{idCourse}" required="required">
-											<option th:each="mainCourse :${mainCourses.toArray()}"
-												th:value="${mainCourse.getIdCourse()}"
-												th:text="${mainCourse.getCourseName()}">One</option>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="inputGroupPrepend1">Major
+													Courses</span>
+											</div>
+											<select class="custom-select" id="maincourseselector"
+												th:field="*{idCourse}" required="required">
+												<option th:each="mainCourse :${mainCourses.toArray()}"
+													th:value="${mainCourse.getIdCourse()}"
+													th:text="${mainCourse.getCourseName()}">One</option>
 
-										</select>
-										<div class="invalid-feedback">Not a valid major course !</div>
-										<div class="valid-feedback">Looks good!</div>
+											</select>
+										</div>
 									</div>
 									<button class="btn btn-primary" type="submit">Select
 										Major Course</button>
@@ -113,8 +125,8 @@
 							<h5 class="mb-0">
 								<button th:class="${button2}" id="fullWidthButton"
 									data-toggle="collapse" data-target="#collapseTwo"
-									aria-expanded="true" aria-controls="collapseTwo">#
-									Minor Course Selector</button>
+									aria-expanded="true" aria-controls="collapseTwo">Minor
+									Course Selector</button>
 							</h5>
 						</div>
 						<div id="collapseTwo" th:class="${div2}"
@@ -130,19 +142,26 @@
 											</div>
 											<input type="text" class="form-control" id="expertsUserName"
 												name="expertsUserName" placeholder="Username"
-												aria-describedby="inputGroupPrepend1" th:value="${username}"
-												readonly="readonly" required="required" />
+												th:value="${username}" readonly="readonly"
+												required="required" />
 										</div>
 									</div>
 									<div class="form-group">
-										<select class="custom-select" id="coursesIdCourse"
-											name="coursesIdCourse" required="required">
-											<option th:each="minorCourse :${minorCourses.toArray()}"
-												th:value="${minorCourse.getIdCourse()}"
-												th:text="${minorCourse.getCourseName()}">One</option>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="inputGroupPrepend1">Minor
+													Courses</span>
+											</div>
+											<select class="custom-select" id="coursesIdCourse"
+												name="coursesIdCourse" required="required">
+												<option th:each="minorCourse :${minorCourses.toArray()}"
+													th:value="${minorCourse.getIdCourse()}"
+													th:text="${minorCourse.getCourseName()}">One</option>
 
-										</select>
+											</select>
+										</div>
 									</div>
+									<p id="schedulermessage" th:text="${expminormsg}"></p>
 									<button class="btn btn-primary" type="submit">Select
 										Minor Course</button>
 								</form>
@@ -156,8 +175,8 @@
 							<h5 class="mb-0">
 								<button th:class="${button3}" id="fullWidthButton"
 									data-toggle="collapse" data-target="#collapseThree"
-									aria-expanded="true" aria-controls="collapseThree">#
-									Minor Course Content Manager</button>
+									aria-expanded="true" aria-controls="collapseThree">Minor
+									Course Content Manager</button>
 							</h5>
 						</div>
 						<div id="collapseThree" th:class="${div3}"
@@ -172,9 +191,8 @@
 												<span class="input-group-text" id="inputGroupPrepend1">Username</span>
 											</div>
 											<input type="text" class="form-control"
-												placeholder="Username" aria-describedby="inputGroupPrepend1"
-												th:value="${username}" name="userName" readonly="readonly"
-												required="required" />
+												placeholder="Username" th:value="${username}"
+												name="userName" readonly="readonly" required="required" />
 										</div>
 									</div>
 
@@ -210,10 +228,10 @@
 									</div>
 
 									<div class="form-group" id="expertlist">
-										<label for="exampleFormControlSelect2">My content
-											ordered list</label> <select multiple="multiple" class="form-control"
-											id="studyMaterialsList" name="studyMaterialsList"
-											required="required">
+										<label for="exampleFormControlSelect2"><b>My
+												content ordered list</b></label> <select multiple="multiple"
+											class="form-control" id="studyMaterialsList"
+											name="studyMaterialsList" required="required">
 											<option
 												th:each="expertGivenStudyMaterial :${expertGivenStudyMaterials.toArray()}"
 												th:value="${expertGivenStudyMaterial.getIdStudyMaterials()}"
@@ -233,8 +251,8 @@
 							<h5 class="mb-0">
 								<button th:class="${button4}" id="fullWidthButton"
 									data-toggle="collapse" data-target="#collapseFour"
-									aria-expanded="true" aria-controls="collapseFour">#
-									Add Study Materials</button>
+									aria-expanded="true" aria-controls="collapseFour">Add
+									Study Materials</button>
 							</h5>
 						</div>
 						<div id="collapseFour" th:class="${div4}"
@@ -261,7 +279,6 @@
 											</div>
 											<input type="text" class="form-control"
 												placeholder="Minorcourse"
-												aria-describedby="inputGroupPrepend1"
 												th:value="${courseforstudymaterial}" readonly="readonly"
 												name="courseforstudymaterial" required="required" />
 										</div>
@@ -270,11 +287,10 @@
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
-												<span class="input-group-text" id="inputGroupPrepend2">Title</span>
+												<span class="input-group-text" id="inputGroupPrepend1">Title</span>
 											</div>
 											<input type="text" class="form-control" id="vediotitle"
-												placeholder="Title" name="title"
-												aria-describedby="inputGroupPrepend2" required="required" />
+												placeholder="Title" name="title" required="required" />
 											<div class="invalid-feedback">Enter the title !</div>
 											<div class="valid-feedback">Looks good!</div>
 										</div>
@@ -283,13 +299,13 @@
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
-												<span class="input-group-text" id="inputGroupPrepend2">Embedded
+												<span class="input-group-text" id="inputGroupPrepend1">Embedded
 													link</span>
 											</div>
 											<input type="text" class="form-control"
 												id="validationServerPassword"
 												placeholder="Link to embbed th vedio" name="link"
-												aria-describedby="inputGroupPrepend2" required="required" />
+												required="required" />
 											<div class="invalid-feedback">Enter the Link !</div>
 											<div class="valid-feedback">Looks good!</div>
 										</div>
@@ -336,11 +352,20 @@
 	</div>
 	<!--__________________________________________ Optional JavaScript _________________________________________-->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+
 	<script src="../js/jquery-3.2.1.slim.min.js"></script>
-
 	<script src="../js/popper.min.js"></script>
-
 	<script src="../js/bootstrap.min.js"></script>
 
 </body>

@@ -28,8 +28,8 @@ import com.esp.service.StudyMaterialsService;
 @Controller
 @RequestMapping("/Experts")
 @SessionAttributes({ "onLoadFun", "vediolink", "username", "fieldCourses", "mainCourses", "minorCourses",
-		"expschedulemsg", "minorschedulemsg", "studymaterials", "expertGivenStudyMaterials", "addStudyMaterialMessage",
-		"button1", "button2", "button3", "button4", "div1", "courseforstudymaterial", "div2", "div3", "div4",
+		"expschedulemsg", "minorschedulemsg","expminormsg","studymaterials", "expertGivenStudyMaterials", "addStudyMaterialMessage",
+		"button1", "button2","schedule","button3", "button4", "div1", "courseforstudymaterial", "div2", "div3", "div4",
 		"schedule", "message", "allExperts", "shbutton1", "shbutton2", "shbutton3", "shbutton4", "shdiv1", "shdiv2",
 		"shdiv3", "shdiv4" })
 public class ExpertsController {
@@ -39,15 +39,15 @@ public class ExpertsController {
 
 	@Autowired
 	private ExpertsService expertsService;
+	
+	@Autowired
+	private ScheduleService scheduleService;
 
 	@Autowired
 	private Initialiser initialiser;
 
 	@Autowired
 	private StudyMaterialsService studyMaterialsService;
-
-	@Autowired
-	private ScheduleService scheduleService;
 
 	/**
 	 * To set the inital display of experts so that the can select field and major
@@ -82,8 +82,22 @@ public class ExpertsController {
 		mainCourses = coursesService.mainCourses();
 
 		// minor courses according to major courses
-		ArrayList<Courses> minorCourses = null;
-		minorCourses = coursesService.minorCoursesById(id);
+		ArrayList<Courses> minorCourses = coursesService.minorCoursesById(id);
+		
+		if(minorCourses.isEmpty())
+		{
+			//initialise experts minor course msg
+			model.addAttribute("expminormsg", "Dont have any minor Course");
+
+		}
+		else
+		{
+			//initialise experts minor course msg
+			model.addAttribute("expminormsg", "");
+
+		}
+		
+		
 		ArrayList<StudyMaterials> studyMaterials = studyMaterialsService.showStudyMaterialsByCourseid(id);
 
 		initialiser.expertInitialiserWithParameters(studyMaterials, model);
@@ -285,35 +299,22 @@ public class ExpertsController {
 			ModelMap model) {
 
 		try {
-			Schedule schedule2;
-
-			// checking if the student exist with same username and email
-			if (expertsService.expertAsStudent(userName)) {
-
-				initialiser.schedulerInitialiserWithoutParameter(model);
-
-				model.addAttribute("username", userName);
-
-			} else {
-				// getting the experts now as student data
-
-				initialiser.schedulerInitialiserWithoutParameter(model);
-
+				initialiser.schedulerInitialiserWithoutParameter(userName,model);
+				
+				Schedule schedule2;
 				// if schedule already exist
 				if (scheduleService.findSchedule(userName) == null) {
 					schedule2 = new Schedule();
 				} else {
 					schedule2 = scheduleService.findSchedule(userName);
-
 				}
 
-				model.addAttribute("schedule", schedule2);
+				model.addAttribute("schedule", schedule2);	
+				
 				model.addAttribute("username", userName);
 
-			}
-
 		} catch (Exception exception) {
-			System.out.println("something went wrong");
+			System.out.println(exception.getMessage());
 		}
 
 		return "Scheduler";

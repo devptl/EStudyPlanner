@@ -21,25 +21,18 @@ import com.esp.model.StudentsHasCourses;
 import com.esp.model.Users;
 import com.esp.service.AdminService;
 import com.esp.service.Decoder;
-import com.esp.service.ExpertsService;
 import com.esp.service.Initialiser;
 import com.esp.service.SMTPMailSender;
-import com.esp.service.StudentsService;
+import com.esp.service.ScheduleService;
 import com.esp.service.UsersService;
 
 @Controller
 @SessionAttributes({ "onLoadFun", "onLoadSchedule", "username", "fieldCourses", "mainCourses", "courseforstudymaterial",
-		"expschedulemsg", "minorschedulemsg", "minorCourses", "studymaterials", "expertGivenStudyMaterials",
+		"expschedulemsg", "minorschedulemsg", "user", "minorCourses", "studymaterials", "expertGivenStudyMaterials",
 		"addStudyMaterialMessage", "schedule", "message", "allExperts", "button1", "button2", "button3", "button4",
-		"div1", "div2", "div3", "div4", "msg", "shbutton1", "shbutton2", "adminForStudentsList", "adminForExpertsList",
-		"shbutton3", "shbutton4", "shdiv1", "shdiv2", "shdiv3", "shdiv4" })
+		"div1", "div2", "div3", "div4", "expminormsg", "msg", "shbutton1", "shbutton2", "adminForStudentsList",
+		"adminForExpertsList", "shbutton3", "shbutton4", "shdiv1", "shdiv2", "shdiv3", "shdiv4" })
 public class LoginController {
-
-	@Autowired
-	private StudentsService studentsService;
-
-	@Autowired
-	private ExpertsService expertsService;
 
 	@Autowired
 	private UsersService usersService;
@@ -49,6 +42,9 @@ public class LoginController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private ScheduleService scheduleService;
 
 	@Autowired
 	private Decoder decoder;
@@ -78,29 +74,24 @@ public class LoginController {
 		if (usersService.usersLogin(loggedUser)) {
 
 			Users user = usersService.findUser(loggedUser.getUserName());
-			if (user.getRole().equals("Expert")) {
+			if (user.getRole().equals("User")) {
 				// initialsing the username for expert
 				String userName = loggedUser.getUserName();
 				initialiser.expertInitialiser(userName, model);
+				
+				Schedule schedule2;
+				// if schedule already exist
+				if (scheduleService.findSchedule(userName) == null) {
+					schedule2 = new Schedule();
+				} else {
+					schedule2 = scheduleService.findSchedule(userName);
+				}
+
+				model.addAttribute("schedule", schedule2);		
+				model.addAttribute("user", user);
 
 				// on successfull login sending to experts page
 				return "Experts";
-
-			} else if (user.getRole().equals("Student")) {
-
-				studentsService.studentsLogin(loggedUser, model);
-				// initialise onload function
-				model.addAttribute("onLoadSchedule", "scheduleSetting('maincourseselector')");
-
-				// set the toggle as schedule already set
-				model.addAttribute("shbutton1", "btn btn-link collapsed");
-				model.addAttribute("shdiv1", "collapse");
-
-				model.addAttribute("shbutton2", "btn btn-link ");
-				model.addAttribute("shdiv2", "collapse show");
-
-				// on successfull login sending to scheduler page
-				return "Scheduler";
 
 			} else if (user.getRole().equals("Admin")) {
 
@@ -145,56 +136,28 @@ public class LoginController {
 			@ModelAttribute("Courses") Courses mainCourse, @ModelAttribute("Schedule") Schedule schedule,
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, ModelMap model) {
 
-		if (registeredUser.getRole().equals("Student")) {
-			if (studentsService.studentRegistration(registeredUser, model)) {
-				// sending the mail to student on registration
-				String emailId = registeredUser.getEmail();
-				String subject = "Thanku " + registeredUser.getFirstName() + " for registration";
-				String messege = "We are very thankfull for your support your"
-						+ " can now set your schedule and proceed with your studies ";
-				try {
+		if (usersService.userRegistration(registeredUser, model)) {
+			String userName = registeredUser.getUserName();
+			// initalise the username
+			initialiser.expertInitialiser(userName, model);
 
-					sMTPMailSender.send(emailId, subject, messege);
-				} catch (Exception e) {
-					System.out.println("network error");
-				}
+			// sending the mail on registration
+			String emailId = registeredUser.getEmail();
+			String subject = "Thanku User " + registeredUser.getFirstName() + " for registration";
+			String messege = "We are very thankfull for your support your"
+					+ " can now set the study material and provide your valuable feeds to us ";
 
-				// on succesfull registration sending to the scheduler page
-				return "Scheduler";
-			} else {
-				// if the registration fails sending back to the front page
-				model.addAttribute("msg", "Student with same username or email exist");
-				initialiser.frontInitialiser(model);
-				return "front";
+			try {
+				sMTPMailSender.send(emailId, subject, messege);
+			} catch (Exception e) {
+				System.out.println("network problem");
 			}
-		} else if (registeredUser.getRole().equals("Expert")) {
-			if (expertsService.expertsRegistration(registeredUser, model)) {
-				String userName = loggedUser.getUserName();
-				// initalise the username
-				initialiser.expertInitialiser(userName, model);
 
-				// sending the mail on registration
-				String emailId = registeredUser.getEmail();
-				String subject = "Thanku Expert " + registeredUser.getFirstName() + " for registration";
-				String messege = "We are very thankfull for your support your"
-						+ " can now set the study material and provide your valuable feeds to us ";
-
-				try {
-					sMTPMailSender.send(emailId, subject, messege);
-				} catch (Exception e) {
-					System.out.println("network problem");
-				}
-
-				model.addAttribute("username", userName);
-				return "Experts";
-			} else {
-				// on invalid registration when expert already exist with username
-				model.addAttribute("msg", "Expert with same username or email alredy exist");
-				initialiser.frontInitialiser(model);
-				return "front";
-			}
+			model.addAttribute("username", userName);
+			return "Experts";
 		} else {
-			model.addAttribute("msg", "role selecction invalid");
+			// on invalid registration when expert already exist with username
+			model.addAttribute("msg", "Expert with same username or email alredy exist");
 			initialiser.frontInitialiser(model);
 			return "front";
 		}

@@ -11,18 +11,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.esp.model.Courses;
+import com.esp.model.ExpertsHasCourses;
 import com.esp.model.StudentsHasStudyMaterials;
 import com.esp.model.StudyMaterials;
+import com.esp.service.CoursesService;
+import com.esp.service.ExpertsService;
 import com.esp.service.StudyMaterialsService;
 
 @Controller
 @RequestMapping("/StudyMaterials")
-@SessionAttributes({ "onLoadCourses", "username", "minorCourse", "studyMaterials", "vediolink",
+@SessionAttributes({ "onLoadCourses", "username", "minorCourse", "studyMaterials", "vediolink", "expertsUserName",
 		"studentCompletedMaterials", "perCompleted", "noOfVedios", "shbutton1", "shdiv1" })
 public class StudyMaterialsController {
 
 	@Autowired
 	private StudyMaterialsService studyMaterialsService;
+	
+	@Autowired
+	private CoursesService coursesService;
+
+	@Autowired
+	private ExpertsService expertsService;
+	
 
 	/**
 	 * To get to Study Materials
@@ -34,7 +44,6 @@ public class StudyMaterialsController {
 	public String studyMaterials(ModelMap model) {
 		return "Courses";
 	}
-	
 
 	/**
 	 * To show the vedios in the courses page
@@ -103,6 +112,31 @@ public class StudyMaterialsController {
 		model.addAttribute("shbutton1", "btn btn-link");
 		model.addAttribute("shdiv1", "collapse show");
 
+		return "Courses";
+
+	}
+
+	/**
+	 * To Store the rating
+	 * 
+	 * @param rating
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/getRating", method = RequestMethod.POST)
+	public String getRating(@RequestParam String expertsUserName,
+			@RequestParam String courseforstudymaterial,@RequestParam int rating, ModelMap model) {
+		
+	    int coursesIdCourse = coursesService.findCourseByName(courseforstudymaterial).getIdCourse();
+		
+	    //getting the required expert details 
+		ExpertsHasCourses expertsHasCourses = expertsService.findByExpertAndCourse(expertsUserName, coursesIdCourse);
+
+		//setting the rating 
+		rating =rating +  expertsHasCourses.getRating();
+		expertsHasCourses.setRating(rating);
+		expertsService.expertHasCourses(expertsHasCourses);
+		
 		return "Courses";
 
 	}

@@ -8,6 +8,10 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
 <!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous" />
 <link rel="stylesheet" href="../css/bootstrap.min.css" />
 
 <!-- Customised CSS and JS -->
@@ -20,7 +24,7 @@
 
 <body onload="frontDisplay()">
 
-	<div class="container">
+	<div class="container" id="containerBody">
 
 
 		<!--____________________________________ Navigation Menu ______________________________________________-->
@@ -249,11 +253,10 @@
 										</div>
 										<input type="text" class="form-control"
 											id="validationServer03" placeholder="Username"
-											pattern="[A-Za-z]+"
-											title="Can't take space or special character"
+											pattern="[A-Za-z][A-Za-z0-9]+"
+											title="Can't take space or special character and cant start with number"
 											oninput="autotab(this, 'validationServer04')" maxlength="15"
-											th:field="*{userName}" aria-describedby="inputGroupPrepend3"
-											required="required" />
+											th:field="*{userName}" required="required" />
 										<div class="invalid-feedback">Enter the Username !</div>
 										<div class="valid-feedback">Looks good!</div>
 									</div>
@@ -263,7 +266,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend2">Email
+										<span class="input-group-text" id="inputGroupPrepend1">Email
 											ID</span>
 									</div>
 									<input type="text" class="form-control" id="validationServer04"
@@ -271,8 +274,7 @@
 										pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
 										title="match the email format ex-abc@gmail.com"
 										oninput="autotab(this, 'validationServer05')" maxlength="25"
-										th:field="*{email}" aria-describedby="inputGroupPrepend2"
-										required="required" />
+										th:field="*{email}" required="required" />
 									<div class="invalid-feedback">Enter the Email !</div>
 									<div class="valid-feedback">Looks good!</div>
 								</div>
@@ -281,48 +283,34 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend3">Password</span>
+										<span class="input-group-text" id="inputGroupPrepend1">Password</span>
 									</div>
 									<input type="password" class="form-control"
 										id="validationServer05"
 										placeholder="Atleat 8 char + lower + upper case + 1 number"
 										pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" maxlength="20"
 										title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-										th:field="*{password}" aria-describedby="inputGroupPrepend2"
-										required="required" />
+										th:field="*{password}" required="required" />
 									<div class="invalid-feedback">Enter the Password !</div>
 									<div class="valid-feedback">Looks good!</div>
 								</div>
-							</div>
+							</div>	
 
-							<div class="form-group">
+							<div class="form-group" id="hiddenObject">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend4">Select
-											Your Role </span>
-									</div>
-									<button class="btn btn-dark" id="expertbutton" type="button">Expert</button>
-									<button class="btn btn-secondary" id="studentbutton"
-										type="button">Student</button>
-								</div>
-							</div>
-
-							<div class="form-group" id="divrole">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend4">Selected
+										<span class="input-group-text" id="inputGroupPrepend1">Selected
 											Role</span>
 									</div>
 									<input type="text" class="form-control" placeholder="Role"
-										aria-describedby="inputGroupPrepend4" name="role" id="role"
-										readonly="readonly" required="required" />
+										name="role" id="role" value="User" readonly="readonly" required="required" />
 								</div>
 							</div>
 
-							<div class="form-group" id="divfield">
+							<div class="form-group" >
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend5">Field</span>
+										<span class="input-group-text" id="inputGroupPrepend1">Field</span>
 									</div>
 									<select class="custom-select" id="validationServer06"
 										th:field="*{field}">
@@ -334,34 +322,17 @@
 								</div>
 							</div>
 
-							<div class="form-group" id="divqualification">
+							<div class="form-group" >
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend6">Qualification</span>
+										<span class="input-group-text" id="inputGroupPrepend1">Qualification</span>
 									</div>
 									<select class="custom-select" id="validationServer07"
 										th:field="*{qualification}">
-										<option value="1">Graduation</option>
-										<option value="2">Masters</option>
-										<option value="3">Docterate</option>
-										<option value="4">Others</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="form-group" id="divyearofexperience">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend2">Year
-											of Experience</span>
-									</div>
-									<select class="custom-select" id="validationServer08"
-										th:field="*{yearOfExperience}">
-										<option value="0">Zero</option>
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
-										<option value="3">Four or Four Plus</option>
+										<option value="Graduation">Graduation</option>
+										<option value="Masters">Masters</option>
+										<option value="Docterate">Docterate</option>
+										<option value="Others">Others</option>
 									</select>
 								</div>
 							</div>
@@ -417,8 +388,8 @@
 									</div>
 									<input type="text" class="form-control" id="Username1"
 										placeholder="Username" aria-describedby="inputGroupPrepend1"
-										pattern="[A-Za-z]+"
-										title="Can't take space or special character"
+										pattern="[A-Za-z][A-Za-z0-9]+"
+										title="Can't take space or special character and cant start with number"
 										oninput="autotab(this, 'validationPassword')" maxlength="15"
 										th:field="*{userName}" required="required" />
 									<div class="invalid-feedback">Enter the Username !</div>
@@ -429,12 +400,13 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend2">Password</span>
+										<span class="input-group-text" id="inputGroupPrepend1">Password</span>
 									</div>
 									<input type="password" class="form-control"
 										id="validationPassword" placeholder="Password"
-										aria-describedby="inputGroupPrepend2" th:field="*{password}"
-										required="required" />
+										pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" maxlength="20"
+										title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+										th:field="*{password}" required="required" />
 									<div class="invalid-feedback">Enter the Password !</div>
 									<div class="valid-feedback">Looks good!</div>
 								</div>
@@ -444,10 +416,6 @@
 								<button type="button" id="forgotAccountButton"
 									class="btn btn-dark " data-toggle="modal"
 									data-target="#exampleModalCenter2">Forgot the Password
-									?</button>
-								<button type="button" id="changeAccountButton"
-									class="btn btn-dark " data-toggle="modal"
-									data-target="#exampleModalCenter3">Change the password
 									?</button>
 							</div>
 							<hr class="my-4" />
@@ -484,9 +452,8 @@
 										<span class="input-group-text" id="inputGroupPrepend1">Username</span>
 									</div>
 									<input type="text" class="form-control" id="Username2"
-										placeholder="Username" aria-describedby="inputGroupPrepend1"
-										pattern="[A-Za-z]+"
-										title="Can't take space or special character"
+										placeholder="Username" pattern="[A-Za-z][A-Za-z0-9]+"
+										title="Can't take space or special character and cant start with number"
 										oninput="autotab(this, 'validationServerEmail')"
 										maxlength="15" name="userName" required="required" />
 									<div class="invalid-feedback">Enter the Username !</div>
@@ -497,7 +464,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend2">Email</span>
+										<span class="input-group-text" id="inputGroupPrepend1">Email</span>
 									</div>
 									<input type="text" class="form-control"
 										id="validationServerEmail"
@@ -526,89 +493,28 @@
 		</div>
 
 
-		<!--_______________________________________ Change The Password Modal __________________________________-->
-		<div class="modal fade" id="exampleModalCenter3" tabindex="-1"
-			role="dialog" aria-labelledby="exampleModalCenterTitle"
-			aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content" id="modalcontent2">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">Change the
-							Password</h5>
-						<button type="button" id="changeCloseButton" class="close"
-							data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<form class="needs-validation" action="/changeThePassword"
-							method="post">
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend1">Username</span>
-									</div>
-									<input type="text" class="form-control" id="Username3"
-										placeholder="Username" aria-describedby="inputGroupPrepend1"
-										name="userName" required="required" />
-									<div class="invalid-feedback">Enter the Username !</div>
-									<div class="valid-feedback">Looks good!</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend2">Old
-											Password</span>
-									</div>
-									<input type="password" class="form-control"
-										id="validationOldPassword" placeholder="Old Password"
-										aria-describedby="inputGroupPrepend2" name="oldPassword"
-										required="required" />
-									<div class="invalid-feedback">Enter the Password !</div>
-									<div class="valid-feedback">Looks good!</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroupPrepend2">New
-											Password</span>
-									</div>
-									<input type="password" class="form-control"
-										id="validationNewPassword"
-										placeholder="Atleat 8 char + lower + upper case + 1 number"
-										pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" maxlength="20"
-										title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-										aria-describedby="inputGroupPrepend2" name="newPassword"
-										required="required" />
-									<div class="invalid-feedback">Enter the Password !</div>
-									<div class="valid-feedback">Looks good!</div>
-								</div>
-							</div>
-
-							<hr class="my-4" />
-							<button type="submit" class="btn btn-primary">Change the
-								Password</button>
-							<button type="reset" class="btn btn-primary">Reset</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 
 		<!-- end container -->
 	</div>
 
 	<!--__________________________________________ Optional JavaScript _________________________________________-->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+
 
 	<script src="../js/jquery-3.2.1.slim.min.js"></script>
-
 	<script src="../js/popper.min.js"></script>
-
 	<script src="../js/bootstrap.min.js"></script>
 
 </body>

@@ -19,7 +19,6 @@ public class Experts {
 	@Id
 	private String userName;
 	private String qualification;
-	private int yearOfExperience;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "expertsHasStudyMaterials", joinColumns = {
@@ -56,10 +55,6 @@ public class Experts {
 		return qualification;
 	}
 
-	public int getYearOfExperience() {
-		return yearOfExperience;
-	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
@@ -68,18 +63,13 @@ public class Experts {
 		this.qualification = qualification;
 	}
 
-	public void setYearOfExperience(int yearOfExperience) {
-		this.yearOfExperience = yearOfExperience;
-	}
-
 	public Experts() {
 	}
 
-	public Experts(String userName, String qualification, int yearOfExperience) {
-		super();
+	public Experts(String userName, String qualification) {
 		this.userName = userName;
 		this.qualification = qualification;
-		this.yearOfExperience = yearOfExperience;
+
 	}
 
 }

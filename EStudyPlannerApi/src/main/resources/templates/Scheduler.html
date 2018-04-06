@@ -8,23 +8,28 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
 <!-- Bootstrap CSS -->
-
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous" />
 <link rel="stylesheet" href="../../css/bootstrap.min.css" />
 
 <link rel="stylesheet" href="../../css/Layout.css" />
 <title>E - Study Planner</title>
 
 <head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="../../js/jquery.min.js"></script>
 
 
-<script src="../../js/clearcookie.js"></script>
 <script src="../../js/schedulerjs.js"></script>
+<script src="../../js/clearcookie.js"></script>
 </head>
 
 <body th:onload="${onLoadSchedule}">
 
-	<div class="container">
+	<div class="container" id="containerBody">
 
 		<!--_______________________________________ Navigation Menu ____________________________________________-->
 		<nav
@@ -43,6 +48,8 @@
 
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a class="nav-link" href="/Experts/">Contribute</a>
+					</li>
 					<li class="nav-item"><a class="nav-link" href="/Scheduler/">Scheduler</a>
 					</li>
 				</ul>
@@ -52,6 +59,8 @@
 							class="topButton" readonly="readonly" id="navusername"
 							name="userName" required="required"></input>
 					</div>
+					<a href="/getProfile" class="btn btn-dark my-2 my-sm-0 topButton"
+						id="loginButton"> Profile </a>	
 					<a href="/" class="btn btn-dark my-2 my-sm-0 topButton"
 						id="loginButton"> LogOut </a>
 				</form>
@@ -94,7 +103,7 @@
 												<span class="input-group-text" id="inputGroupPrepend1">Username</span>
 											</div>
 											<input type="text" class="form-control"
-												placeholder="Username" aria-describedby="inputGroupPrepend1"
+												placeholder="Username" 
 												id="studentsUserName" th:value="${username}"
 												name="studentsUserName" readonly="readonly"
 												required="required" />
@@ -106,56 +115,74 @@
 
 									<div class="form-row">
 										<div class="col-md-6 mb-2">
-											<label for="validationServer01"><b>Slot 1</b> Start
-												time </label> <input type="time" class="form-control" id="slotOneIn"
-												name="slotOneIn" th:value="${schedule.getSlotOneIn()}"
-												required="required" />
-											<div class="invalid-feedback">Enter the correct slot !</div>
-											<div class="valid-feedback">Looks good!</div>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="inputGroupPrepend1">Slot
+														1 Start Time </span>
+												</div>
+												<input type="time" class="form-control" id="slotOneIn"
+													name="slotOneIn" th:value="${schedule.getSlotOneIn()}"
+													required="required" />
+											</div>
 										</div>
 
 										<div class="col-md-6 mb-2">
-											<label for="validationServer02">End time</label> <input
-												type="time" class="form-control" id="slotOneOut"
-												name="slotOneOut" th:value="${schedule.getSlotOneOut()}"
-												required="required" />
-											<div class="invalid-feedback">Enter the correct Name !</div>
-											<div class="valid-feedback">Looks good!</div>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="inputGroupPrepend1">End
+														Time</span>
+												</div>
+												<input type="time" class="form-control" id="slotOneOut"
+													name="slotOneOut" th:value="${schedule.getSlotOneOut()}"
+													required="required" />
+											</div>
 										</div>
 									</div>
 									<div class="form-row">
 										<div class="col-md-6 mb-2">
-											<label for="validationServer01"><b>Slot 2</b> Start
-												time </label> <input type="time" class="form-control" id="slotTwoIn"
-												name="slotTwoIn" th:value="${schedule.getSlotTwoIn()}" />
-											<div class="invalid-feedback">Enter the correct slot !</div>
-											<div class="valid-feedback">Looks good!</div>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="inputGroupPrepend1">Slot
+														2 Start Time </span>
+												</div>
+												<input type="time" class="form-control" id="slotTwoIn"
+													name="slotTwoIn" th:value="${schedule.getSlotTwoIn()}" />
+											</div>
 										</div>
 
 										<div class="col-md-6 mb-2">
-											<label for="validationServer02">End time</label> <input
-												type="time" class="form-control" id="slotTwoOut"
-												name="slotTwoOut" th:value="${schedule.getSlotTwoOut()}" />
-											<div class="invalid-feedback">Enter the correct Name !</div>
-											<div class="valid-feedback">Looks good!</div>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="inputGroupPrepend1">End
+														Time</span>
+												</div>
+												<input type="time" class="form-control" id="slotTwoOut"
+													name="slotTwoOut" th:value="${schedule.getSlotTwoOut()}" />
+											</div>
 										</div>
 									</div>
 									<div class="form-row">
 										<div class="col-md-6 mb-2">
-											<label for="validationServer01"><b>Slot 3</b> Start
-												time </label> <input type="time" class="form-control"
-												id="slotThreeIn" name="slotThreeIn"
-												th:value="${schedule.getSlotThreeIn()}" />
-											<div class="invalid-feedback">Enter the correct slot !</div>
-											<div class="valid-feedback">Looks good!</div>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="inputGroupPrepend1">Slot
+														3 Start Time </span>
+												</div>
+												<input type="time" class="form-control" id="slotThreeIn"
+													name="slotThreeIn" th:value="${schedule.getSlotThreeIn()}" />
+											</div>
 										</div>
 
 										<div class="col-md-6 mb-2">
-											<label for="validationServer02">End time</label> <input
-												type="time" class="form-control" id="slotThreeOut"
-												name="slotThreeOut" th:value="${schedule.getSlotThreeOut()}" />
-											<div class="invalid-feedback">Enter the correct Name !</div>
-											<div class="valid-feedback">Looks good!</div>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="inputGroupPrepend1">End
+														Time</span>
+												</div>
+												<input type="time" class="form-control" id="slotThreeOut"
+													name="slotThreeOut"
+													th:value="${schedule.getSlotThreeOut()}" />
+											</div>
 										</div>
 									</div>
 									<p id="schedulermessage" th:text="${message}"></p>
@@ -189,7 +216,7 @@
 												<span class="input-group-text" id="inputGroupPrepend1">Username</span>
 											</div>
 											<input type="text" class="form-control"
-												placeholder="Username" aria-describedby="inputGroupPrepend1"
+												placeholder="Username" 
 												id="studentsUserName" th:value="${username}"
 												name="studentsUserName" readonly="readonly"
 												required="required" />
@@ -199,16 +226,19 @@
 									</div>
 
 									<div class="form-group">
-										<label for="validationServer02">Select the Major
-											Course</label> <select class="custom-select" id="maincourseselector"
-											th:field="*{coursesIdCourse}" required="required">
-											<option th:each="mainCourse :${mainCourses.toArray()}"
-												th:value="${mainCourse.getIdCourse()}"
-												th:text="${mainCourse.getCourseName()}">One</option>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="inputGroupPrepend1">Major
+													Courses</span>
+											</div>
+											<select class="custom-select" id="maincourseselector"
+												th:field="*{coursesIdCourse}" required="required">
+												<option th:each="mainCourse :${mainCourses.toArray()}"
+													th:value="${mainCourse.getIdCourse()}"
+													th:text="${mainCourse.getCourseName()}">One</option>
 
-										</select>
-										<div class="invalid-feedback">Not a valid major course !</div>
-										<div class="valid-feedback">Looks good!</div>
+											</select>
+										</div>
 									</div>
 									<button class="btn btn-primary" type="submit">Select
 										Major Course</button>
@@ -251,20 +281,25 @@
 									</div>
 
 									<div class="form-group">
-										<label for="validationServer03">Select the Minor
-											Course</label> <select class="custom-select" id="minorcourseselector"
-											th:field="*{coursesIdCourse}" required="required">
-											<option th:each="minorCourse :${minorCourses.toArray()}"
-												th:value="${minorCourse.getIdCourse()}"
-												th:text="${minorCourse.getCourseName()}">Choose...</option>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="inputGroupPrepend1">Minor
+														Courses</span>
+											</div>
+											<select class="custom-select" id="minorcourseselector"
+												th:field="*{coursesIdCourse}" required="required">
+												<option th:each="minorCourse :${minorCourses.toArray()}"
+													th:value="${minorCourse.getIdCourse()}"
+													th:text="${minorCourse.getCourseName()}">Select
+													the Major Course First</option>
 
-										</select>
-										<div class="invalid-feedback">Not a valid minor course !</div>
-										<div class="valid-feedback">Looks good!</div>
+											</select>
+										</div>
 									</div>
+									<p id="schedulermessage" th:text="${minorschedulemsg}"></p>
 									<button class="btn btn-primary" type="submit">Select
 										Minor Course</button>
-									<p id="schedulermessage" th:text="${minorschedulemsg}"></p>
+									
 								</form>
 							</div>
 						</div>
@@ -292,7 +327,7 @@
 												<span class="input-group-text" id="inputGroupPrepend1">Username</span>
 											</div>
 											<input type="text" class="form-control"
-												placeholder="Username" aria-describedby="inputGroupPrepend1"
+												placeholder="Username" 
 												id="studentsUserName" th:value="${username}"
 												name="studentsUserName" readonly="readonly"
 												required="required" />
@@ -317,21 +352,25 @@
 									</div>
 
 									<div class="form-group">
-										<label for="validationServer01">Select your Expert</label> <select
-											class="custom-select" id="expertselector"
-											name="expertsUserName" required="required">
-											<option value="default">I am my expert</option>
-											<option th:each="allExpert :${allExperts.toArray()}"
-												th:value="${allExpert.getUserName()}"
-												th:text="${allExpert.getUserName()}">One</option>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="inputGroupPrepend1">Experts
+												</span>
+											</div>
+											<select class="custom-select" id="expertselector"
+												name="expertsUserName" required="required">
+												<option value="default">I am my expert</option>
+												<option th:each="allExpert :${allExperts.toArray()}"
+													th:value="${allExpert.getUserName()}"
+													th:text="${allExpert.getUserName()}">One</option>
 
-										</select>
-										<div class="invalid-feedback">Not a valid Field !</div>
-										<div class="valid-feedback">Looks good!</div>
+											</select>
+										</div>
 									</div>
+									<p id="schedulermessage" th:text="${expschedulemsg}"></p>
 									<button class="btn btn-primary" type="submit">Select
 										Expert</button>
-									<p id="schedulermessage" th:text="${expschedulemsg}"></p>
+									
 								</form>
 							</div>
 						</div>
@@ -344,11 +383,20 @@
 	</div>
 	<!--_________________________________________ Optional JavaScript __________________________________________-->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+
 	<script src="../../js/jquery-3.2.1.slim.min.js"></script>
-
 	<script src="../../js/popper.min.js"></script>
-
 	<script src="../../js/bootstrap.min.js"></script>
 
 </body>
