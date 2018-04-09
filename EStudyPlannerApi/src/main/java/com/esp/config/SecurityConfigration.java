@@ -16,12 +16,18 @@ public class SecurityConfigration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private Decoder decoder;
 
+	/**
+	 * To set the authorised user for the admin page
+	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().withUser("admin").password(decoder.decodePassword("QWRtaW5AMTIz")).roles("ADMIN");
 
 	}
 
+	/** 
+	 * Checking the authentication when hits the admin page
+	 */
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.httpBasic().and().authorizeRequests().antMatchers("/admin").hasRole("ADMIN")

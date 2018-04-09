@@ -52,9 +52,9 @@
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
 					<div id="divusername">
-						<input type="text" th:value="${user.getUserName()}" placeholder="username"
-							class="topButton" readonly="readonly" id="navusername"
-							name="userName" required="required"></input>
+						<input type="text" th:value="${user.getUserName()}"
+							placeholder="username" class="topButton" readonly="readonly"
+							id="navusername" name="userName" required="required"></input>
 					</div>
 
 					<a href="/" class="btn btn-dark my-2 my-sm-0 topButton"
@@ -82,31 +82,31 @@
 									placeholder="Username" pattern="[A-Za-z][A-Za-z0-9]+"
 									title="Can't take space or special character and cant start with number"
 									oninput="autotab(this, 'validationServer04')" maxlength="15"
-									th:value="${user.getUserName()}"
-									name="userName" readonly="readonly" required="required" />
+									th:value="${user.getUserName()}" name="userName"
+									readonly="readonly" required="required" />
 								<div class="invalid-feedback">Enter the Username !</div>
 								<div class="valid-feedback">Looks good!</div>
 							</div>
 						</div>
-						
+
 						<div class="col-md-4 mb-3">
 							<input type="text" class="form-control" id="validationServer01"
 								placeholder="First name" pattern="[A-Za-z]+"
 								title="Can't take space or special character"
 								oninput="autotab(this, 'validationServer02')" maxlength="15"
-								th:value="${user.getFirstName()}"
-								name="firstName" required="required" />
+								th:value="${user.getFirstName()}" name="firstName"
+								required="required" />
 							<div class="invalid-feedback">Enter the First Name !</div>
 							<div class="valid-feedback">Looks good!</div>
 						</div>
-						
+
 						<div class="col-md-4 mb-3">
 							<input type="text" class="form-control" id="validationServer02"
 								placeholder="Last name" pattern="[A-Za-z]+"
 								title="Can't take space or special character"
 								oninput="autotab(this, 'validationServer03')" maxlength="15"
-								th:value="${user.getLastName()}"
-								name="lastName" required="required" />
+								th:value="${user.getLastName()}" name="lastName"
+								required="required" />
 							<div class="invalid-feedback">Enter the Last Name !</div>
 							<div class="valid-feedback">Looks good!</div>
 						</div>
@@ -119,8 +119,7 @@
 									ID</span>
 							</div>
 							<input type="text" class="form-control" id="validationServer04"
-								placeholder="abc@gmail.com"
-								th:value="${user.getEmail()}"
+								placeholder="abc@gmail.com" th:value="${user.getEmail()}"
 								pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
 								title="match the email format ex-abc@gmail.com"
 								oninput="autotab(this, 'validationServer05')" maxlength="25"
@@ -136,7 +135,7 @@
 								<span class="input-group-text" id="inputGroupPrepend1">Field</span>
 							</div>
 							<select class="custom-select" id="validationServer06"
-								name="field" >
+								name="field">
 								<option th:each="fieldCourse :${fieldCourses.toArray()}"
 									th:value="${fieldCourse.getIdCourse()}"
 									th:text="${fieldCourse.getCourseName()}">One</option>
@@ -150,7 +149,7 @@
 								<span class="input-group-text" id="inputGroupPrepend1">Qualification</span>
 							</div>
 							<select class="custom-select" id="validationServer07"
-								name="qualification" >
+								name="qualification">
 								<option value="Graduation">Graduation</option>
 								<option value="Masters">Masters</option>
 								<option value="Docterate">Docterate</option>
@@ -176,9 +175,10 @@
 							<div class="valid-feedback"></div>
 						</div>
 					</div>
-					
+
 					<p id="schedulermessage" th:text="${profileMessage}"></p>
-					<button class="btn btn-primary" type="submit">Update My Profile</button>
+					<button class="btn btn-primary" type="submit">Update My
+						Profile</button>
 					<button type="reset" class="btn btn-primary">Reset</button>
 				</form>
 
@@ -211,8 +211,8 @@
 										placeholder="Username" pattern="[A-Za-z][A-Za-z0-9]+"
 										title="Can't take space or special character and cant start with number"
 										oninput="autotab(this, 'validationOldPassword')"
-										th:value="${user.getUserName()}"
-										name="userName" readonly="readonly" required="required" />
+										th:value="${user.getUserName()}" name="userName"
+										readonly="readonly" required="required" />
 									<div class="invalid-feedback">Enter the Username !</div>
 									<div class="valid-feedback">Looks good!</div>
 								</div>

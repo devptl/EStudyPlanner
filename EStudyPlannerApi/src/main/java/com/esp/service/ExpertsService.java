@@ -105,7 +105,7 @@ public class ExpertsService {
 	 *            - CourseID
 	 * @return {@link Experts}
 	 */
-	public ArrayList<Experts> findExpertsWithCoursesId(int id) {
+	public ArrayList<ExpertsHasCourses> findExpertsWithCoursesId(int id) {
 
 		return expertsComponents.findExpertsWithCoursesId(id);
 

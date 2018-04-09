@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 
 import com.esp.model.Courses;
 import com.esp.model.Experts;
+import com.esp.model.ExpertsHasCourses;
 import com.esp.model.ExpertsHasStudyMaterials;
 import com.esp.model.Schedule;
 import com.esp.model.StudyMaterials;
@@ -81,8 +82,7 @@ public class Initialiser {
 		model.addAttribute("minorCourses", minorCourses);
 
 		// inital list of experts
-		ArrayList<Experts> allExperts = null;
-		allExperts = expertsService.getAllExperts();
+		ArrayList<ExpertsHasCourses> allExperts = new ArrayList<>();
 		model.addAttribute("allExperts", allExperts);
 
 		// initialse the suggested list
@@ -172,8 +172,7 @@ public class Initialiser {
 		model.addAttribute("schedule", schedule);
 
 		// inital list of experts
-		ArrayList<Experts> allExperts = null;
-		allExperts = expertsService.getAllExperts();
+		ArrayList<ExpertsHasCourses> allExperts = new ArrayList<>();
 		model.addAttribute("allExperts", allExperts);
 
 		// initialise onload function

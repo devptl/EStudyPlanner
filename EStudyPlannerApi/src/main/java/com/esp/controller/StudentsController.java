@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.esp.model.Courses;
-import com.esp.model.Experts;
+import com.esp.model.ExpertsHasCourses;
 import com.esp.model.Schedule;
 import com.esp.model.StudentsHasCourses;
 import com.esp.service.CoursesService;
@@ -34,8 +34,6 @@ public class StudentsController {
 	@Autowired
 	private CoursesService coursesService;
 
-	
-	
 	/**
 	 * To show the courses in the particualar main course
 	 * 
@@ -53,20 +51,19 @@ public class StudentsController {
 		// initialising minor course on selection of major course
 		ArrayList<Courses> minorCourses = null;
 		minorCourses = coursesService.mainCoursesById(id);
-		
-		//checking the minor course has study materials in it 
-		if(minorCourses.isEmpty()) {
+
+		// checking the minor course has study materials in it
+		if (minorCourses.isEmpty()) {
 			// initialise expert schedule msg
 			model.addAttribute("minorschedulemsg", "No minor courses with study materials");
 			// initialise expert schedule msg
 			model.addAttribute("expschedulemsg", "First select the Minor Course");
-		}
-		else {
+		} else {
 			model.addAttribute("minorschedulemsg", "");
 			// initialise expert schedule msg
 			model.addAttribute("expschedulemsg", "");
 		}
-		
+
 		model.addAttribute("minorCourses", minorCourses);
 
 		// initialise onload function
@@ -109,7 +106,12 @@ public class StudentsController {
 		model.addAttribute("courseforstudymaterial", courseForStudyMaterial);
 
 		// initalise new experts list
-		ArrayList<Experts> allExperts = expertsService.findExpertsWithCoursesId(id);
+		ArrayList<ExpertsHasCourses> allExperts = expertsService.findExpertsWithCoursesId(id);
+		if (allExperts.isEmpty()) {
+			allExperts = new ArrayList<>();
+			// initialise expert schedule msg
+			model.addAttribute("expschedulemsg", "no one gave feeds till now");
+		}
 		model.addAttribute("allExperts", allExperts);
 
 		// initialise onload function

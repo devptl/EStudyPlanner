@@ -73,11 +73,14 @@ public class StudyMaterialsComponents {
 	public ArrayList<StudyMaterials> showStudyMaterialsByCourseName(String minorCourseName) {
 		ArrayList<StudyMaterials> myList = new ArrayList<>();
 
+		// getting the complete list
 		ArrayList<StudyMaterials> mainList = (ArrayList<StudyMaterials>) studyMaterialsRepository.findAll();
 
 		for (int i = 0; i < mainList.size(); i++) {
 			StudyMaterials s = mainList.get(i);
+			// getting the associated course
 			Courses c = coursesRepository.findOne(s.getCoursesIdCourse());
+			// checking if the course name matched to given name
 			if (c.getCourseName().equals(minorCourseName)) {
 				myList.add(s);
 			}
@@ -95,18 +98,21 @@ public class StudyMaterialsComponents {
 			String courseforstudymaterial) {
 		ArrayList<StudentsHasStudyMaterials> myList = new ArrayList<>();
 
+		// getting the complete list by student useername
 		ArrayList<StudentsHasStudyMaterials> mainList = studentsHasStudyMaterialsRepository
 				.findByStudentsUserName(studentsUserName);
 
 		for (int i = 0; i < mainList.size(); i++) {
 			StudentsHasStudyMaterials sh = mainList.get(i);
+			// finding associated study material
 			StudyMaterials s = studyMaterialsRepository.findOne(sh.getStudyMaterialsIdStudyMaterials());
+			// finding the associated course
 			Courses c = coursesRepository.findOne(s.getCoursesIdCourse());
+			// checking if the course id matched
 			if (c.getCourseName().equals(courseforstudymaterial)) {
 				myList.add(sh);
 			}
 		}
-
 		return myList;
 
 	}

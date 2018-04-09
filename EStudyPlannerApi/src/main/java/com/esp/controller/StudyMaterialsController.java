@@ -26,13 +26,12 @@ public class StudyMaterialsController {
 
 	@Autowired
 	private StudyMaterialsService studyMaterialsService;
-	
+
 	@Autowired
 	private CoursesService coursesService;
 
 	@Autowired
 	private ExpertsService expertsService;
-	
 
 	/**
 	 * To get to Study Materials
@@ -124,19 +123,24 @@ public class StudyMaterialsController {
 	 * @return
 	 */
 	@RequestMapping(value = "/getRating", method = RequestMethod.POST)
-	public String getRating(@RequestParam String expertsUserName,
-			@RequestParam String courseforstudymaterial,@RequestParam int rating, ModelMap model) {
-		
-	    int coursesIdCourse = coursesService.findCourseByName(courseforstudymaterial).getIdCourse();
-		
-	    //getting the required expert details 
-		ExpertsHasCourses expertsHasCourses = expertsService.findByExpertAndCourse(expertsUserName, coursesIdCourse);
+	public String getRating(@RequestParam String studentsUserName, @RequestParam String expertsUserName,
+			@RequestParam String courseforstudymaterial, @RequestParam int rating, ModelMap model) {
 
-		//setting the rating 
-		rating =rating +  expertsHasCourses.getRating();
-		expertsHasCourses.setRating(rating);
-		expertsService.expertHasCourses(expertsHasCourses);
-		
+		if (studentsUserName.equalsIgnoreCase(expertsUserName)) {
+			// giving the rating to himself not possible
+		} else {
+			int coursesIdCourse = coursesService.findCourseByName(courseforstudymaterial).getIdCourse();
+
+			// getting the required expert details
+			ExpertsHasCourses expertsHasCourses = expertsService.findByExpertAndCourse(expertsUserName,
+					coursesIdCourse);
+
+			// setting the rating
+			rating = rating + expertsHasCourses.getRating();
+			expertsHasCourses.setRating(rating);
+			expertsService.expertHasCourses(expertsHasCourses);
+		}
+
 		return "Courses";
 
 	}

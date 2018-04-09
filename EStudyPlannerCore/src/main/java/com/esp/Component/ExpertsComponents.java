@@ -41,8 +41,6 @@ public class ExpertsComponents {
 	@Autowired
 	private ExpertsHasStudyMaterialsRepository expertsHasStudyMaterialsRepository;
 
-	
-
 	/**
 	 * return list of all Experts
 	 * 
@@ -74,14 +72,15 @@ public class ExpertsComponents {
 
 	/**
 	 * To find the expert with course
+	 * 
 	 * @param expertsUserName
 	 * @param coursesIdCourse
 	 * @return
 	 */
-	public ExpertsHasCourses findByExpertsUserNameAndCoursesIdCourse(String expertsUserName,int coursesIdCourse) {
+	public ExpertsHasCourses findByExpertsUserNameAndCoursesIdCourse(String expertsUserName, int coursesIdCourse) {
 		return expertsHasCoursesRepository.findByExpertsUserNameAndCoursesIdCourse(expertsUserName, coursesIdCourse);
 	}
-	
+
 	/**
 	 * To save in experts has Courses tables
 	 * 
@@ -137,14 +136,18 @@ public class ExpertsComponents {
 			String userName) {
 		ArrayList<ExpertsHasStudyMaterials> myList = new ArrayList<>();
 
+		// getting the complete list
 		ArrayList<ExpertsHasStudyMaterials> mainList = expertsHasStudyMaterialsRepository
 				.findByExpertsUserName(userName);
 
 		for (int i = 0; i < mainList.size(); i++) {
 			ExpertsHasStudyMaterials e = mainList.get(i);
+			// getting the assoicated study material
 			StudyMaterials s = studyMaterialsRepository.findOne(e.getStudyMaterialsIdStudyMaterials());
+			// getting the associated course
 			Courses c = coursesRepository.findOne(s.getCoursesIdCourse());
 			if (c.getCourseName().equals(id)) {
+				// adding the data to the list
 				myList.add(e);
 			}
 		}
@@ -159,24 +162,19 @@ public class ExpertsComponents {
 	 *            - CourseID
 	 * @return {@link Experts}
 	 */
-	public ArrayList<Experts> findExpertsWithCoursesId(int id) {
-
-		ArrayList<Experts> myList = new ArrayList<>();
+	public ArrayList<ExpertsHasCourses> findExpertsWithCoursesId(int id) {
 
 		ArrayList<ExpertsHasCourses> mainList = expertsHasCoursesRepository.findByCoursesIdCourse(id);
-		
+
+		// sorting the list into descending order of ratitng
 		Collections.sort(mainList, new Comparator<ExpertsHasCourses>() {
-		    @Override
-		    public int compare(ExpertsHasCourses o1, ExpertsHasCourses o2) {
-		        return o1.getRating()-o2.getRating();
-		    }
+			@Override
+			public int compare(ExpertsHasCourses o1, ExpertsHasCourses o2) {
+				return o2.getRating() - o1.getRating();
+			}
 		});
 
-		for (int i = 0; i < mainList.size(); i++) {
-			Experts e = expertsRepository.findOne(mainList.get(i).getExpertsUserName());
-			myList.add(e);
-		}
-		return myList;
+		return mainList;
 	}
 
 	/**

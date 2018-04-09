@@ -60,9 +60,9 @@
 							name="userName" required="required"></input>
 					</div>
 					<a href="/getProfile" class="btn btn-dark my-2 my-sm-0 topButton"
-						id="loginButton"> Profile </a>	
-					<a href="/" class="btn btn-dark my-2 my-sm-0 topButton"
-						id="loginButton"> LogOut </a>
+						id="loginButton"> Profile </a> <a href="/"
+						class="btn btn-dark my-2 my-sm-0 topButton" id="loginButton">
+						LogOut </a>
 				</form>
 			</div>
 		</nav>
@@ -103,10 +103,9 @@
 												<span class="input-group-text" id="inputGroupPrepend1">Username</span>
 											</div>
 											<input type="text" class="form-control"
-												placeholder="Username" 
-												id="studentsUserName" th:value="${username}"
-												name="studentsUserName" readonly="readonly"
-												required="required" />
+												placeholder="Username" id="studentsUserName"
+												th:value="${username}" name="studentsUserName"
+												readonly="readonly" required="required" />
 
 											<div class="invalid-feedback">Enter the Username !</div>
 											<div class="valid-feedback">Looks good!</div>
@@ -216,10 +215,9 @@
 												<span class="input-group-text" id="inputGroupPrepend1">Username</span>
 											</div>
 											<input type="text" class="form-control"
-												placeholder="Username" 
-												id="studentsUserName" th:value="${username}"
-												name="studentsUserName" readonly="readonly"
-												required="required" />
+												placeholder="Username" id="studentsUserName"
+												th:value="${username}" name="studentsUserName"
+												readonly="readonly" required="required" />
 											<div class="invalid-feedback">Enter the Username !</div>
 											<div class="valid-feedback">Looks good!</div>
 										</div>
@@ -284,7 +282,7 @@
 										<div class="input-group">
 											<div class="input-group-prepend">
 												<span class="input-group-text" id="inputGroupPrepend1">Minor
-														Courses</span>
+													Courses</span>
 											</div>
 											<select class="custom-select" id="minorcourseselector"
 												th:field="*{coursesIdCourse}" required="required">
@@ -299,7 +297,7 @@
 									<p id="schedulermessage" th:text="${minorschedulemsg}"></p>
 									<button class="btn btn-primary" type="submit">Select
 										Minor Course</button>
-									
+
 								</form>
 							</div>
 						</div>
@@ -327,10 +325,9 @@
 												<span class="input-group-text" id="inputGroupPrepend1">Username</span>
 											</div>
 											<input type="text" class="form-control"
-												placeholder="Username" 
-												id="studentsUserName" th:value="${username}"
-												name="studentsUserName" readonly="readonly"
-												required="required" />
+												placeholder="Username" id="studentsUserName"
+												th:value="${username}" name="studentsUserName"
+												readonly="readonly" required="required" />
 											<div class="invalid-feedback">Enter the Username !</div>
 											<div class="valid-feedback">Looks good!</div>
 										</div>
@@ -361,8 +358,10 @@
 												name="expertsUserName" required="required">
 												<option value="default">I am my expert</option>
 												<option th:each="allExpert :${allExperts.toArray()}"
-													th:value="${allExpert.getUserName()}"
-													th:text="${allExpert.getUserName()}">One</option>
+													th:value="${allExpert.getExpertsUserName()}"
+													th:text="${allExpert.getExpertsUserName()} +
+													'*     ------------------------------------------ Rating >> '
+													+${allExpert.getRating()}"></option>
 
 											</select>
 										</div>
@@ -370,7 +369,7 @@
 									<p id="schedulermessage" th:text="${expschedulemsg}"></p>
 									<button class="btn btn-primary" type="submit">Select
 										Expert</button>
-									
+
 								</form>
 							</div>
 						</div>

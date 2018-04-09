@@ -156,6 +156,7 @@ public class LoginController {
 			model.addAttribute("username", userName);
 			return "Experts";
 		} else {
+			
 			// on invalid registration when expert already exist with username
 			model.addAttribute("msg", "Expert with same username or email alredy exist");
 			initialiser.frontInitialiser(model);
@@ -201,11 +202,14 @@ public class LoginController {
 				sMTPMailSender.send(user.getEmail(), "Forgot the password alert", text);
 
 			} else {
-				msg = "invalid attempt to get user";
+				
+				//if the wrong password is given 
+				msg = "invalid attempt to get the user details";
 				System.out.println("Invalid attempt to get User");
 			}
 
 		} catch (Exception e) {
+			//if the error occour while sending the mail
 			System.out.println("network error");
 			model.addAttribute("msg", msg);
 
@@ -246,9 +250,9 @@ public class LoginController {
 				Users user = usersService.findUser(userName);
 				msg = "Password is changed";
 				String text = "Hello " + user.getFirstName() + " your password is changed make sure your do not "
-						+ "disclose the password .The new password is : " + user.getPassword();
+						+ "disclose the password .The new password is : " + newPassword;
 
-				sMTPMailSender.send(user.getEmail(), "Forgot the password alert", text);
+				sMTPMailSender.send(user.getEmail(), "Changed the password alert", text);
 
 			} else {
 				msg = "invalid attempt to change password";
@@ -256,12 +260,13 @@ public class LoginController {
 			}
 
 		} catch (Exception e) {
+			//is error occour while sending the mail
 			System.out.println("network error");
 		}
 
 		// setting the message for front page
-		model.addAttribute("msg", msg);
-		return "front";
+		model.addAttribute("profileMessage", msg);
+		return "Profile";
 	}
 
 }

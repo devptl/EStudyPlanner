@@ -18,7 +18,7 @@ public class CoursesComponents {
 
 	@Autowired
 	private CoursesRepository coursesRepository;
-	
+
 	@Autowired
 	private StudyMaterialsRepository studyMaterialsRepository;
 
@@ -82,10 +82,8 @@ public class CoursesComponents {
 
 		return s1;
 	}
-	
-	
-	public ArrayList<Courses> minorCoursesById(int id)
-	{
+
+	public ArrayList<Courses> minorCoursesById(int id) {
 		return coursesRepository.findByParentCourseId(id);
 	}
 
@@ -96,16 +94,18 @@ public class CoursesComponents {
 	 *            - CourseId
 	 * @return {@link Courses}
 	 */
-	public ArrayList<Courses> mainCoursesById(int id) {		
+	public ArrayList<Courses> mainCoursesById(int id) {
 		ArrayList<Courses> mainList = coursesRepository.findByParentCourseId(id);
 		ArrayList<Courses> myList = new ArrayList<>();
-		for(int i=0;i<mainList.size();i++)
-		{
-			int couseId=mainList.get(i).getIdCourse();
-			if(studyMaterialsRepository.findByCoursesIdCourse(couseId).size()!=0) {
+
+		// getting the courses that has the study materials
+		for (int i = 0; i < mainList.size(); i++) {
+			int couseId = mainList.get(i).getIdCourse();
+			if (studyMaterialsRepository.findByCoursesIdCourse(couseId).size() != 0) {
+				// adding that to the list
 				myList.add(mainList.get(i));
 			}
-			
+
 		}
 		return myList;
 	}
@@ -132,16 +132,16 @@ public class CoursesComponents {
 	 */
 	public ArrayList<Courses> getCoursesForStudent(String userName) {
 		ArrayList<Courses> myList = new ArrayList<>();
-
 		ArrayList<StudentsHasCourses> mainList = studentHasCoursesRepository.findByStudentsUserName(userName);
 
+		// getting the couses that is associated to particular student
 		for (int i = 0; i < mainList.size(); i++) {
 			Courses c = coursesRepository.findOne(mainList.get(i).getCoursesIdCourse());
+			// adding it to the list
 			myList.add(c);
 		}
 
 		return myList;
-
 	}
 
 	/**
@@ -153,16 +153,16 @@ public class CoursesComponents {
 	 */
 	public ArrayList<Courses> getCoursesForExpert(String userName) {
 		ArrayList<Courses> myList = new ArrayList<>();
-
 		ArrayList<ExpertsHasCourses> mainList = expertsHasCoursesRepository.findByExpertsUserName(userName);
 
+		// getting the courses associated to the particular expert
 		for (int i = 0; i < mainList.size(); i++) {
 			Courses c = coursesRepository.findOne(mainList.get(i).getCoursesIdCourse());
+			// adding it to the list
 			myList.add(c);
 		}
 
 		return myList;
-
 	}
 
 }
