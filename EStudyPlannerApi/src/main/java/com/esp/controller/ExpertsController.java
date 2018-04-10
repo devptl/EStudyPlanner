@@ -311,7 +311,6 @@ public class ExpertsController {
 			@ModelAttribute("StudentsHasCourses") StudentsHasCourses studentsHasCourses, @RequestParam String userName,
 			ModelMap model) {
 
-		try {
 			// initialiser for the scheduler page
 			initialiser.schedulerInitialiserWithoutParameter(userName, model);
 
@@ -327,9 +326,6 @@ public class ExpertsController {
 			model.addAttribute("schedule", schedule2);
 			model.addAttribute("username", userName);
 
-		} catch (Exception exception) {
-			System.out.println(exception.getMessage());
-		}
 
 		return "Scheduler";
 	}

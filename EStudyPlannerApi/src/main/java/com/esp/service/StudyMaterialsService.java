@@ -220,7 +220,7 @@ public class StudyMaterialsService {
 			float completed = studentCompletedMaterials.size();
 			perCompleted = ((completed * 100) / total);
 
-		} catch (Exception e) {
+		} catch (ArithmeticException arithmeticException) {
 			perCompleted = 0;
 		}
 

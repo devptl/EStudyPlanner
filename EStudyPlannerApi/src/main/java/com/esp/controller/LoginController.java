@@ -2,6 +2,8 @@ package com.esp.controller;
 
 import java.util.ArrayList;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -158,8 +160,8 @@ public class LoginController {
 
 			try {
 				sMTPMailSender.send(emailId, subject, messege);
-			} catch (Exception e) {
-				System.out.println("network problem");
+			} catch (MessagingException messagingException) {
+				System.out.println("network problem" + messagingException.getMessage());
 			}
 
 			model.addAttribute("username", userName);
@@ -217,9 +219,9 @@ public class LoginController {
 				System.out.println("Invalid attempt to get User");
 			}
 
-		} catch (Exception e) {
+		} catch (MessagingException messagingException) {
 			// if the error occour while sending the mail
-			System.out.println("network error");
+			System.out.println("network error" + messagingException.getMessage());
 			model.addAttribute("msg", msg);
 
 		}
@@ -267,9 +269,9 @@ public class LoginController {
 				System.out.println("Invalid attempt to change Password");
 			}
 
-		} catch (Exception e) {
+		} catch (MessagingException messagingException) {
 			// if error occour while sending the mail
-			System.out.println("network error");
+			System.out.println("network error" + messagingException.getMessage());
 		}
 
 		// setting the message for front page

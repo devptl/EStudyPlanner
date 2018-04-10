@@ -106,7 +106,7 @@ public class StudyMaterialsController {
 
 		try {
 			perCompleted = (comp * 100) / noOfVedios;
-		} catch (Exception exception) {
+		} catch (ArithmeticException arithmeticException) {
 			perCompleted = 0;
 		}
 

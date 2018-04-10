@@ -1,4 +1,4 @@
-package com.mindfire.java;
+package com.esp.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class Cardsystem1ApplicationTests {
+public class EStudyPlannerCoreTests {
 
 	@Test
 	public void contextLoads() {

@@ -58,8 +58,8 @@ public class NavController {
 		try {
 			// starting the timer
 			setTimer.runScheduler();
-		} catch (Exception e) {
-			System.out.println("the thread exception");
+		} catch (InterruptedException interruptedException) {
+			System.out.println("the thread exception" + interruptedException.getMessage());
 		}
 
 		return "timer has started";

@@ -3,6 +3,8 @@ package com.esp.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -85,8 +87,8 @@ public class SetTimer {
 
 				}
 
-			} catch (Exception e) {
-				System.out.println("network issue mail can not be send");
+			} catch (MessagingException messagingException) {
+				System.out.println("network issue mail can not be send " + messagingException.getMessage());
 			}
 
 		}
