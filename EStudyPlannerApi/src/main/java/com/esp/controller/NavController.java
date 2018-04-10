@@ -14,6 +14,14 @@ import com.esp.model.RegisteredUser;
 import com.esp.service.Initialiser;
 import com.esp.service.SetTimer;
 
+/**
+ * Controller class handles the operation related to the homer page or the timer
+ * Home page mapping                        - /                    -  To set the front.html as home page
+ * startTimer()                             - /timer               -  To set the timer
+ * 
+ * @author mindfire
+ *
+ */
 @Controller
 @SessionAttributes({ "fieldCourses", "msg" })
 public class NavController {
@@ -38,8 +46,7 @@ public class NavController {
 		initialiser.frontInitialiser(model);
 		return "front";
 	}
-	
-	
+
 	/**
 	 * To set the timer
 	 * 

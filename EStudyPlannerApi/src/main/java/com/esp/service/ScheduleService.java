@@ -14,6 +14,18 @@ import com.esp.model.Experts;
 import com.esp.model.Schedule;
 import com.esp.model.Students;
 
+/**
+ * Service class to provide service related to the schedule
+ * checkSchedule()                           -  To get the difference of timing
+ * differnceOfTime()                         -  Get the diffence between time in and out
+ * dontSaveSchedule()                        -  When dont want to save schedule due to wrong input
+ * saveSchedule()                            -  To save the schedule in the database and set the other display
+ * manageSchedule()                          -  To set the content for the schedule page
+ * findSchedule()                            -  To find the schedule with the particualar username
+ * 
+ * @author mindfire
+ *
+ */
 @Service
 public class ScheduleService {
 
@@ -126,7 +138,7 @@ public class ScheduleService {
 	 * To find the schedule with the particualar username
 	 * 
 	 * @param username
-	 *            - {@link Students}
+	 *            - students username
 	 * @return {@link Schedule}
 	 */
 	public Schedule findSchedule(String username) {

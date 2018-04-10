@@ -21,12 +21,22 @@ import com.esp.service.ScheduleService;
 import com.esp.service.StudentsService;
 import com.esp.service.StudyMaterialsService;
 
+/**
+ * Controller class handle the operation related to the schedule
+ * main mapping                           -  /Scheduler
+ * schedulerDisplay()                     -  /**                  -  To set the initial display of scheduler page
+ * scheduleEntry()                        -  /enterSchedule       -  To save the schedule
+ * showStudyMaterials()                   -  /showStudyMaterials  -  To Show the study material to the student
+ * 
+ * @author mindfire
+ *
+ */
 @Controller
 @RequestMapping("/Scheduler")
 @SessionAttributes({ "onLoadSchedule", "username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",
-		"expschedulemsg", "minorschedulemsg","expertsUserName", "courseforstudymaterial", "minorCourse", "studyMaterials", "vediolink",
-		"shbutton1", "shbutton2", "shbutton3", "shbutton4", "studentCompletedMaterials", "noOfVedios", "perCompleted",
-		"shdiv1", "shdiv2", "shdiv3", "shdiv4" })
+		"expschedulemsg", "minorschedulemsg", "expertsUserName", "courseforstudymaterial", "minorCourse",
+		"studyMaterials", "vediolink", "shbutton1", "shbutton2", "shbutton3", "shbutton4", "studentCompletedMaterials",
+		"noOfVedios", "perCompleted", "shdiv1", "shdiv2", "shdiv3", "shdiv4" })
 public class ScheduleController {
 
 	@Autowired
@@ -49,7 +59,6 @@ public class ScheduleController {
 
 		return "Scheduler";
 	}
-	
 
 	/**
 	 * To save the schedule when particular save has to be their
@@ -129,9 +138,9 @@ public class ScheduleController {
 
 		float perCompleted = studyMaterialsService.trackCourseCompletion(studyMaterial, studentCompletedMaterials);
 
-		//initialise experts name
+		// initialise experts name
 		model.addAttribute("expertsUserName", expertsUserName);
-		
+
 		// completed percent initialisation
 		model.addAttribute("perCompleted", perCompleted);
 

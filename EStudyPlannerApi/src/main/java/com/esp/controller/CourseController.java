@@ -11,6 +11,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.esp.model.Courses;
 import com.esp.service.CoursesService;
 
+/**
+ * Controller class to handle the opterations related to the Courses
+ * allCourse()                   -  /allCourses                -  To view all Courses
+ * fieldCourse()                 -  /fCourses                  -  To view field courses
+ * mainCourse()                  -  /mainCourses               -  To view main courses
+ * 
+ * @author mindfire
+ *
+ */
 @Controller
 public class CourseController {
 
@@ -22,7 +31,7 @@ public class CourseController {
 	 * 
 	 * @return {@link Courses}
 	 */
-	@RequestMapping(value = "allCourses", method = RequestMethod.GET)
+	@RequestMapping(value = "/allCourses", method = RequestMethod.GET)
 	@ResponseBody
 	public ArrayList<Courses> allCourse() {
 		ArrayList<Courses> courses;
@@ -35,11 +44,11 @@ public class CourseController {
 	 * 
 	 * @return {@link Courses}
 	 */
-	@RequestMapping(value = "fCourses", method = RequestMethod.GET)
+	@RequestMapping(value = "/fCourses", method = RequestMethod.GET)
 	@ResponseBody
 	public ArrayList<Courses> fieldCourse() {
 		ArrayList<Courses> courses;
-		courses = coursesService.mainCoursesById(101);
+		courses = coursesService.minorCoursesById(0);
 		return courses;
 	}
 
@@ -48,7 +57,7 @@ public class CourseController {
 	 * 
 	 * @return {@link Courses}
 	 */
-	@RequestMapping(value = "mainCourses", method = RequestMethod.GET)
+	@RequestMapping(value = "/mainCourses", method = RequestMethod.GET)
 	@ResponseBody
 	public ArrayList<Courses> mainCourse() {
 		ArrayList<Courses> courses;

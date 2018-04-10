@@ -26,6 +26,16 @@ import com.esp.service.SMTPMailSender;
 import com.esp.service.ScheduleService;
 import com.esp.service.UsersService;
 
+/**
+ * Controller class handles the operation related to the login
+ * login()                             -  /login               -  When a user logs in 
+ * registration()                      -  /registration        -  When a user registers
+ * forgotThePassword()                 -  /forgotThePassword   -  When a particular user forget the paswword
+ * changeThePassword()                 -  /changeThePassword   -  When user want to change the password
+ * 
+ * @author mindfire
+ *
+ */
 @Controller
 @SessionAttributes({ "onLoadFun", "onLoadSchedule", "username", "fieldCourses", "mainCourses", "courseforstudymaterial",
 		"expschedulemsg", "minorschedulemsg", "user", "minorCourses", "studymaterials", "expertGivenStudyMaterials",
@@ -42,7 +52,7 @@ public class LoginController {
 
 	@Autowired
 	private AdminService adminService;
-	
+
 	@Autowired
 	private ScheduleService scheduleService;
 
@@ -53,8 +63,7 @@ public class LoginController {
 	private Initialiser initialiser;
 
 	/**
-	 * This controller is for the logged user expert or student they are handled
-	 * here
+	 * This controller is for the logged user they are handled here
 	 * 
 	 * @param expert
 	 * @param student
@@ -78,7 +87,7 @@ public class LoginController {
 				// initialsing the username for expert
 				String userName = loggedUser.getUserName();
 				initialiser.expertInitialiser(userName, model);
-				
+
 				Schedule schedule2;
 				// if schedule already exist
 				if (scheduleService.findSchedule(userName) == null) {
@@ -87,7 +96,7 @@ public class LoginController {
 					schedule2 = scheduleService.findSchedule(userName);
 				}
 
-				model.addAttribute("schedule", schedule2);		
+				model.addAttribute("schedule", schedule2);
 				model.addAttribute("user", user);
 
 				// on successfull login sending to experts page
@@ -120,7 +129,7 @@ public class LoginController {
 	}
 
 	/**
-	 * To register for both the users
+	 * When a user registers
 	 * 
 	 * @param loggedUser
 	 * @param registeredUser
@@ -156,7 +165,7 @@ public class LoginController {
 			model.addAttribute("username", userName);
 			return "Experts";
 		} else {
-			
+
 			// on invalid registration when expert already exist with username
 			model.addAttribute("msg", "Expert with same username or email alredy exist");
 			initialiser.frontInitialiser(model);
@@ -202,14 +211,14 @@ public class LoginController {
 				sMTPMailSender.send(user.getEmail(), "Forgot the password alert", text);
 
 			} else {
-				
-				//if the wrong password is given 
+
+				// if the wrong password is given
 				msg = "invalid attempt to get the user details";
 				System.out.println("Invalid attempt to get User");
 			}
 
 		} catch (Exception e) {
-			//if the error occour while sending the mail
+			// if the error occour while sending the mail
 			System.out.println("network error");
 			model.addAttribute("msg", msg);
 
@@ -230,7 +239,6 @@ public class LoginController {
 	 * @param userName
 	 * @param oldPassword
 	 * @param newPassword
-	 * @param role
 	 * @param model
 	 * @return {@link front.html}
 	 */
@@ -260,7 +268,7 @@ public class LoginController {
 			}
 
 		} catch (Exception e) {
-			//is error occour while sending the mail
+			// if error occour while sending the mail
 			System.out.println("network error");
 		}
 

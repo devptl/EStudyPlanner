@@ -12,6 +12,13 @@ import com.esp.Component.ScheduleComponents;
 import com.esp.Component.UserComponent;
 import com.esp.model.Schedule;
 
+/**
+ * Service class to set the timer on hours basisn to send the mail if the free
+ * slot is available for particular student
+ * 
+ * @author mindfire
+ *
+ */
 @Service
 @EnableScheduling
 public class SetTimer {

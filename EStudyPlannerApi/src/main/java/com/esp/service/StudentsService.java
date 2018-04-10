@@ -10,6 +10,16 @@ import com.esp.model.Students;
 import com.esp.model.StudentsHasCourses;
 import com.esp.model.StudentsHasExperts;
 
+/**
+ * Service class to provide service related to the student
+ * findStudentByUsername()                        -  To get the student list with the username
+ * getAllStudents()                               -  To get the all Student list
+ * saveStudentsAndMinorCourse()                   -  To save the student with the courses in join table
+ * saveStudentsHasExperts()                       -  To save the student that has experts in join table
+ * 
+ * @author mindfire
+ *
+ */
 @Service
 public class StudentsService {
 
@@ -50,7 +60,7 @@ public class StudentsService {
 	 * To save the student that has experts in join table
 	 * 
 	 * @param se-
-	 *            {@link StudentsHasExperts}s
+	 *            {@link StudentsHasExperts}
 	 */
 	public void saveStudentsHasExperts(StudentsHasExperts se) {
 		studentsComponents.saveStudentsHasExperts(se);

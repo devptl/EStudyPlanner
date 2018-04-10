@@ -18,6 +18,15 @@ import com.esp.service.CoursesService;
 import com.esp.service.ExpertsService;
 import com.esp.service.StudentsService;
 
+/**
+ * Controller class handles the operation related to student
+ * main mapping                         -  /Scheduler
+ * entryStudentWithMainCourse()         -  /entryUserAndMainCourse    -  To show the courses in a main course
+ * entryStudentWithMinorCourse()        -  /entryUserAndMinorCourse   -  When student sets the minor courses
+ * 
+ * @author mindfire
+ *
+ */
 @Controller
 @RequestMapping("/Scheduler")
 @SessionAttributes({ "onLoadSchedule", "username", "schedule", "message", "mainCourses", "minorCourses", "allExperts",

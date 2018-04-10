@@ -9,6 +9,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import com.esp.service.Decoder;
 
+/**
+ * Configuration class for the spring security on the admin pages
+ * 
+ * @author mindfire
+ *
+ */
 @EnableWebSecurity
 @Configuration
 public class SecurityConfigration extends WebSecurityConfigurerAdapter {
@@ -25,17 +31,14 @@ public class SecurityConfigration extends WebSecurityConfigurerAdapter {
 
 	}
 
-	/** 
+	/**
 	 * Checking the authentication when hits the admin page
 	 */
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.httpBasic().and().authorizeRequests().antMatchers("/admin").hasRole("ADMIN")
-					.and()
-					.formLogin().loginPage("/")
-					.usernameParameter("userName").passwordParameter("password")
-					.and().csrf()
-					.disable().headers().frameOptions().disable();
+		httpSecurity.httpBasic().and().authorizeRequests().antMatchers("/admin").hasRole("ADMIN").and().formLogin()
+				.loginPage("/").usernameParameter("userName").passwordParameter("password").and().csrf().disable()
+				.headers().frameOptions().disable();
 
 	}
 

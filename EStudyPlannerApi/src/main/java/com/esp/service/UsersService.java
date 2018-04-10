@@ -14,6 +14,18 @@ import com.esp.model.Schedule;
 import com.esp.model.Students;
 import com.esp.model.Users;
 
+/**
+ * Service class to provide service related to the users
+ * checkForUser()                             -  To check For the user by email
+ * usersLogin()                               -  For the user login
+ * changeTheUserPassword()                    -  When a user want to change the password
+ * userRegistration()                         -  For registration of particular user
+ * saveUserDetails()                          -  To edit the detials
+ * findUser()                                 -  To get the user by username
+ * 
+ * @author mindfire
+ *
+ */
 @Service
 public class UsersService {
 
@@ -78,7 +90,7 @@ public class UsersService {
 	 * @param userName
 	 * @param oldPassword
 	 * @param newPassword
-	 * @return
+	 * @return changePasswordStatus
 	 */
 	public boolean changeTheUserPassword(String userName, String oldPassword, String newPassword) {
 
@@ -102,7 +114,7 @@ public class UsersService {
 	}
 
 	/**
-	 * For registration of particular expert in database
+	 * For registration of particular user
 	 * 
 	 * @param registeredUser
 	 * @param model
@@ -144,7 +156,7 @@ public class UsersService {
 			userComponent.saveUser(user);
 			expertsComponents.saveExpert(expert);
 			studentsComponents.saveStudent(student);
-			
+
 			Schedule schedule2;
 			// if schedule already exist
 			if (scheduleService.findSchedule(userName) == null) {
@@ -157,33 +169,32 @@ public class UsersService {
 			}
 
 			model.addAttribute("schedule", schedule2);
-			
+
 			model.addAttribute("user", user);
-			
 
 			return true;
 		} else
 			return false;
 	}
-	
-	
+
 	/**
-	 * To edit the detials 
+	 * To edit the detials
+	 * 
 	 * @param user
 	 * @param student
 	 * @param expert
 	 */
-	public void saveUserDetails(Users user,Students student, Experts expert) {
+	public void saveUserDetails(Users user, Students student, Experts expert) {
 		userComponent.saveUser(user);
 		expertsComponents.saveExpert(expert);
-		studentsComponents.saveStudent(student);		
+		studentsComponents.saveStudent(student);
 	}
 
 	/**
-	 * To check for the user
+	 * To get the user by username
 	 * 
 	 * @param userName
-	 * @return
+	 * @return {@link Users}
 	 */
 	public Users findUser(String userName) {
 		return userComponent.findOne(userName);

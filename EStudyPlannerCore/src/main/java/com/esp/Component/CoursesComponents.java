@@ -13,6 +13,21 @@ import com.esp.repository.ExpertsHasCoursesRepository;
 import com.esp.repository.StudentsHasCoursesRepository;
 import com.esp.repository.StudyMaterialsRepository;
 
+/**
+ * Component class to provide components on courses
+ * allCourses()                                -   Return list of all Courses
+ * findOneCourse()                             -   Return a particular Course
+ * saveCourse()                                -   To save a particular course in database
+ * getfieldCourses()                           -   List of all filed courses
+ * mainCourses()                               -   List of all the major courses
+ * mainCoursesById()                           -   List of course according to given parent id
+ * findCourseByName()                          -   To find the courses by name
+ * getCoursesForStudent()                      -   Courses list with particular student has registered
+ * getCoursesForExpert()                       -   Courses list with particular expert has registered
+ * 
+ * @author mindfire
+ *
+ */
 @Component
 public class CoursesComponents {
 

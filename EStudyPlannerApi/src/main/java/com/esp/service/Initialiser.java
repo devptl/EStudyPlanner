@@ -13,6 +13,17 @@ import com.esp.model.ExpertsHasStudyMaterials;
 import com.esp.model.Schedule;
 import com.esp.model.StudyMaterials;
 
+/**
+ * Service class to initilise differt pages with set of values
+ * frontInitialiser()                         -  This methord is to initialise the values for the front page
+ * expertInitialiser()                        -  This method is to initialise the starting values for experts page
+ * expertInitialiserWithParameters()          -  To initialise the values to experts page
+ * schedulerInitialiserWithoutParameter()     -  This method is to initialise the start values in Scheduler page
+ * schedulerInitialiser()                     -  This method initialise the scheduler page once logged in
+ * 
+ * @author mindfire
+ *
+ */
 @Service
 public class Initialiser {
 

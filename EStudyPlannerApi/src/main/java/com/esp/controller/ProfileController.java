@@ -15,23 +15,31 @@ import com.esp.service.ExpertsService;
 import com.esp.service.StudentsService;
 import com.esp.service.UsersService;
 
+/**
+ * Controller class handle the operations related to profile management
+ * getProfile()                           -  /getProfile              -  To get to the profile of the user 
+ * editProfile()                          -  /editProfile             -  To update the profile
+ * 
+ * @author mindfire
+ *
+ */
 @Controller
-@SessionAttributes({ "fieldCourses", "profileMessage", "user" ,"schedule"})
+@SessionAttributes({ "fieldCourses", "profileMessage", "user", "schedule" })
 public class ProfileController {
 
 	@Autowired
 	private UsersService usersService;
-	
+
 	@Autowired
 	private StudentsService studentsService;
 
 	@Autowired
 	private ExpertsService expertsService;
-	
+
 	/**
 	 * To get to the profile of the user
 	 * 
-	 * @return
+	 * @return {@link Profile.html}
 	 */
 	@RequestMapping(value = "/getProfile", method = RequestMethod.GET)
 	public String getProfile(ModelMap model) {
@@ -44,25 +52,25 @@ public class ProfileController {
 	/**
 	 * To update the profile
 	 * 
-	 * @return
+	 * @return {@link Profile.html}
 	 */
 	@RequestMapping(value = "/editProfile", method = RequestMethod.POST)
 	public String editProfile(@RequestParam String userName, @RequestParam String firstName,
 			@RequestParam String lastName, @RequestParam int field, @RequestParam String qualification,
 			ModelMap model) {
-		
+
 		Users user = usersService.findUser(userName);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		
+
 		Students student = studentsService.findStudentByUsername(userName);
 		student.setField(field);
-		
+
 		Experts expert = expertsService.findExpertByUsername(userName);
 		expert.setQualification(qualification);
-		
+
 		usersService.saveUserDetails(user, student, expert);
-		
+
 		model.addAttribute("profileMessage", "Profile is Updated");
 		model.addAttribute("user", user);
 

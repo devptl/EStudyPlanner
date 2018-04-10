@@ -25,6 +25,21 @@ import com.esp.service.Initialiser;
 import com.esp.service.ScheduleService;
 import com.esp.service.StudyMaterialsService;
 
+
+/**
+ * Controller class handle the operations related to experts
+ * main mapping                           -  /Experts
+ * expertDisplay()                        -  /**                  -  Inital display of experts  
+ * expertPostDisplayByMainCourseId()      -  /MainId              -  When a experts select the major course  
+ * expertsPostHasMinorCourses()           -  /MinorCourses        -  When a experts select the minor course 
+ * expertsPostSuggestedMaterials()        -  /SuggestedMaterials  -  When experts create an list of study material  
+ * addPostStudyMaterials()                -  /addStudyMaterials   -  When expert add the study material
+ * showExpertVedios()                     -  /showExpertVedios    -  To show the vedios in to experts
+ * expertsAsStudent()                     -  /asStudent           -  When an experts login as student
+ * 
+ * @author mindfire
+ *
+ */
 @Controller
 @RequestMapping("/Experts")
 @SessionAttributes({ "onLoadFun", "vediolink", "username", "fieldCourses", "mainCourses", "minorCourses",

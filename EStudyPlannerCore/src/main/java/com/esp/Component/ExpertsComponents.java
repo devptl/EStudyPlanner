@@ -20,6 +20,25 @@ import com.esp.repository.ExpertsRepository;
 import com.esp.repository.StudentsHasExpertsRepository;
 import com.esp.repository.StudyMaterialsRepository;
 
+/**
+ * Component class to provide components on experts
+ * allExperts()                                 -  Return list of all Experts
+ * findOneExpert()                              -  Return a particular Expert
+ * saveExpert()                                 -  To save a particular expert in database
+ * findByExpertsUserNameAndCoursesIdCourse()    -  To find the expert with course and experts name
+ * saveExpertsHasCourses() 						-  To save in experts has Courses tables
+ * saveExpertsHasStudyMaterials() 				-  To save in experts has StudyMaterial tables
+ * deleteExpertsHasStudyMaterials()		    	-  To delete from experts has StudyMaterial tables
+ * expertsHasStudyMAterialWithUsername()	    -  List all the study material with a particular expert username
+ * expertsHasStudyMAterialWithUsernameAndCouseId() - To get the expert has study material 
+ * 													list accoriding to the experts username
+ * findExpertsWithCoursesId()                   -  To get the list of experts according to the given course id
+ * getExpertForStudent()                        -  To get the list of Experts student has applied for
+ * getStudentsForExpert(                        -  To get the list of student following particular expert
+ * 
+ * @author mindfire
+ *
+ */
 @Component
 public class ExpertsComponents {
 
@@ -71,7 +90,7 @@ public class ExpertsComponents {
 	}
 
 	/**
-	 * To find the expert with course
+	 * To find the expert with course and experts name
 	 * 
 	 * @param expertsUserName
 	 * @param coursesIdCourse
@@ -123,7 +142,7 @@ public class ExpertsComponents {
 	}
 
 	/**
-	 * To get the expert has stuy material list accoriding to the experts username
+	 * To get the expert has study material list accoriding to the experts username
 	 * and course Id
 	 * 
 	 * @param id
@@ -160,7 +179,7 @@ public class ExpertsComponents {
 	 * 
 	 * @param id
 	 *            - CourseID
-	 * @return {@link Experts}
+	 * @return {@link ExpertsHasCourses}
 	 */
 	public ArrayList<ExpertsHasCourses> findExpertsWithCoursesId(int id) {
 

@@ -11,6 +11,23 @@ import com.esp.model.ExpertsHasStudyMaterials;
 import com.esp.model.StudentsHasStudyMaterials;
 import com.esp.model.StudyMaterials;
 
+/**
+ * Service class to provide service related to the study materials
+ * showStudyMaterialsByCourseid()                -  To get the list of study material by Course ID
+ * showStudyMaterialsByCourseName()              -  To get the list of study material with particular course name
+ * showStudyMaterialsByUserNameAndCourseId()     -  To get the study materials list with expert name and the course name
+ * allStudyMaterials()                           -  To list all the available study materials
+ * getVedioEmbeddedLink()                        -  To get the embedded link from the embedded text
+ * saveStudyMaterial()                           -  To Save the Study material in database
+ * getCompletedList()                            -  To get the study material with the particular student username
+ * saveStudentHasStudyMaterials()                -  To save the completed list to the database
+ * getStudyMaterials()                           -  To get the study material list with the experts name
+ * getStudyMaterialsForStudent()                 -  To get the study material list with student name
+ * trackCourseCompletion()                       -  To track how much course he has completed
+ * 
+ * @author mindfire
+ *
+ */
 @Service
 public class StudyMaterialsService {
 

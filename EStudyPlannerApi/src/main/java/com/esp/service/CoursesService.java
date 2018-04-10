@@ -7,9 +7,22 @@ import org.springframework.stereotype.Service;
 
 import com.esp.Component.CoursesComponents;
 import com.esp.model.Courses;
-import com.esp.model.Experts;
-import com.esp.model.Students;
 
+/**
+ * Service class to provide service related to the courses
+ * showCourses()                                -  List of all the Courses
+ * getfieldCourses()                            -  To get the field courses
+ * mainCourses()                                -  List of all the major courses
+ * mainCoursesById()                            -  List by parent id and if study material available  
+ * minorCoursesById()                           -  List of course by parent Id
+ * getCourseWithId()                            -  To get the courses with particualarr id
+ * findCourseByName()                           -  To find the courses by name
+ * getCoursesForStudent()                       -  Get the Courses list with particular student has registered
+ * getCoursesForExpert()                        -  Get the Courses list with particular expert has registered
+ * 
+ * @author mindfire
+ *
+ */
 @Service
 public class CoursesService {
 
@@ -63,7 +76,7 @@ public class CoursesService {
 	 * List of course by parent Id
 	 * 
 	 * @param id
-	 * @return
+	 * @return {@link Courses}
 	 */
 	public ArrayList<Courses> minorCoursesById(int id) {
 
@@ -85,10 +98,10 @@ public class CoursesService {
 	 * To find the courses by name
 	 * 
 	 * @param name
+	 *            - courseName
 	 * @return {@link Courses}
 	 */
 	public Courses findCourseByName(String name) {
-
 		return coursesComponents.findCourseByName(name);
 
 	}
@@ -97,7 +110,7 @@ public class CoursesService {
 	 * Get the Courses list with particular student has registered
 	 * 
 	 * @param userName
-	 *            - {@link Students}
+	 *            - student username
 	 * @return {@link Courses}
 	 */
 	public ArrayList<Courses> getCoursesForStudent(String userName) {
@@ -110,7 +123,7 @@ public class CoursesService {
 	 * Get the Courses list with particular expert has registered
 	 * 
 	 * @param userName
-	 *            - {@link Experts}
+	 *            - experts Username
 	 * @return {@link Courses}
 	 */
 	public ArrayList<Courses> getCoursesForExpert(String userName) {

@@ -12,6 +12,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.esp.model.Experts;
 import com.esp.service.AdminService;
 
+/**
+ * Controller class to handle the opterations related to the Admin
+ * main mapping                  -  /admin
+ * adminPage()                   -  /                         -  To return to admin page
+ * adminExpertPage()             -  /Expert                   -  To return to admin page for experts
+ * adminStudentPage()            -  /Student                  -  To return to admin page for student
+ * 
+ * @author mindfire
+ *
+ */
 @Controller
 @RequestMapping("/admin")
 @SessionAttributes({ "adminForStudentsList", "adminForExpertsList" })
@@ -31,7 +41,7 @@ public class AdminController {
 		// initialising the admin for experts
 		ArrayList<Experts> adminForExpertsList = adminService.getAdminForExperts();
 		model.addAttribute("adminForExpertsList", adminForExpertsList);
-		
+
 		return "Admin";
 	}
 
@@ -55,7 +65,7 @@ public class AdminController {
 	 * To return to admin page for student
 	 * 
 	 * @param model
-	 * @return {@link AdminForExpert.html}
+	 * @return {@link Admin.html}
 	 */
 	@RequestMapping(value = "/Student", method = RequestMethod.GET)
 	public String adminStudentPage(ModelMap model) {

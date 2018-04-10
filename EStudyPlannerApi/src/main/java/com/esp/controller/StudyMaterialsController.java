@@ -18,6 +18,17 @@ import com.esp.service.CoursesService;
 import com.esp.service.ExpertsService;
 import com.esp.service.StudyMaterialsService;
 
+/**
+ * Controller class handle the operation related to study materials 
+ * main mapping                          -  /StudyMaterials
+ * studyMaterials()                      -  /**                         -  To get to Study Materials  
+ * showVedios()                          -  /showVedios                 -  To show the vedios in the courses page
+ * studentCompletedMaterials()           -  /StudentCompletedMaterials  -  When a student completes the study material
+ * getRating()                           -  /getRating                  -  To Store the rating
+ * 
+ * @author mindfire
+ *
+ */
 @Controller
 @RequestMapping("/StudyMaterials")
 @SessionAttributes({ "onLoadCourses", "username", "minorCourse", "studyMaterials", "vediolink", "expertsUserName",

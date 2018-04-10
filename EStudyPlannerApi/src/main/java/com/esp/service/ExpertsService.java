@@ -13,6 +13,23 @@ import com.esp.model.ExpertsHasStudyMaterials;
 import com.esp.model.Students;
 import com.esp.model.StudentsHasExperts;
 
+/**
+ * Service class to provide service related to the experts
+ * expertHasCourses()                            -  To save data in the expert has courses table
+ * expertsHasStudyMAterials()                    -  To get the list of study materials experts have listed
+ * getAllExperts()                               -  To get the list of all experts
+ * expertsHasStudyMAterialWithUsername()         -  List all the study material with a particular expert username
+ * findExpertsWithCoursesId()                    -  To get the expert has stuy material list accoriding 
+ * 													to the experts username and course Id
+ * findExpertByUsername()                        -  To find and expert with his username
+ * expertAsStudent()                             -  When an experts want to register as student
+ * expertAsStudentExist()                        -  To check if the student exist
+ * getExpertForStudent()                         -  To get the list of Experts student has applied for
+ * getStudentsForExpert()                        -  To get the list of student following particular expert
+ *
+ * @author mindfire
+ *
+ */
 @Service
 public class ExpertsService {
 
@@ -84,7 +101,7 @@ public class ExpertsService {
 
 	/**
 	 * To get the expert has stuy material list accoriding to the experts username
-	 * and course Id
+	 * and course Name
 	 * 
 	 * @param id
 	 *            - CourseID
@@ -110,8 +127,16 @@ public class ExpertsService {
 		return expertsComponents.findExpertsWithCoursesId(id);
 
 	}
-	
-	public ExpertsHasCourses findByExpertAndCourse(String expertsUserName,int coursesIdCourse) {
+
+	/**
+	 * To get the expert has stuy material list accoriding to the experts username
+	 * and course Id
+	 * 
+	 * @param expertsUserName
+	 * @param coursesIdCourse
+	 * @return {@link ExpertsHasCourses}
+	 */
+	public ExpertsHasCourses findByExpertAndCourse(String expertsUserName, int coursesIdCourse) {
 		return expertsComponents.findByExpertsUserNameAndCoursesIdCourse(expertsUserName, coursesIdCourse);
 	}
 

@@ -8,6 +8,15 @@ import org.springframework.stereotype.Component;
 import com.esp.model.Schedule;
 import com.esp.repository.ScheduleRepository;
 
+/**
+ * Component class to provide components on schedule
+ * findOneSchedule()                             -  To get a particular schedule
+ * allSchedule()                                 -  To get the all the schedules
+ * saveSchedule()                                -  To save a schedule in database
+ * 
+ * @author mindfire
+ *
+ */
 @Component
 public class ScheduleComponents {
 

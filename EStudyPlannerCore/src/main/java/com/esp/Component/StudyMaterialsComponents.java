@@ -12,6 +12,18 @@ import com.esp.repository.CoursesRepository;
 import com.esp.repository.StudentsHasStudyMaterialsRepository;
 import com.esp.repository.StudyMaterialsRepository;
 
+/**
+ * Component class to provide components on study materials
+ * allStudyMaterials()                              -  Return list of all StudyMaterials
+ * findOneStudyMaterial()                           -  Return a particular StudyMaterial
+ * saveStudyMaterial()                              -  To save a particular study material in database
+ * showStudyMaterialsByCourseid()                   -  To get the list of study material by Course ID
+ * showStudyMaterialsByCourseName()                 -  To get the list of study material with particular course name
+ * getCompletedList()                               -  To get the study material with the particular student username
+ * 
+ * @author mindfire
+ *
+ */
 @Component
 public class StudyMaterialsComponents {
 

@@ -4,6 +4,12 @@ import java.util.Base64;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * Service class to encode the password
+ * 
+ * @author mindfire
+ *
+ */
 @Service
 public class Encoder {
 

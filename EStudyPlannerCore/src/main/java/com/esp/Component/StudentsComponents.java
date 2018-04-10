@@ -14,6 +14,19 @@ import com.esp.repository.StudentsHasExpertsRepository;
 import com.esp.repository.StudentsHasStudyMaterialsRepository;
 import com.esp.repository.StudentsRepository;
 
+/**
+ * Component class to provide components on students
+ * allStudents()                                 -  Return list of all Students
+ * findOneStudent()                              -  Return a particular Student
+ * saveStudent()                                 -  To save a particular Student in database
+ * saveStudentsHasCourses()                      -  To save in student has Courses tables
+ * saveStudentsHasExperts()                      -  To save in student has Experts tables
+ * saveStudentsHasStudyMaterials()               -  To save the student has Study Material
+ * deleteStudentsHasStudyMaterials()             -  To delete row from student has study material
+ * 
+ * @author mindfire
+ *
+ */
 @Component
 public class StudentsComponents {
 
@@ -37,7 +50,6 @@ public class StudentsComponents {
 	public ArrayList<Students> allStudents() {
 		return (ArrayList<Students>) studentsRepository.findAll();
 	}
-
 
 	/**
 	 * return a particular Student

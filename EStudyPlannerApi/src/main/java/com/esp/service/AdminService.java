@@ -10,6 +10,14 @@ import com.esp.Component.StudentsComponents;
 import com.esp.model.Experts;
 import com.esp.model.Students;
 
+/**
+ * Service class to provide services related to admin
+ * getAdminForStudent()                        -  Return the full detail of the student
+ * getAdminForExperts()                        -  To get the details statistics for experts
+ * 
+ * @author mindfire
+ *
+ */
 @Service
 public class AdminService {
 
