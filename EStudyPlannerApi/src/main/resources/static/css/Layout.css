@@ -1,0 +1,256 @@
+/*--------------------------------- Body Styling ------------------------------*/
+body {
+	background: #007bff;
+}
+
+#main {
+	background-image: url(../images/bodybackground.png);
+    padding-top: 5%;
+    padding-right: 6%;
+    padding-left: 6%;
+}
+
+#containerBody{
+	padding: 0px;
+}
+
+#mainForm {
+	float: left;
+}
+
+.justified{
+	text-align: justify;
+}
+
+/*--------------------------------- Nav Styling --------------------------------*/
+#navbar {
+	border-radius: 5px;
+	opacity: 0.9 !important;
+	background-image: url("../images/navbackground.jpg");
+}
+
+#navbar li a {
+	color: white;
+	font-weight: bolder;
+}
+
+#navusername {
+	height: 36px;
+}
+
+#mainTitle {
+	color: white;
+	font-weight: bolder;
+}
+
+#searchbutton {
+	border: white;
+	color: #1d2124;
+	background: white;
+}
+
+.topButton {
+	background: #ededf0;
+	text-shadow: grey 1px 1px 2px;
+	color: darkslateblue;
+	border: black;
+	margin-left: 4px;
+	font-weight: bolder;
+	text-align: center;
+	width: 160px;
+	border-radius: 13px;
+}
+
+/*--------------------------------- Slider Styling ------------------------------*/
+#slidetext {
+	text-align: center;
+	font-size: 23px;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 1%;
+	padding-bottom: 2%;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+    background: #dfdfe3;
+	text-shadow: grey 1px 1px 2px;
+	color: darkslateblue;
+}
+
+#slideimage {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+/*--------------------------------- Modal Styling --------------------------------*/
+#modalcontent1 {
+	opacity: 0.9 !important;
+	background-image: url("../images/loginbackground.jpg");
+}
+
+#modalcontent2 {
+	opacity: 0.9 !important;
+	background-image: url("../images/loginbackground.jpg");
+}
+
+#modalcontent4 {
+	opacity: 0.9 !important;
+	background-image: url("../images/loginbackground.jpg");
+}
+
+#divlogin {
+	float: left;
+}
+
+#alreadHaveAccountButton {
+	background: transparent;
+	color: blue;
+	border: none;
+}
+
+#forgotAccountButton {
+	background: transparent;
+	color: blue;
+	border: none;
+}
+
+#changeAccountButton {
+	background: transparent;
+	color: blue;
+	border: none;
+}
+
+#ratingButton{
+	width: 100%;
+    height: 35px;
+	background: #e2dddc;
+}
+
+/*--------------------------------- Main Content Styling --------------------------*/
+#maincontent1 {
+	height: -webkit-fill-available;
+}
+
+#maincontent {
+	height: auto;
+}
+
+#maincard {
+	background-image: url("../images/mainbackground.jpg");
+}
+
+#sidecard {
+	    background: #f3f3f6;
+}
+
+#inputGroupPrepend1{
+	font-weight: bolder;
+}
+
+#accordion {
+	width: 100% !important;
+	float: left !important;
+}
+
+#accordion2 {
+	float: left !important;
+}
+
+#RegisterMainButton {
+	font-size: 21px;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	border-radius: 20px;
+	background: #ececef;
+	text-shadow: grey 1px 1px 2px;
+	color: darkslateblue;
+}
+
+/*--------------------------------- Form Content Styling ---------------------------*/
+#fullWidthButton {
+	color: black;
+	width: 100%;
+	font-weight: bolder;
+	font-variant-caps: titling-caps;
+}
+
+#hiddenObject {
+	display: none;
+}
+
+#formid {
+	float: left !important;
+}
+
+#expertlist {
+	margin-top: 2%;
+}
+
+#studentslist {
+	margin-top: 2%;
+}
+
+#studyMaterialsList {
+	background: #e2dbdb;
+}
+
+#setstudymaterial {
+	margin-top: 2%;
+}
+
+#frontmessage {
+	color: red !important;
+	font-weight: bolder !important;
+	text-align: center;
+}
+
+#schedulermessage {
+	color: red !important;
+	font-weight: bolder !important;
+}
+
+#warningtext {
+	color: red;
+	font-weight: bolder;
+}
+
+#vedioframe {
+	margin-left: 4%;
+	height: 550px;
+	width: 92%;
+	border-width: 4px;
+	border-color: black;
+}
+
+/*-------------------------------------- Table Styling --------------------------------*/
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+    border: 1px solid #a3a5ae;
+	text-align: left;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: #dbdbdf;
+}
+
+tr:nth-child(odd) {
+    background-color: #f3f3f6;
+}
+
+/*-------------------------------------- Rating Styling --------------------------------*/
+
+.star-rating {
+  line-height:32px;
+  font-size:1.25em;
+}
+
+.star-rating .fa-star{color: yellow;}
+
+

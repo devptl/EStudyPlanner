@@ -14,11 +14,13 @@ target/
 *.ear
 
 #Gradle temporary files
+target/
 EStudyPlannerApi/target/
 EStudyPlannerCore/target/
 
 #Eclipse files
 **/.project
+**/.properties
 **/.classpath
 **/.settings/
 blog/bin/
